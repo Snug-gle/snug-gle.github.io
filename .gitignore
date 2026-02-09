@@ -9,3 +9,25 @@ tsconfig.tsbuildinfo
 private/
 .replit
 replit.nix
+content/.claude.json
+content/.idea/
+content/.makemd/
+
+# Non-public content (managed in Obsidian vault only)
+content/CLAUDE.md
+content/GEMINI.md
+content/GEMINI-MCP-SETUP.md
+content/README.md
+content/PUBLISHING.md
+content/AUTOMATION-EXAMPLES.md
+content/VAULT-IMPROVEMENT-PLAN.md
+content/VAULT-TRANSFORMATION-COMPLETE.md
+content/archive/
+content/area/work/
+content/area/log/
+content/area/learning/
+content/area/private/
+content/area/career/interview-prep/
+content/project/inbox/
+content/resource/daily/
+content/project/active/portfolio/portfolio-resume.md
