@@ -1,6 +1,6 @@
 # Journey Continues
 
-> "측정하고, 개선하고, 문서화하는 개발자"
+> 더 나은 코드는 혼자 만들 수 없다 — Upstream First를 지향하는 개발자
 
 **Full-stack Developer** | Java/Spring + React/TypeScript
 Based in Korea | Powered by [Quartz v4](https://quartz.jzhao.xyz/)
