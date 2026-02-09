@@ -1,0 +1,591 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.co.uplus.agent.snap.mapper.message.UmsMapper">
+
+    <select id="getTime" resultType="String">
+        SELECT TO_CHAR(NOW(), 'YYYYMMDDHH24MISS')
+    </select>
+
+    <select id="selectOneRow" resultType="Ums">
+        SELECT ${columnName}
+        FROM ${tableName}
+        LIMIT 1
+    </select>
+
+    <update id="alterTable">
+        ALTER TABLE ${tableName} ADD ${columnName} ${columnType} ${columnCondition}
+    </update>
+
+    <update id="createSendTable">
+        CREATE TABLE ${tableName} (
+            CLIENT_KEY              VARCHAR(40)                         NOT NULL,
+            REQ_CH                  VARCHAR(10)                         NOT NULL,
+            TRAFFIC_TYPE            VARCHAR(10)     DEFAULT 'normal'    NOT NULL,
+            MSG_STATUS              VARCHAR(10)     DEFAULT 'ready'     NOT NULL,
+            REQ_DATE                TIMESTAMP                           NOT NULL,
+            CALLBACK_NUMBER         VARCHAR(16),
+            KISA_ORIGCODE           VARCHAR(20),
+            CAMPAIGN_ID             VARCHAR(20),
+            DEPT_CODE               VARCHAR(20),
+            PHONE                   VARCHAR(16),
+            MSG                     VARCHAR(2000),
+            TITLE                   VARCHAR(100),
+            TEMPLATE_CODE           VARCHAR(20),
+            MERGE_DATA              VARCHAR(2000),
+            FILE_DATA               VARCHAR(1000),
+            MMS_FILE_LIST           VARCHAR(450),
+            FB_CH                   VARCHAR(10),
+            FB_MSG                  VARCHAR(4000),
+            FB_TITLE                VARCHAR(100),
+            FB_FILE_LIST            VARCHAR(450),
+            RCS_MSGBASE_ID          VARCHAR(40),
+            RCS_HEADER              VARCHAR(1),
+            RCS_FOOTER              VARCHAR(16),
+            RCS_COPY_ALLOWED        VARCHAR(1)      DEFAULT 'Y',
+            RCS_EXPIRY_OPTION       VARCHAR(1),
+            RCS_AGENCY_ID           VARCHAR(20),
+            RCS_AGENCY_KEY          VARCHAR(20),
+            RCS_BRAND_KEY           VARCHAR(20),
+            RCS_BUTTON              VARCHAR(1000),
+            KAKAO_CH_ID             VARCHAR(65),
+            KAKAO_TEMPLATE_CODE     VARCHAR(20),
+            KAKAO_BUTTON            VARCHAR(1000),
+            KAKAO_IMAGE_WIDE_YN     VARCHAR(1),
+            KAKAO_IMAGE_URL         VARCHAR(150),
+            KAKAO_IMAGE_LINK        VARCHAR(150),
+            KAKAO_FILE              VARCHAR(150),
+            KAKAO_AD_FLAG           VARCHAR(1),
+            KAKAO_GROUP_KEY         VARCHAR(100),
+            PUSH_APP_ID             VARCHAR(255),
+            PUSH_PROVIDER           VARCHAR(20),
+            PUSH_APP_USER_ID        VARCHAR(20),
+            PUSH_FILE               VARCHAR(150),
+            PUSH_EXT                VARCHAR(1000),
+            ROUTE_INFO              VARCHAR(20),
+            SENT_DATE               TIMESTAMP,
+            DONE_CH                 VARCHAR(10),
+            DONE_PRODUCT            VARCHAR(10),
+            DONE_DATE               TIMESTAMP,
+            DONE_CODE               VARCHAR(10),
+            DONE_CODE_DESC          VARCHAR(200),
+            DONE_FB_DETAIL          VARCHAR(1000),
+            DONE_TELCO              VARCHAR(10),
+            ETC1                    VARCHAR(50),
+            ETC2                    VARCHAR(50),
+            ETC3                    VARCHAR(50),
+            ETC4                    VARCHAR(50),
+            ETC5                    VARCHAR(50),
+            ETC6                    VARCHAR(50),
+            CONSTRAINT PK_${tableName} PRIMARY KEY ( CLIENT_KEY )
+        );
+        
+        COMMENT ON COLUMN ${tableName}.CLIENT_KEY IS            '메시지 고유 번호 (직접 고유 번호를 생성하여 입력 ex) datetime + business name + random string)';
+        COMMENT ON COLUMN ${tableName}.REQ_CH IS                '발송 채널 (- 문자 : SMS, MMS - 글로벌 SMS : GDS - RCS : RCS - 카카오톡 : ALIMTALK, FRIENDTALK - PUSH : PUSH - 템플릿(통합) 발송 : UMS)';
+        COMMENT ON COLUMN ${tableName}.TRAFFIC_TYPE IS          '메시지 유형 (- normal : 일반 (default) - real : 실시간/중요 - batch : 마케팅, 광고)';
+        COMMENT ON COLUMN ${tableName}.MSG_STATUS IS            '발송 상태 (- ready : 발송 대기 (insert 상태 값) - request : 발송 완료 - complete : 결과 수신 완료 - pre-send : select 완료 - pre-image : 이미지 등록 작업 중)';
+        COMMENT ON COLUMN ${tableName}.REQ_DATE IS              '발송 요청 시간 (미래 시간으로 입력 시, 예약 발송됨)';
+        COMMENT ON COLUMN ${tableName}.CALLBACK_NUMBER IS       '발신번호 (문자나 RCS 발송 시 필수 입력)';
+        COMMENT ON COLUMN ${tableName}.KISA_ORIGCODE IS         'KISA 최초 발신사업자 구분 코드 (재판매사의 경우 필수 입력, 일반 고객은 공란)';
+        COMMENT ON COLUMN ${tableName}.CAMPAIGN_ID IS           '캠페인 ID (메시지 허브에서 캠페인 단위 통계내기위해 사용)';
+        COMMENT ON COLUMN ${tableName}.DEPT_CODE IS             '부서코드 (부서별 빌링이 필요한 경우 사용)';
+        COMMENT ON COLUMN ${tableName}.PHONE IS                 '수신번호';
+        COMMENT ON COLUMN ${tableName}.MSG IS                   '전송할 메시지 내용 (가변 데이터 입력 시 \#\{NAME\} 로 입력)';
+        COMMENT ON COLUMN ${tableName}.TITLE IS                 '제목 (LMS/MMS/RCS/KKO_NOTI/PUSH 발송 시 사용)';
+        COMMENT ON COLUMN ${tableName}.TEMPLATE_CODE IS         '메시지허브 템플릿 키 (허브 사용자 콘솔에 등록한 통합발송 템플릿 키)';
+        COMMENT ON COLUMN ${tableName}.MERGE_DATA IS            '가변 데이터 (ex) { "NAME" : "홍길동", "SHOP" : "이마트 용산" })';
+        COMMENT ON COLUMN ${tableName}.FILE_DATA IS             '템플릿 이미지 변경 발송 데이터 (”서비스명 . 변경할 이미지 번호 . 이미지 첨부 방식(.친구톡 이미지 Wide 여부)” key 와 값으로 이루어진 데이터 ex) {”rcs.1.path”:”pokemon.jpg”, “friendtalk.1.url.y”:”https://msghub.uplus.co.kr/image/digimon.jpg”})';
+        COMMENT ON COLUMN ${tableName}.MMS_FILE_LIST IS         'MMS 파일 (절대 경로/상대 경로/URL/메시지허브 파일 ID) (”,”로 구분하여 3개 까지 입력 가능)';
+        COMMENT ON COLUMN ${tableName}.FB_CH IS                 'fallback 발송할 채널 (SMS/LMS/MMS 만 가능)';
+        COMMENT ON COLUMN ${tableName}.FB_MSG IS                'fallback 메시지 내용';
+        COMMENT ON COLUMN ${tableName}.FB_TITLE IS              'fallback 메시지 제목';
+        COMMENT ON COLUMN ${tableName}.FB_FILE_LIST IS          'fallback MMS 파일 (절대 경로/상대 경로/URL/메시지허브 파일 ID) (”,”로 구분하여 3개 까지 입력 가능)';
+        COMMENT ON COLUMN ${tableName}.RCS_MSGBASE_ID IS        'RCS 메시지베이스 ID';
+        COMMENT ON COLUMN ${tableName}.RCS_HEADER IS            'RCS 메시지 유형 (- info → 0 : 정보성 메시지 - ad → 1 : 광고성 메시지)';
+        COMMENT ON COLUMN ${tableName}.RCS_FOOTER IS            '무료수신거부번호';
+        COMMENT ON COLUMN ${tableName}.RCS_COPY_ALLOWED IS      'RCS 메시지 복사/공유 허용 여부 (- Y : 허용 (default) - N : 미허용 기본값)';
+        COMMENT ON COLUMN ${tableName}.RCS_EXPIRY_OPTION IS     '발송 타임아웃 시간 (옵션 해당 시간만큼 발송 시도 및 결과 대기 - 1 : 72시간 - 2 : 30초 - 3 : 3분 - 4 : 1시간)';
+        COMMENT ON COLUMN ${tableName}.RCS_AGENCY_ID IS         '대행사 ID (ex) lguplus)';
+        COMMENT ON COLUMN ${tableName}.RCS_AGENCY_KEY IS        '대행사 인증 Key (입력하는 agencyId가 대행사의 것일 경우, 해당 대행사의 agencyKey를 함께 전송해야 함)';
+        COMMENT ON COLUMN ${tableName}.RCS_BRAND_KEY IS         '발신자 인증 Key (기업에서 생성한 브랜드마다 부여되는 Key로, 메시지 전송 시 발신번호가 속한 브랜드의 Key를 함께 전송해야 함)';
+        COMMENT ON COLUMN ${tableName}.RCS_BUTTON IS            'RCS 버튼 (Object array)';
+        COMMENT ON COLUMN ${tableName}.KAKAO_CH_ID IS           '카카오톡 채널 아이디';
+        COMMENT ON COLUMN ${tableName}.KAKAO_TEMPLATE_CODE IS   '알림톡, 친구톡 템플릿 코드';
+        COMMENT ON COLUMN ${tableName}.KAKAO_BUTTON IS          '카카오 버튼 Object';
+        COMMENT ON COLUMN ${tableName}.KAKAO_IMAGE_WIDE_YN IS   '친구톡 와이드 이미지 여부(Y/N)';
+        COMMENT ON COLUMN ${tableName}.KAKAO_IMAGE_URL IS       '친구톡 이미지 URL';
+        COMMENT ON COLUMN ${tableName}.KAKAO_IMAGE_LINK IS      '친구톡 이미지 링크';
+        COMMENT ON COLUMN ${tableName}.KAKAO_FILE IS            '친구톡 이미지 파일 (절대 경로/상대 경로/URL/메시지허브 파일 ID)';
+        COMMENT ON COLUMN ${tableName}.KAKAO_AD_FLAG IS         '광고 표기 여부(Y/N)';
+        COMMENT ON COLUMN ${tableName}.KAKAO_GROUP_KEY IS       '알림톡 그룹 발송용 KEY';
+        COMMENT ON COLUMN ${tableName}.PUSH_APP_ID IS           '앱 아이디 (메시지허브 관리자 콘솔에 등록한 APP ID)';
+        COMMENT ON COLUMN ${tableName}.PUSH_PROVIDER IS         'PUSH 공급자 (- FCM : 구글 - APNS : 애플)';
+        COMMENT ON COLUMN ${tableName}.PUSH_APP_USER_ID IS      '앱 사용자 아이디 (해당 앱을 설치하여 사용하는 사용자 ID)';
+        COMMENT ON COLUMN ${tableName}.PUSH_FILE IS             'push 이미지 파일 (절대 경로/상대 경로/URL/메시지허브 파일 ID)';
+        COMMENT ON COLUMN ${tableName}.PUSH_EXT IS              '확장 커스텀 메시지 (이미지 푸시를 위한 URL 또는 앱 상세페이지를 꾸밀 데이타 정보 URL(json))';
+        COMMENT ON COLUMN ${tableName}.ROUTE_INFO IS            '발송된 세션 ID/ API Key (연동된 여러 세션 중, 실제 발송된 세션)';
+        COMMENT ON COLUMN ${tableName}.SENT_DATE IS             '발송 요청 시간 (Agent가 메시지허브 G/W 로 발송한 시간)';
+        COMMENT ON COLUMN ${tableName}.DONE_CH IS               '발송 성공한 채널';
+        COMMENT ON COLUMN ${tableName}.DONE_PRODUCT IS          '발송 성공한 상품 종류';
+        COMMENT ON COLUMN ${tableName}.DONE_DATE IS             '단말 전달 시간 or 실패 최종 시간';
+        COMMENT ON COLUMN ${tableName}.DONE_CODE IS             '처리 결과 코드';
+        COMMENT ON COLUMN ${tableName}.DONE_CODE_DESC IS        '처리 결과 상세';
+        COMMENT ON COLUMN ${tableName}.DONE_FB_DETAIL IS        'fallback 발송 처리 상세 (첫 번째 채널이 발송 실패하고, 다음 채널이 발송될 경우 첫 번째 채널의 실패 코드 및 설명 표기)';
+        COMMENT ON COLUMN ${tableName}.DONE_TELCO IS            '이통사 정보 (문자 및 RCS발송 성공의 경우 이통사 코드 업데이트)';
+        COMMENT ON COLUMN ${tableName}.ETC1 IS                  '기타 고객사 예비 필드1';
+        COMMENT ON COLUMN ${tableName}.ETC2 IS                  '기타 고객사 예비 필드2';
+        COMMENT ON COLUMN ${tableName}.ETC3 IS                  '기타 고객사 예비 필드3';
+        COMMENT ON COLUMN ${tableName}.ETC4 IS                  '기타 고객사 예비 필드4';
+        COMMENT ON COLUMN ${tableName}.ETC5 IS                  '기타 고객사 예비 필드5';
+        COMMENT ON COLUMN ${tableName}.ETC6 IS                  '기타 고객사 예비 필드6';
+    </update>
+
+    <update id="createLogTable">
+        CREATE TABLE ${tableName} (
+            CLIENT_KEY              VARCHAR(40)                         NOT NULL,
+            REQ_CH                  VARCHAR(10)                         NOT NULL,
+            TRAFFIC_TYPE            VARCHAR(10)     DEFAULT 'normal'    NOT NULL,
+            MSG_STATUS              VARCHAR(10)     DEFAULT 'ready'     NOT NULL,
+            REQ_DATE                TIMESTAMP                           NOT NULL,
+            CALLBACK_NUMBER         VARCHAR(16),
+            KISA_ORIGCODE           VARCHAR(20),
+            CAMPAIGN_ID             VARCHAR(20),
+            DEPT_CODE               VARCHAR(20),
+            PHONE                   VARCHAR(16),
+            MSG                     VARCHAR(2000),
+            TITLE                   VARCHAR(100),
+            TEMPLATE_CODE           VARCHAR(20),
+            MERGE_DATA              VARCHAR(2000),
+            FILE_DATA               VARCHAR(1000),
+            MMS_FILE_LIST           VARCHAR(450),
+            FB_CH                   VARCHAR(10),
+            FB_MSG                  VARCHAR(4000),
+            FB_TITLE                VARCHAR(100),
+            FB_FILE_LIST            VARCHAR(450),
+            RCS_MSGBASE_ID          VARCHAR(40),
+            RCS_HEADER              VARCHAR(1),
+            RCS_FOOTER              VARCHAR(16),
+            RCS_COPY_ALLOWED        VARCHAR(1)      DEFAULT 'Y',
+            RCS_EXPIRY_OPTION       VARCHAR(1),
+            RCS_AGENCY_ID           VARCHAR(20),
+            RCS_AGENCY_KEY          VARCHAR(20),
+            RCS_BRAND_KEY           VARCHAR(20),
+            RCS_BUTTON              VARCHAR(1000),
+            KAKAO_CH_ID             VARCHAR(65),
+            KAKAO_TEMPLATE_CODE     VARCHAR(20),
+            KAKAO_BUTTON            VARCHAR(1000),
+            KAKAO_IMAGE_WIDE_YN     VARCHAR(1),
+            KAKAO_IMAGE_URL         VARCHAR(150),
+            KAKAO_IMAGE_LINK        VARCHAR(150),
+            KAKAO_FILE              VARCHAR(150),
+            KAKAO_AD_FLAG           VARCHAR(1),
+            KAKAO_GROUP_KEY         VARCHAR(100),
+            PUSH_APP_ID             VARCHAR(255),
+            PUSH_PROVIDER           VARCHAR(20),
+            PUSH_APP_USER_ID        VARCHAR(20),
+            PUSH_FILE               VARCHAR(150),
+            PUSH_EXT                VARCHAR(1000),
+            ROUTE_INFO              VARCHAR(20),
+            SENT_DATE               TIMESTAMP,
+            DONE_CH                 VARCHAR(10),
+            DONE_PRODUCT            VARCHAR(10),
+            DONE_DATE               TIMESTAMP,
+            DONE_CODE               VARCHAR(10),
+            DONE_CODE_DESC          VARCHAR(200),
+            DONE_FB_DETAIL          VARCHAR(1000),
+            DONE_TELCO              VARCHAR(10),
+            ETC1                    VARCHAR(50),
+            ETC2                    VARCHAR(50),
+            ETC3                    VARCHAR(50),
+            ETC4                    VARCHAR(50),
+            ETC5                    VARCHAR(50),
+            ETC6                    VARCHAR(50)
+        );
+
+        COMMENT ON COLUMN ${tableName}.CLIENT_KEY IS            '메시지 고유 번호 (직접 고유 번호를 생성하여 입력 ex) datetime + business name + random string)';
+        COMMENT ON COLUMN ${tableName}.REQ_CH IS                '발송 채널 (- 문자 : SMS, MMS - 글로벌 SMS : GDS - RCS : RCS - 카카오톡 : ALIMTALK, FRIENDTALK - PUSH : PUSH - 템플릿(통합) 발송 : UMS)';
+        COMMENT ON COLUMN ${tableName}.TRAFFIC_TYPE IS          '메시지 유형 (- normal : 일반 (default) - real : 실시간/중요 - batch : 마케팅, 광고)';
+        COMMENT ON COLUMN ${tableName}.MSG_STATUS IS            '발송 상태 (- ready : 발송 대기 (insert 상태 값) - request : 발송 완료 - complete : 결과 수신 완료 - pre-send : select 완료 - pre-image : 이미지 등록 작업 중)';
+        COMMENT ON COLUMN ${tableName}.REQ_DATE IS              '발송 요청 시간 (미래 시간으로 입력 시, 예약 발송됨)';
+        COMMENT ON COLUMN ${tableName}.CALLBACK_NUMBER IS       '발신번호 (문자나 RCS 발송 시 필수 입력)';
+        COMMENT ON COLUMN ${tableName}.KISA_ORIGCODE IS         'KISA 최초 발신사업자 구분 코드 (재판매사의 경우 필수 입력, 일반 고객은 공란)';
+        COMMENT ON COLUMN ${tableName}.CAMPAIGN_ID IS           '캠페인 ID (메시지 허브에서 캠페인 단위 통계내기위해 사용)';
+        COMMENT ON COLUMN ${tableName}.DEPT_CODE IS             '부서코드 (부서별 빌링이 필요한 경우 사용)';
+        COMMENT ON COLUMN ${tableName}.PHONE IS                 '수신번호';
+        COMMENT ON COLUMN ${tableName}.MSG IS                   '전송할 메시지 내용 (가변 데이터 입력 시 \#\{NAME\} 로 입력)';
+        COMMENT ON COLUMN ${tableName}.TITLE IS                 '제목 (LMS/MMS/RCS/KKO_NOTI/PUSH 발송 시 사용)';
+        COMMENT ON COLUMN ${tableName}.TEMPLATE_CODE IS         '메시지허브 템플릿 키 (허브 사용자 콘솔에 등록한 통합발송 템플릿 키)';
+        COMMENT ON COLUMN ${tableName}.MERGE_DATA IS            '가변 데이터 (ex) { "NAME" : "홍길동", "SHOP" : "이마트 용산" })';
+        COMMENT ON COLUMN ${tableName}.FILE_DATA IS             '템플릿 이미지 변경 발송 데이터 (”서비스명 . 변경할 이미지 번호 . 이미지 첨부 방식(.친구톡 이미지 Wide 여부)” key 와 값으로 이루어진 데이터 ex) {”rcs.1.path”:”pokemon.jpg”, “friendtalk.1.url.y”:”https://msghub.uplus.co.kr/image/digimon.jpg”})';
+        COMMENT ON COLUMN ${tableName}.MMS_FILE_LIST IS         'MMS 파일 (절대 경로/상대 경로/URL/메시지허브 파일 ID) (”,”로 구분하여 3개 까지 입력 가능)';
+        COMMENT ON COLUMN ${tableName}.FB_CH IS                 'fallback 발송할 채널 (SMS/LMS/MMS 만 가능)';
+        COMMENT ON COLUMN ${tableName}.FB_MSG IS                'fallback 메시지 내용';
+        COMMENT ON COLUMN ${tableName}.FB_TITLE IS              'fallback 메시지 제목';
+        COMMENT ON COLUMN ${tableName}.FB_FILE_LIST IS          'fallback MMS 파일 (절대 경로/상대 경로/URL/메시지허브 파일 ID) (”,”로 구분하여 3개 까지 입력 가능)';
+        COMMENT ON COLUMN ${tableName}.RCS_MSGBASE_ID IS        'RCS 메시지베이스 ID';
+        COMMENT ON COLUMN ${tableName}.RCS_HEADER IS            'RCS 메시지 유형 (- info → 0 : 정보성 메시지 - ad → 1 : 광고성 메시지)';
+        COMMENT ON COLUMN ${tableName}.RCS_FOOTER IS            '무료수신거부번호';
+        COMMENT ON COLUMN ${tableName}.RCS_COPY_ALLOWED IS      'RCS 메시지 복사/공유 허용 여부 (- Y : 허용 (default) - N : 미허용 기본값)';
+        COMMENT ON COLUMN ${tableName}.RCS_EXPIRY_OPTION IS     '발송 타임아웃 시간 (옵션 해당 시간만큼 발송 시도 및 결과 대기 - 1 : 72시간 - 2 : 30초 - 3 : 3분 - 4 : 1시간)';
+        COMMENT ON COLUMN ${tableName}.RCS_AGENCY_ID IS         '대행사 ID (ex) lguplus)';
+        COMMENT ON COLUMN ${tableName}.RCS_AGENCY_KEY IS        '대행사 인증 Key (입력하는 agencyId가 대행사의 것일 경우, 해당 대행사의 agencyKey를 함께 전송해야 함)';
+        COMMENT ON COLUMN ${tableName}.RCS_BRAND_KEY IS         '발신자 인증 Key (기업에서 생성한 브랜드마다 부여되는 Key로, 메시지 전송 시 발신번호가 속한 브랜드의 Key를 함께 전송해야 함)';
+        COMMENT ON COLUMN ${tableName}.RCS_BUTTON IS            'RCS 버튼 (Object array)';
+        COMMENT ON COLUMN ${tableName}.KAKAO_CH_ID IS           '카카오톡 채널 아이디';
+        COMMENT ON COLUMN ${tableName}.KAKAO_TEMPLATE_CODE IS   '알림톡, 친구톡 템플릿 코드';
+        COMMENT ON COLUMN ${tableName}.KAKAO_BUTTON IS          '카카오 버튼 Object';
+        COMMENT ON COLUMN ${tableName}.KAKAO_IMAGE_WIDE_YN IS   '친구톡 와이드 이미지 여부(Y/N)';
+        COMMENT ON COLUMN ${tableName}.KAKAO_IMAGE_URL IS       '친구톡 이미지 URL';
+        COMMENT ON COLUMN ${tableName}.KAKAO_IMAGE_LINK IS      '친구톡 이미지 링크';
+        COMMENT ON COLUMN ${tableName}.KAKAO_FILE IS            '친구톡 이미지 파일 (절대 경로/상대 경로/URL/메시지허브 파일 ID)';
+        COMMENT ON COLUMN ${tableName}.KAKAO_AD_FLAG IS         '광고 표기 여부(Y/N)';
+        COMMENT ON COLUMN ${tableName}.KAKAO_GROUP_KEY IS       '알림톡 그룹 발송용 KEY';
+        COMMENT ON COLUMN ${tableName}.PUSH_APP_ID IS           '앱 아이디 (메시지허브 관리자 콘솔에 등록한 APP ID)';
+        COMMENT ON COLUMN ${tableName}.PUSH_PROVIDER IS         'PUSH 공급자 (- FCM : 구글 - APNS : 애플)';
+        COMMENT ON COLUMN ${tableName}.PUSH_APP_USER_ID IS      '앱 사용자 아이디 (해당 앱을 설치하여 사용하는 사용자 ID)';
+        COMMENT ON COLUMN ${tableName}.PUSH_FILE IS             'push 이미지 파일 (절대 경로/상대 경로/URL/메시지허브 파일 ID)';
+        COMMENT ON COLUMN ${tableName}.PUSH_EXT IS              '확장 커스텀 메시지 (이미지 푸시를 위한 URL 또는 앱 상세페이지를 꾸밀 데이타 정보 URL(json))';
+        COMMENT ON COLUMN ${tableName}.ROUTE_INFO IS            '발송된 세션 ID/ API Key (연동된 여러 세션 중, 실제 발송된 세션)';
+        COMMENT ON COLUMN ${tableName}.SENT_DATE IS             '발송 요청 시간 (Agent가 메시지허브 G/W 로 발송한 시간)';
+        COMMENT ON COLUMN ${tableName}.DONE_CH IS               '발송 성공한 채널';
+        COMMENT ON COLUMN ${tableName}.DONE_PRODUCT IS          '발송 성공한 상품 종류';
+        COMMENT ON COLUMN ${tableName}.DONE_DATE IS             '단말 전달 시간 or 실패 최종 시간';
+        COMMENT ON COLUMN ${tableName}.DONE_CODE IS             '처리 결과 코드';
+        COMMENT ON COLUMN ${tableName}.DONE_CODE_DESC IS        '처리 결과 상세';
+        COMMENT ON COLUMN ${tableName}.DONE_FB_DETAIL IS        'fallback 발송 처리 상세 (첫 번째 채널이 발송 실패하고, 다음 채널이 발송될 경우 첫 번째 채널의 실패 코드 및 설명 표기)';
+        COMMENT ON COLUMN ${tableName}.DONE_TELCO IS            '이통사 정보 (문자 및 RCS발송 성공의 경우 이통사 코드 업데이트)';
+        COMMENT ON COLUMN ${tableName}.ETC1 IS                  '기타 고객사 예비 필드1';
+        COMMENT ON COLUMN ${tableName}.ETC2 IS                  '기타 고객사 예비 필드2';
+        COMMENT ON COLUMN ${tableName}.ETC3 IS                  '기타 고객사 예비 필드3';
+        COMMENT ON COLUMN ${tableName}.ETC4 IS                  '기타 고객사 예비 필드4';
+        COMMENT ON COLUMN ${tableName}.ETC5 IS                  '기타 고객사 예비 필드5';
+        COMMENT ON COLUMN ${tableName}.ETC6 IS                  '기타 고객사 예비 필드6';
+    </update>
+
+    <update id="createSendTableIndexes">
+        CREATE SEQUENCE ${tableName}_SEQ START WITH 1 MAXVALUE 99999999 MINVALUE 1 CYCLE CACHE 20;
+        CREATE INDEX ${tableName}_IDX1 ON ${tableName}(MSG_STATUS, REQ_CH, TRAFFIC_TYPE, REQ_DATE);
+        CREATE INDEX ${tableName}_IDX2 ON ${tableName}(PHONE);
+        CREATE INDEX ${tableName}_IDX3 ON ${tableName}(DONE_CODE, REQ_DATE);
+    </update>
+
+    <update id="createLogTableIndexes">
+        CREATE INDEX ${tableName}_IDX1 ON ${tableName}(PHONE);
+        CREATE INDEX ${tableName}_IDX2 ON ${tableName}(DONE_CODE, REQ_DATE);
+    </update>
+
+    <!-- Send Messages Search -->
+    <select id="selectMessagesToSend" resultType="Ums">
+        SELECT
+            CLIENT_KEY                              AS key,
+            REQ_CH                                  AS request_channel,
+            TO_CHAR(REQ_DATE,'YYYYMMDDHH24MISS')    AS request_date,
+            CALLBACK_NUMBER,
+            KISA_ORIGCODE                           AS kisa_origin_code,
+            CAMPAIGN_ID,
+            DEPT_CODE                               AS department_code,
+            PHONE,
+            MSG                                     AS message,
+            TITLE,
+            TEMPLATE_CODE,
+            MERGE_DATA                              AS merge_data_string,
+            FILE_DATA                               AS file_data_string,
+            MMS_FILE_LIST                           AS mms_file_list_string,
+            FB_CH                                   AS fallback_channel,
+            FB_MSG                                  AS fallback_message,
+            FB_TITLE                                AS fallback_title,
+            FB_FILE_LIST                            AS fallback_file_list_string,
+            RCS_MSGBASE_ID                          AS rcs_messagebase_id,
+            RCS_HEADER,
+            RCS_FOOTER,
+            RCS_COPY_ALLOWED,
+            RCS_EXPIRY_OPTION,
+            RCS_AGENCY_ID,
+            RCS_AGENCY_KEY,
+            RCS_BRAND_KEY,
+            RCS_BUTTON                              AS rcs_button_string,
+            KAKAO_CH_ID                             AS kakao_channel_id,
+            KAKAO_TEMPLATE_CODE,
+            KAKAO_BUTTON                            AS kakao_button_string,
+            KAKAO_IMAGE_WIDE_YN,
+            KAKAO_IMAGE_URL,
+            KAKAO_IMAGE_LINK,
+            KAKAO_FILE,
+            KAKAO_AD_FLAG,
+            KAKAO_GROUP_KEY                         AS kakao_group_key,
+            PUSH_APP_ID,
+            PUSH_PROVIDER,
+            PUSH_APP_USER_ID,
+            PUSH_FILE,
+            PUSH_EXT                                AS push_ext_string,
+            DONE_CODE
+        FROM ${tableName}
+        WHERE
+            MSG_STATUS = 'ready' AND
+            REQ_CH = #{channel} AND
+            TRAFFIC_TYPE = #{lineType} AND
+            <![CDATA[REQ_DATE < NOW() ]]>
+        LIMIT 1000
+    </select>
+
+    <!-- Processing Collect Results -->
+    <update id="updateOnCollect" >
+        UPDATE ${tableName}
+        SET
+            MSG_STATUS = 'pre-send'
+        WHERE
+            MSG_STATUS = 'ready' AND
+            <if test="parameter.key == null">CLIENT_KEY IS NULL</if>
+            <if test="parameter.key != null">CLIENT_KEY = #{parameter.key}</if>
+    </update>
+
+    <!-- Processing Collect Results -->
+    <update id="updateOnCollectBatch" >
+        UPDATE ${tableName}
+        SET
+            MSG_STATUS = 'pre-send'
+        WHERE
+            MSG_STATUS = 'ready' AND
+            CLIENT_KEY IN
+            <foreach collection="parameterList" item="item" index="index" open="(" separator="," close=")">
+                #{item.key}
+            </foreach>
+    </update>
+
+    <!-- Processing re ready -->
+    <update id="updateReReady">
+        UPDATE ${tableName}
+        SET
+            MSG_STATUS = 'ready'
+        WHERE
+            MSG_STATUS IN ('pre-send', 'pre-image')
+    </update>
+
+    <update id="updateResult">
+        UPDATE ${tableName}
+        SET
+            MSG_STATUS = CASE WHEN MSG_STATUS = 'complete' THEN MSG_STATUS ELSE #{parameter.messageStatus} END
+            <if test="parameter.requestChannel != null">, REQ_CH = #{parameter.requestChannel}</if>
+            <if test="parameter.routeId != null">, ROUTE_INFO = #{parameter.routeId}</if>
+            <if test="parameter.sentDate != null">, SENT_DATE = TO_TIMESTAMP(#{parameter.sentDate}, 'YYYYMMDDHH24MISS')</if>
+            <if test="parameter.doneChannel != null">, DONE_CH = #{parameter.doneChannel}</if>
+            <if test="parameter.doneProduct != null">, DONE_PRODUCT = #{parameter.doneProduct}</if>
+            <if test="parameter.doneDate != null">, DONE_DATE = TO_TIMESTAMP(#{parameter.doneDate}, 'YYYYMMDDHH24MISS')</if>
+            <if test="parameter.doneCode != null">, DONE_CODE = #{parameter.doneCode}</if>
+            <if test="parameter.doneCodeDescription != null">, DONE_CODE_DESC = #{parameter.doneCodeDescription}</if>
+            <if test="parameter.doneFallbackDetail != null">, DONE_FB_DETAIL = #{parameter.doneFallbackDetail}</if>
+            <if test="parameter.doneTelco != null">, DONE_TELCO = #{parameter.doneTelco}</if>
+        WHERE
+            <if test="parameter.key == null">CLIENT_KEY is null</if>
+            <if test="parameter.key != null">CLIENT_KEY = #{parameter.key}</if>
+    </update>
+
+    <!-- expired Messages Search -->
+    <select id="selectMessagesToExpire" resultType="Ums">
+        SELECT
+            CLIENT_KEY                              AS key,
+            TO_CHAR(SENT_DATE, 'YYYYMMDDHH24MISS')    AS sent_date
+        FROM ${tableName}
+        WHERE
+            MSG_STATUS IN ('pre-send', 'pre-image') AND
+            REQ_CH = #{channel} AND
+            TRAFFIC_TYPE = #{lineType} AND
+            <![CDATA[REQ_DATE < TO_TIMESTAMP(#{expireDate}, 'YYYYMMDDHH24MISS') AND ]]>
+            ROUTE_INFO is null
+        LIMIT 100
+    </select>
+
+    <!-- expired Messages Search -->
+    <select id="selectMessagesSentToExpire" resultType="Ums">
+        SELECT
+            CLIENT_KEY                              AS key,
+            TO_CHAR(SENT_DATE, 'YYYYMMDDHH24MISS')    AS sent_date
+        FROM ${tableName}
+        WHERE
+            MSG_STATUS = 'request' AND
+            REQ_CH = #{channel} AND
+            TRAFFIC_TYPE = #{lineType} AND
+            <![CDATA[REQ_DATE < TO_TIMESTAMP(#{expireDate}, 'YYYYMMDDHH24MISS') AND ]]>
+            FB_CH is null AND
+            ROUTE_INFO = #{routeId}
+        LIMIT 100
+    </select>
+
+    <!-- expired Messages Search -->
+    <select id="selectSentMessagesToExpireWithFallback" resultType="Ums">
+        SELECT
+            CLIENT_KEY                              AS key,
+            TO_CHAR(SENT_DATE, 'YYYYMMDDHH24MISS')    AS sent_date
+        FROM ${tableName}
+        WHERE
+            MSG_STATUS = 'request' AND
+            REQ_CH = #{channel} AND
+            TRAFFIC_TYPE = #{lineType} AND
+            <![CDATA[REQ_DATE < TO_TIMESTAMP(#{expireDate}, 'YYYYMMDDHH24MISS') AND ]]>
+            FB_CH IS NOT NULL AND
+            ROUTE_INFO = #{routeId}
+        LIMIT 100
+    </select>
+
+    <update id="updateReExpire">
+        UPDATE ${tableName}
+        SET
+            MSG_STATUS = 'request'
+        WHERE
+            MSG_STATUS = 'pre-expire'
+    </update>
+
+    <select id="selectMessagesToFallback" resultType="Ums">
+        SELECT
+            CLIENT_KEY                          AS key,
+            FB_CH                               AS fallback_channel,
+            DONE_FB_DETAIL                      AS done_fallback_detail
+        FROM ${tableName}
+        WHERE
+            MSG_STATUS IN ('pre-send', 'request') AND
+            REQ_CH = #{channel} AND
+            TRAFFIC_TYPE = #{lineType} AND
+            CLIENT_KEY IN
+            <foreach collection="parameterList" item="item" index="index" open="(" separator="," close=")">
+                #{item}
+            </foreach>
+    </select>
+
+    <!-- Move Messages Search -->
+    <select id="selectMessagesToMove" resultType="Ums">
+        SELECT
+            CLIENT_KEY                              AS key,
+            TO_CHAR(REQ_DATE, 'YYYYMMDDHH24MISS')   AS request_date
+        FROM ${tableName}
+        WHERE
+            MSG_STATUS = 'complete' AND
+            TRAFFIC_TYPE = #{lineType} AND
+            ROUTE_INFO IS NOT NULL
+        LIMIT 100
+    </select>
+
+    <!-- Pre-Image Search -->
+    <select id="selectMessagesInImageReg" resultType="Ums">
+        SELECT
+            CLIENT_KEY      AS key,
+            FILE_DATA       AS file_data_string,
+            MMS_FILE_LIST   AS mms_file_list_string,
+            FB_FILE_LIST    AS fallback_file_list_string,
+            KAKAO_FILE,
+            PUSH_FILE
+        FROM ${tableName}
+        WHERE
+            MSG_STATUS = 'pre-image' AND
+            REQ_CH = #{channel} AND
+            TRAFFIC_TYPE = #{lineType}
+        LIMIT 100
+    </select>
+
+    <!-- Log Table Transfer -->
+    <insert id="insertMessagesIntoLog">
+        INSERT INTO ${logTableName} (
+            CLIENT_KEY,     REQ_CH,     TRAFFIC_TYPE,   MSG_STATUS, REQ_DATE,   CALLBACK_NUMBER,    KISA_ORIGCODE,
+            CAMPAIGN_ID,    DEPT_CODE,  PHONE,  MSG,    TITLE,  TEMPLATE_CODE,  MERGE_DATA, FILE_DATA,  MMS_FILE_LIST,
+            FB_CH, FB_MSG,  FB_TITLE,   FB_FILE_LIST,   RCS_MSGBASE_ID,     RCS_HEADER,     RCS_FOOTER, RCS_COPY_ALLOWED,
+            RCS_EXPIRY_OPTION,  RCS_AGENCY_ID,  RCS_AGENCY_KEY,     RCS_BRAND_KEY,  RCS_BUTTON,
+            KAKAO_CH_ID,    KAKAO_TEMPLATE_CODE,    KAKAO_BUTTON,   KAKAO_IMAGE_WIDE_YN,    KAKAO_IMAGE_URL,
+            KAKAO_IMAGE_LINK,   KAKAO_FILE, KAKAO_AD_FLAG,  KAKAO_GROUP_KEY,    PUSH_APP_ID,    PUSH_PROVIDER,
+            PUSH_APP_USER_ID,   PUSH_FILE,  PUSH_EXT,   ROUTE_INFO,     SENT_DATE,  DONE_CH,    DONE_PRODUCT,   DONE_DATE,
+            DONE_CODE,  DONE_CODE_DESC,     DONE_FB_DETAIL,     DONE_TELCO,     ETC1,   ETC2,   ETC3,   ETC4,   ETC5,   ETC6
+        )
+        SELECT
+            CLIENT_KEY,     REQ_CH,     TRAFFIC_TYPE,   MSG_STATUS, REQ_DATE,   CALLBACK_NUMBER,    KISA_ORIGCODE,
+            CAMPAIGN_ID,    DEPT_CODE,  PHONE,  MSG,    TITLE,  TEMPLATE_CODE,  MERGE_DATA, FILE_DATA,  MMS_FILE_LIST,
+            FB_CH, FB_MSG,  FB_TITLE,   FB_FILE_LIST,   RCS_MSGBASE_ID,     RCS_HEADER,     RCS_FOOTER, RCS_COPY_ALLOWED,
+            RCS_EXPIRY_OPTION,  RCS_AGENCY_ID,  RCS_AGENCY_KEY,     RCS_BRAND_KEY,  RCS_BUTTON,
+            KAKAO_CH_ID,    KAKAO_TEMPLATE_CODE,    KAKAO_BUTTON,   KAKAO_IMAGE_WIDE_YN,    KAKAO_IMAGE_URL,
+            KAKAO_IMAGE_LINK,   KAKAO_FILE, KAKAO_AD_FLAG,  KAKAO_GROUP_KEY,    PUSH_APP_ID,    PUSH_PROVIDER,
+            PUSH_APP_USER_ID,   PUSH_FILE,  PUSH_EXT,   ROUTE_INFO,     SENT_DATE,  DONE_CH,    DONE_PRODUCT,   DONE_DATE,
+            DONE_CODE,  DONE_CODE_DESC,     DONE_FB_DETAIL,     DONE_TELCO,     ETC1,   ETC2,   ETC3,   ETC4,   ETC5,   ETC6
+        FROM ${sendTableName}
+        WHERE
+            <if test="parameter.key == null">CLIENT_KEY is null</if>
+            <if test="parameter.key != null">CLIENT_KEY = #{parameter.key}</if>
+    </insert>
+
+    <!-- Log Table Transfer Batch -->
+    <insert id="insertMessagesIntoLogBatch">
+        INSERT INTO ${logTableName} (
+            CLIENT_KEY,     REQ_CH,     TRAFFIC_TYPE,   MSG_STATUS, REQ_DATE,   CALLBACK_NUMBER,    KISA_ORIGCODE,
+            CAMPAIGN_ID,    DEPT_CODE,  PHONE,  MSG,    TITLE,  TEMPLATE_CODE,  MERGE_DATA, FILE_DATA,  MMS_FILE_LIST,
+            FB_CH, FB_MSG,  FB_TITLE,   FB_FILE_LIST,   RCS_MSGBASE_ID,     RCS_HEADER,     RCS_FOOTER, RCS_COPY_ALLOWED,
+            RCS_EXPIRY_OPTION,  RCS_AGENCY_ID,  RCS_AGENCY_KEY,     RCS_BRAND_KEY,  RCS_BUTTON,
+            KAKAO_CH_ID,    KAKAO_TEMPLATE_CODE,    KAKAO_BUTTON,   KAKAO_IMAGE_WIDE_YN,    KAKAO_IMAGE_URL,
+            KAKAO_IMAGE_LINK,   KAKAO_FILE, KAKAO_AD_FLAG,  KAKAO_GROUP_KEY,    PUSH_APP_ID,    PUSH_PROVIDER,
+            PUSH_APP_USER_ID,   PUSH_FILE,  PUSH_EXT,   ROUTE_INFO,     SENT_DATE,  DONE_CH,    DONE_PRODUCT,   DONE_DATE,
+            DONE_CODE,  DONE_CODE_DESC,     DONE_FB_DETAIL,     DONE_TELCO,     ETC1,   ETC2,   ETC3,   ETC4,   ETC5,   ETC6
+        )
+        SELECT
+            CLIENT_KEY,     REQ_CH,     TRAFFIC_TYPE,   MSG_STATUS, REQ_DATE,   CALLBACK_NUMBER,    KISA_ORIGCODE,
+            CAMPAIGN_ID,    DEPT_CODE,  PHONE,  MSG,    TITLE,  TEMPLATE_CODE,  MERGE_DATA, FILE_DATA,  MMS_FILE_LIST,
+            FB_CH, FB_MSG,  FB_TITLE,   FB_FILE_LIST,   RCS_MSGBASE_ID,     RCS_HEADER,     RCS_FOOTER, RCS_COPY_ALLOWED,
+            RCS_EXPIRY_OPTION,  RCS_AGENCY_ID,  RCS_AGENCY_KEY,     RCS_BRAND_KEY,  RCS_BUTTON,
+            KAKAO_CH_ID,    KAKAO_TEMPLATE_CODE,    KAKAO_BUTTON,   KAKAO_IMAGE_WIDE_YN,    KAKAO_IMAGE_URL,
+            KAKAO_IMAGE_LINK,   KAKAO_FILE, KAKAO_AD_FLAG,  KAKAO_GROUP_KEY,    PUSH_APP_ID,    PUSH_PROVIDER,
+            PUSH_APP_USER_ID,   PUSH_FILE,  PUSH_EXT,   ROUTE_INFO,     SENT_DATE,  DONE_CH,    DONE_PRODUCT,   DONE_DATE,
+            DONE_CODE,  DONE_CODE_DESC,     DONE_FB_DETAIL,     DONE_TELCO,     ETC1,   ETC2,   ETC3,   ETC4,   ETC5,   ETC6
+        FROM ${sendTableName}
+        WHERE
+            CLIENT_KEY IN
+            <foreach collection="parameterList" item="item" index="index" open="(" separator="," close=")">
+                #{item.key}
+            </foreach>
+    </insert>
+
+    <!-- Delete Send Table Messages After Transfer -->
+    <update id="deleteMessagesFromSend">
+        DELETE FROM ${tableName}
+        WHERE
+            <if test="parameter.key == null">CLIENT_KEY is null</if>
+            <if test="parameter.key != null">CLIENT_KEY = #{parameter.key}</if>
+    </update>
+
+    <!-- Delete Send Table Messages After Transfer Batch -->
+    <update id="deleteMessagesFromSendBatch">
+        DELETE FROM ${tableName}
+        WHERE
+            CLIENT_KEY IN
+            <foreach collection="parameterList" item="item" index="index" open="(" separator="," close=")">
+                #{item.key}
+            </foreach>
+    </update>
+
+    <insert id="insertAlarmMessage">
+        INSERT INTO ${tableName} (
+        CLIENT_KEY,
+        REQ_CH,
+        TRAFFIC_TYPE,
+        MSG_STATUS,
+        REQ_DATE,
+        CALLBACK_NUMBER,
+        KISA_ORIGCODE,
+        PHONE,
+        MSG,
+        RCS_MSGBASE_ID,
+        RCS_HEADER,
+        RCS_COPY_ALLOWED,
+        RCS_EXPIRY_OPTION,
+        RCS_AGENCY_ID
+        )
+        VALUES (
+        #{parameter.key},
+        #{parameter.requestChannel},
+        #{parameter.lineType},
+        'ready',
+        NOW(),
+        #{parameter.callbackNumber},
+        #{parameter.kisaOriginCode},
+        #{parameter.phone},
+        #{parameter.message},
+        'SS000000',
+        '0',
+        'Y',
+        '2',
+        #{parameter.rcsAgencyId}
+        )
+    </insert>
+</mapper>

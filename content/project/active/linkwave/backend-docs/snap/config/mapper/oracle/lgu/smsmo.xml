@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.co.uplus.agent.snap.mapper.mo.SmsMoMapper">
+
+    <select id="getTime" resultType="String">
+        SELECT TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+        FROM DUAL
+    </select>
+
+    <select id="selectOneRow" resultType="SmsMo">
+    <![CDATA[
+        SELECT ${columnName}
+        FROM ${tableName}
+        WHERE ROWNUM < 2
+        ]]>
+    </select>
+
+    <update id="alterTable">
+        ALTER TABLE ${tableName} ADD ${columnName} ${columnType} ${columnCondition}
+    </update>
+
+    <update id="createMoTable">
+        CREATE TABLE ${tableName} (
+            MO_NUM				NUMBER(12)			NOT NULL,
+            MO_ACCEPTTIME		VARCHAR2(14),
+            MO_MODIFIED			VARCHAR2(14),
+            MO_NUMBER			VARCHAR2(20),
+            MO_SENDER			VARCHAR2(20),
+            MO_ORGADDR			VARCHAR2(20),
+            MO_MSG				VARCHAR2(160),
+            MO_SN				NUMBER(12),
+            MO_NET				VARCHAR2(10),
+            MO_STATUS			VARCHAR2(1),
+            MO_REPLY_DATE		VARCHAR2(14),
+            MO_REPLY_MSG		VARCHAR2(160),
+            CONSTRAINT PK_${tableName} PRIMARY KEY ( MO_NUM )
+        )
+    </update>
+
+    <update id="createMoTableIndexes">
+        {CALL
+            DECLARE
+            v_sql varchar2(500);
+            BEGIN
+            v_sql :=
+            'CREATE SEQUENCE ${tableName}_SEQ START WITH 1  MAXVALUE 99999999 MINVALUE 1 CYCLE CACHE 20 NOORDER';
+            execute immediate v_sql;
+
+            v_sql := 'CREATE INDEX ${tableName}_IDX1 ON ${tableName}(MO_ACCEPTTIME)';
+                execute immediate v_sql;
+
+                v_sql := 'CREATE INDEX ${tableName}_IDX2 ON ${tableName}(MO_SENDER)';
+            execute immediate v_sql;
+
+            v_sql := 'CREATE INDEX ${tableName}_IDX3 ON ${tableName}(MO_STATUS)';
+            execute immediate v_sql;
+
+                v_sql := 'CREATE INDEX ${tableName}_IDX4 ON ${tableName}(MO_SN)';
+                execute immediate v_sql;
+            END
+        }
+    </update>
+
+    <update id="createMoMapTable">
+        CREATE TABLE ${tableName} (
+            MO_NUMBER			    VARCHAR2(20),
+            ALARM_YN			    VARCHAR2(1)  DEFAULT'N',
+            ALARM_DAY_TIME		    VARCHAR2(20) DEFAULT'09:00~18:00',
+            ALARM_DAY_RECEIVERS	    VARCHAR2(200),
+            ALARM_DAY_SENDER	    VARCHAR2(20),
+            ALARM_NIGHT_TIME		VARCHAR2(20) DEFAULT'18:00~09:00',
+            ALARM_NIGHT_RECEIVERS	VARCHAR2(200),
+            ALARM_NIGHT_SENDER	    VARCHAR2(20),
+            ALARM_MSG			    VARCHAR2(160),
+            AUTO_REPLY_YN		    VARCHAR2(1)  DEFAULT'N',
+            AUTO_REPLY_MSG			VARCHAR2(160)
+        )
+    </update>
+
+    <update id="createMoMapTableIndexes" parameterType="map" >
+        CREATE INDEX ${tableName}_IDX1 ON ${tableName}(MO_NUMBER);
+    </update>
+
+    <insert id="insertIntoMoTable">
+        INSERT INTO ${tableName} (
+            MO_NUM,
+            MO_ACCEPTTIME,
+            MO_MODIFIED,
+            MO_NUMBER,
+            MO_SENDER,
+            MO_ORGADDR,
+            MO_MSG,
+            MO_SN,
+            MO_STATUS,
+            MO_NET
+        )
+        VALUES (
+            ${tableName}_SEQ.NEXTVAL,
+            #{parameter.receiveDate},
+            TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS'),
+            #{parameter.moNumber},
+            #{parameter.callback},
+            #{parameter.sender},
+            #{parameter.message},
+            #{parameter.moKey},
+            #{parameter.status},
+            #{parameter.telco}
+        )
+    </insert>
+</mapper>

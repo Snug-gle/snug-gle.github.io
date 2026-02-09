@@ -1,0 +1,42 @@
+---
+created: 2025-05-07
+java:
+---
+- ORM 이전 방식
+	- DB에서 데이터를 읽어오려면, SQL을 이용해야
+	- 읽어온 데이터를 객체에 Mapping 해야함
+	- 요구사항이 변경되면 코드에 존재하는 SQL을 변경해야 
+	- 객체에 Mappring 하는 코드도 수정해야 함
+- ORM 이란?
+	- Object-Relational Mapping
+	- 객체와 관계형 DB를 Mapping 해주는 기술 (ORM - Framework)
+	- ORM을 이용하면 SQL을 이용해서 DB에 데이터를 저장하는 것이 아니라 자바 객체 자체를 Collection에 저장하듯 사용할 수 있음
+	- ORM은 기술이고, 실제로 구현한 것은 ORM Framework라고 함
+	- Java 진영에서는 Hibernate라는 ORM Framework를 가장 많이 사용
+- ORM의 장점
+	- SQL을 직접 코드에 사용하지 않아도 된다
+	- 재사용성이 증가한다
+	- 유지보수 편리
+	- 코드 가독성이 증가
+	- DBMS에 대한 종속성이 낮아짐 (ORM 프레임워크를 사용(설정)하기 때문)
+- JPA란?
+	- Java Persistance API
+	- JAVA 진영의 ORM 기술 표준
+	- 표준이기 때문에 구현체는 따로 존재함
+	- 대표적 구현체가 Hibernate
+	- Spring 에서도 Hibernate를 사용한다
+	- 다만 Spring 에서는 Spring Data JPA를 이용해 더 쉬운 사용을 제공함
+- JPA와 ORM의 차이
+	- ORM은 객체와 관계형 데이터베이스를 Mapping 하는 기술 (기술)
+	- JPA는 Java 진영에서 사용하는 ORM Specification (규격)
+	- 즉, ORM은 기술이고, JPA는 그 기술을 위한 규격을 모아둔 것
+- MyBatis 란?
+	- SQL Mapper
+	- 객체와 (단순한)SQL을 Mapping 하는 것
+	- 쿼리와 연결을 쉽게 할 뿐 SQL 작성을 대신할 순 없다.
+- MyBatis를 사용하지 않는 이유
+	- 요구사항이 바뀌면 SQL 수정이 필연적
+	- SQL 의존적이다
+	- SQL을 세부적으로 다룰 수 있다는 장점이 존재 but 보통 세부적인 SQL을 사용하는 경우가 많지 않음
+	- SQL을 찾아서 수정해야 하기 때문에 유지보수가 힘듬
+	- 가독성이 떨어짐

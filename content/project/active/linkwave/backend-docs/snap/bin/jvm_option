@@ -1,0 +1,1 @@
+-server -XX:+UseG1GC -Xms64m -Xmx192m -XX:MetaspaceSize=72m -XX:MaxMetaspaceSize=96m -XX:MaxDirectMemorySize=48m -XX:ReservedCodeCacheSize=36m -XX:CompressedClassSpaceSize=12m -Dloader.path=lib/jdbc -Djava.library.path=lib/queue

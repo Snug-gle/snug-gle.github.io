@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.co.uplus.agent.snap.mapper.image.RcsImageMapper">
+
+    <select id="getTime" resultType="String">
+        SELECT TO_CHAR(NOW(), 'YYYYMMDDHH24MISS')
+    </select>
+
+    <select id="selectOneRow" resultType="Image">
+    <![CDATA[
+        SELECT ${columnName}
+        FROM ${tableName}
+        LIMIT 1
+    ]]>
+    </select>
+
+    <update id="alterTable">
+        ALTER TABLE ${tableName} ADD ${columnName} ${columnType} ${columnCondition}
+    </update>
+
+    <!-- 사전등록 이미지 테이블 생성 -->
+    <update id="createImageTable">
+        CREATE TABLE ${tableName} (
+            IMGKEY      integer  NOT NULL,
+            GROUP_KEY   character varying(100),
+            GROUP_CNT   character varying(1),
+            STATUS      character varying(1) DEFAULT '0' NOT NULL,
+            RSLT        character varying(10),
+            RSLTDESC    character varying(1000),
+            SENDABLE    character varying(1) DEFAULT 'N' NOT NULL,
+            BRAND_ID    character varying(100) NOT NULL,
+            IMG_PATH    character varying(128),
+            IMG_ID      character varying(100),
+            MEDIA_URL   character varying(256),
+            REQDATE     timestamp NOT NULL,
+            RPTDATE     timestamp,
+            TEMPLATE_YN character varying(1) NOT NULL,
+            CONSTRAINT PK_${tableName} PRIMARY KEY (IMGKEY)
+        )
+    </update>
+
+    <update id="createImageTableIndexes">
+        CREATE INDEX ${tableName}_IDX1 ON ${tableName} (GROUP_KEY, SENDABLE);
+        CREATE INDEX ${tableName}_IDX2 ON ${tableName} (STATUS, REQDATE, SENDABLE);
+        CREATE INDEX ${tableName}_IDX3 ON ${tableName} (REQDATE);
+    </update>
+
+    <!-- 사전등록 이미지 파일 DB 조회 -->
+    <select id="selectImagesToSend" resultType="Image">
+    <![CDATA[
+        SELECT /* +RULE*/
+            IMGKEY   AS key,
+            IMG_PATH AS image_path,
+            IMG_ID   AS file_id,
+            BRAND_ID,
+            REQDATE  AS request_date,
+            TEMPLATE_YN
+        FROM ${tableName}
+        WHERE
+            STATUS = '0' AND
+            SENDABLE = 'N' AND
+            REQDATE < NOW()
+        LIMIT 100
+    ]]>
+    </select>
+
+    <!-- Processing re ready -->
+    <update id="updateReReady">
+        UPDATE ${tableName}
+        SET
+            STATUS = '0'
+        WHERE
+            STATUS = '9'
+    </update>
+
+    <!-- 사전등록 이미지 결과 처리 -->
+    <update id="updateResult">
+        UPDATE ${tableName}
+        SET
+            STATUS = #{parameter.imageStatus}
+            <if test="parameter.sendable != null">, SENDABLE = #{parameter.sendable}</if>
+            <if test="parameter.fileId != null">, IMG_ID = #{parameter.fileId}</if>
+            <if test="parameter.doneCode != null">, RSLT = #{parameter.doneCode}</if>
+            <if test="parameter.doneCodeDescription != null">, RSLTDESC = #{parameter.doneCodeDescription}</if>
+            <if test="parameter.doneDate != null">, RPTDATE = TO_TIMESTAMP(#{parameter.doneDate}, 'YYYYMMDDHH24MISS')</if>
+        WHERE
+            <if test="parameter.key == null">IMGKEY IS NULL</if>
+            <if test="parameter.key != null">IMGKEY = CAST(#{parameter.key} AS integer)</if>
+    </update>
+
+    <!-- 사전등록 이미지 결과 대기 expire 대상 조회 -->
+    <select id="selectRequestImagesToExpire" resultType="Image">
+    <![CDATA[
+        SELECT
+            IMGKEY AS key
+        FROM ${tableName}
+        WHERE
+            STATUS = '1' AND
+            REQDATE < NOW() - INTERVAL '30 seconds'
+        LIMIT 100
+    ]]>
+    </select>
+</mapper>

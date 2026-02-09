@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.co.uplus.agent.snap.mapper.mo.MsghubMoMapper">
+
+    <select id="getTime" resultType="String">
+        SELECT DATE_FORMAT(NOW(),'%Y%m%d%H%i%s')
+    </select>
+
+    <select id="selectOneRow" resultType="MsghubMo">
+        SELECT ${columnName}
+        FROM ${tableName}
+        LIMIT 1
+    </select>
+
+    <update id="alterTable">
+        ALTER TABLE ${tableName} ADD ${columnName} ${columnType} ${columnCondition}
+    </update>
+
+    <!-- Create MO Table -->
+    <update id="createMoTable">
+        CREATE TABLE ${tableName} (
+            CLIENT_KEY       VARCHAR(40)       NOT NULL,
+            MO_KEY           VARCHAR(50),
+            MO_NUMBER        VARCHAR(16),
+            SENDER           VARCHAR(16),
+            CALLBACK         VARCHAR(16),
+            RCV_DATE         DATETIME,
+            INS_DATE         DATETIME,
+            PRODUCT          VARCHAR(10),
+            MSG              VARCHAR(2000),
+            TELCO            VARCHAR(10),
+            STATUS           VARCHAR(10),
+            REPLAY_DATE      DATETIME,
+            REPLAY_MSG       VARCHAR(80),
+            SUBJECT          VARCHAR(100),
+            CONTENT_CNT      INTEGER,
+            CONTENT_LIST     VARCHAR(1000),
+            CONSTRAINT PK_${tableName} PRIMARY KEY (MO_NUMBER)
+        )
+    </update>
+
+    <update id="createMoTableIndexes">
+        CREATE INDEX ${tableName}_IDX1 ON ${tableName} (RCV_DATE);
+        CREATE INDEX ${tableName}_IDX2 ON ${tableName} (MO_NUMBER);
+        CREATE INDEX ${tableName}_IDX3 ON ${tableName} (STATUS);
+    </update>
+
+    <update id="createMoMapTable">
+        CREATE TABLE ${tableName} (
+            MO_NUMBER			    VARCHAR(16),
+            ALARM_YN			    VARCHAR(1)  DEFAULT'N',
+            ALARM_DAY_TIME		    VARCHAR(20) DEFAULT'09:00~18:00',
+            ALARM_DAY_RECEIVERS	    VARCHAR(200),
+            ALARM_DAY_SENDER	    VARCHAR(20),
+            ALARM_NIGHT_TIME		VARCHAR(20) DEFAULT'18:00~09:00',
+            ALARM_NIGHT_RECEIVERS	VARCHAR(200),
+            ALARM_NIGHT_SENDER	    VARCHAR(20),
+            ALARM_MSG			    VARCHAR(80),
+            AUTO_REPLY_YN		    VARCHAR(1)  DEFAULT'N',
+            AUTO_REPLY_MSG			VARCHAR(80)
+        )
+    </update>
+
+    <update id="createMoMapTableIndexes">
+        CREATE INDEX ${tableName}_IDX1 ON ${tableName}(MO_NUMBER);
+    </update>
+
+    <insert id="insertIntoMoTable">
+        INSERT INTO ${tableName} (
+            CLIENT_KEY,
+            MO_KEY,
+            MO_NUMBER,
+            SENDER,
+            CALLBACK,
+            RCV_DATE,
+            INS_DATE,
+            PRODUCT,
+            MSG,
+            TELCO,
+            STATUS,
+            REPLAY_DATE,
+            REPLAY_MSG,
+            SUBJECT,
+            CONTENT_CNT,
+            CONTENT_LIST
+        )
+        VALUES (
+            #{parameter.key},
+            #{parameter.moKey},
+            #{parameter.moNumber},
+            #{parameter.sender},
+            #{parameter.callback},
+            FROM_UNIXTIME(UNIX_TIMESTAMP(#{parameter.receiveDate}),
+            NOW(),
+            #{parameter.product},
+            #{parameter.message},
+            #{parameter.telco},
+            #{parameter.status},
+            FROM_UNIXTIME(UNIX_TIMESTAMP(#{parameter.replyDate}),
+            #{parameter.replyMessage},
+            #{parameter.subject},
+            #{parameter.contentCount},
+            #{parameter.contentListString}
+       )
+    </insert>
+</mapper>

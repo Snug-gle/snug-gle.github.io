@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.co.uplus.agent.snap.mapper.watchdog.WatchdogMapper">
+
+    <select id="gettime" resultType="String">
+        SELECT DATE_FORMAT(NOW(),'%Y%m%d%H%i%s')
+    </select>
+
+    <select id="selectOneRow" resultType="Watchdog">
+        SELECT ${columnName}
+        FROM ${tableName}
+        LIMIT 1
+    </select>
+    
+    <update id="alterTable">
+        ALTER TABLE ${tableName} ADD ${columnName} ${columnType} ${columnCondition}
+    </update>
+    
+    <update id="createWatchdogTable">
+        CREATE TABLE ${tableName} (
+            SEQ               INT AUTO_INCREMENT PRIMARY KEY,
+            AGENT_ID          VARCHAR(50),
+            WATCHDOG_STATUS   VARCHAR(10),
+            WATCHDOG_INTERVAL INT(11),
+            THREAD_LLT        VARCHAR(1000),
+            UPDATE_DATE       DATETIME,
+            ETC               VARCHAR(256)
+        )
+    </update>
+
+    <update id="createWatchdogTableIndexes">
+        UPDATE ${tableName}
+        SET AGENT_ID = AGENT_ID
+        WHERE 1 = 0
+    </update>
+
+    <!-- select active watchdog & selet next active watchdog -->
+    <select id="selectWatchdog" resultType="Watchdog">
+        SELECT
+            AGENT_ID                                 AS agent_id,
+            WATCHDOG_STATUS                          AS watchdog_status,
+            WATCHDOG_INTERVAL                        AS watchdog_interval,
+            THREAD_LLT                               AS thread_loop_time,
+            DATE_FORMAT(UPDATE_DATE, '%Y%m%d%H%i%s') AS update_date,
+            DATE_FORMAT(NOW(), '%Y%m%d%H%i%s')       AS db_date
+        FROM ${tableName}
+        WHERE
+            WATCHDOG_STATUS = #{watchdogStatus}
+        ORDER BY AGENT_ID
+    </select>
+
+    <select id="selectWatchdogAll" resultType="Watchdog">
+        SELECT
+        AGENT_ID                                 AS agent_id,
+        WATCHDOG_STATUS                          AS watchdog_status,
+        WATCHDOG_INTERVAL                        AS watchdog_interval,
+        THREAD_LLT                               AS thread_loop_time,
+        DATE_FORMAT(UPDATE_DATE, '%Y%m%d%H%i%s') AS update_date,
+        DATE_FORMAT(NOW(), '%Y%m%d%H%i%s')       AS db_date
+        FROM ${tableName}
+        ORDER BY AGENT_ID
+    </select>
+
+    <select id="checkAgentId" resultType="Watchdog">
+        SELECT
+            *
+        FROM ${tableName}
+        WHERE
+            AGENT_ID = #{agentId}
+        LIMIT 1
+    </select>
+
+    <select id="selectCurrentStatus" resultType="Watchdog">
+        SELECT
+            WATCHDOG_STATUS
+        FROM ${tableName}
+        WHERE
+            AGENT_ID = #{agentId}
+    </select>
+
+    <insert id="insertIntoWatchdogTable">
+        INSERT INTO ${tableName} (
+            AGENT_ID,
+            WATCHDOG_STATUS,
+            WATCHDOG_INTERVAL,
+            UPDATE_DATE,
+            ETC
+        )
+        VALUES (
+            #{agentId},
+            #{watchdogStatus},
+            #{watchdogInterval},
+            NOW(),
+            #{monotonicTimestamp}
+        )
+    </insert>
+
+    <update id="updateWatchdogTable">
+        UPDATE ${tableName}
+        SET
+            UPDATE_DATE = NOW()
+            <if test="watchdogStatus != null">, WATCHDOG_STATUS = #{watchdogStatus}</if>
+            <if test="monotonicTimestamp != null">, ETC = #{monotonicTimestamp}</if>
+        WHERE
+            AGENT_ID = #{agentId}
+    </update>
+</mapper>

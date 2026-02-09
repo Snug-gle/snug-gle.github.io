@@ -13,6 +13,9 @@
   },
   "scripts": {
     "quartz": "./quartz/bootstrap-cli.mjs",
+    "ensure-dates": "node ensure-dates.mjs",
+    "build": "npm run ensure-dates && npx quartz build -d content",
+    "serve": "npm run ensure-dates && npx quartz build --serve -d content",
     "docs": "npx quartz build --serve -d docs",
     "check": "tsc --noEmit && npx prettier . --check",
     "format": "npx prettier . --write",

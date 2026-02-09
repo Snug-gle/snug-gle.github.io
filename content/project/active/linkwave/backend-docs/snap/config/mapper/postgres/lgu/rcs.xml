@@ -1,0 +1,431 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.co.uplus.agent.snap.mapper.message.RcsMapper">
+
+    <select id="getTime" resultType="String">
+        SELECT TO_CHAR(NOW(), 'YYYYMMDDHH24MISS')
+    </select>
+
+    <select id="selectOneRow" resultType="Rcs">
+        SELECT ${columnName}
+        FROM ${tableName}
+        LIMIT 1
+    </select>
+
+    <update id="alterTable">
+        ALTER TABLE ${tableName} ADD ${columnName} ${columnType} ${columnCondition}
+    </update>
+
+    <update id="createSendTable">
+        CREATE TABLE ${tableName} (
+            MSGKEY               numeric(11)           NOT NULL,
+            TYPE                 character varying(2) DEFAULT '10' NOT NULL,
+            SENDABLE             character varying(1) DEFAULT 'N' NOT NULL,
+            STATUS               character varying(2) DEFAULT '0' NOT NULL,
+            REQDATE              timestamp NOT NULL,
+            CALLBACK             character varying(15) NOT NULL,
+            PHONE                character varying(15) NOT NULL,
+            DEPT_CODE            character varying(20),
+            GROUP_ID             character varying(20),
+            AGENCY_ID            character varying(100),
+            AGENCY_KEY           character varying(64),
+            BRAND_ID             character varying(20) NOT NULL,
+            BRAND_KEY            character varying(64),
+            MSGBASE_ID           character varying(50) NOT NULL,
+            MSG                  character varying(4000),
+            MSG_HEADER           character varying(120) DEFAULT '0' NOT NULL,
+            MSG_TITLE            character varying(200),
+            MSG_FOOTER           character varying(120),
+            MSG_COPYALLOWED      character varying(5) DEFAULT 'Y' NOT NULL,
+            RCS_OBJECT           character varying(4000),
+            FALLBACK_YN          character varying(1) DEFAULT 'N' NOT NULL,
+            FALLBACK_TYPE        character varying(3),
+            FALLBACK_TITLE       character varying(40),
+            FALLBACK_MSG         character varying(4000),
+            FALLBACK_KISACODE    character varying(10),
+            FALLBACK_REASON      character varying(10),
+            FALLBACK_REASON_DESC character varying(1000),
+            IMG_GROUP_KEY        character varying(100),
+            IMG_GROUP_CNT        character varying(2) DEFAULT '0',
+            BTN_OBJECT           character varying(4000),
+            BTN_CNT              character varying(3) DEFAULT '0' NOT NULL,
+            BTN_INSERT_TYPE      character varying(20),
+            BTN_TEXT_1           character varying(100),
+            BTN_TYPE_1           character varying(100),
+            BTN_CONTENTS_1       character varying(100),
+            BTN_TEXT_2           character varying(100),
+            BTN_TYPE_2           character varying(100),
+            BTN_CONTENTS_2       character varying(100),
+            BTN_TEXT_3           character varying(100),
+            BTN_TYPE_3           character varying(100),
+            BTN_CONTENTS_3       character varying(100),
+            WT_PRD_CODE          character varying(10),
+            WT_REGDATE           timestamp,
+            WT_REG_USER_ID       character varying(20) DEFAULT 'SYSTEM' NOT NULL,
+            WT_SEND_GRP          character varying(20) DEFAULT '1' NOT NULL,
+            ROUTE_ID             character varying(20),
+            RPTDATE              timestamp,
+            PRODUCT_CODE         character varying(10),
+            RSLT                 character varying(10),
+            RSLTDESC             character varying(1000),
+            TELCO                character varying(10),
+            ETC1                 character varying(64),
+            ETC2                 character varying(64),
+            ETC3                 character varying(64),
+            ETC4                 character varying(64),
+            ETC5                 character varying(64),
+            ETC6                 character varying(64),
+            CONSTRAINT PK_${tableName} PRIMARY KEY (MSGKEY)
+        )
+    </update>
+
+    <update id="createLogTable">
+        CREATE TABLE ${tableName} (
+            MSGKEY               numeric(11),
+            TYPE                 character varying(2),
+            SENDABLE             character varying(1),
+            STATUS               character varying(2),
+            REQDATE              DATE,
+            CALLBACK             character varying(15),
+            PHONE                character varying(15),
+            DEPT_CODE            character varying(20),
+            GROUP_ID             character varying(20),
+            AGENCY_ID            character varying(100),
+            AGENCY_KEY           character varying(64),
+            BRAND_ID             character varying(20),
+            BRAND_KEY            character varying(64),
+            MSGBASE_ID           character varying(50),
+            MSG                  character varying(4000),
+            MSG_HEADER           character varying(120),
+            MSG_TITLE            character varying(200),
+            MSG_FOOTER           character varying(120),
+            MSG_COPYALLOWED      character varying(5),
+            RCS_OBJECT           character varying(4000),
+            FALLBACK_YN          character varying(1),
+            FALLBACK_TYPE        character varying(3),
+            FALLBACK_TITLE       character varying(40),
+            FALLBACK_MSG         character varying(4000),
+            FALLBACK_KISACODE    character varying(10),
+            FALLBACK_REASON      character varying(10),
+            FALLBACK_REASON_DESC character varying(1000),
+            IMG_GROUP_KEY        character varying(100),
+            IMG_GROUP_CNT        character varying(2),
+            BTN_OBJECT           character varying(4000),
+            BTN_CNT              character varying(3),
+            BTN_INSERT_TYPE      character varying(20),
+            BTN_TEXT_1           character varying(100),
+            BTN_TYPE_1           character varying(100),
+            BTN_CONTENTS_1       character varying(100),
+            BTN_TEXT_2           character varying(100),
+            BTN_TYPE_2           character varying(100),
+            BTN_CONTENTS_2       character varying(100),
+            BTN_TEXT_3           character varying(100),
+            BTN_TYPE_3           character varying(100),
+            BTN_CONTENTS_3       character varying(100),
+            WT_PRD_CODE          character varying(10),
+            WT_REGDATE           DATE,
+            WT_REG_USER_ID       character varying(20) DEFAULT 'SYSTEM' NOT NULL,
+            WT_SEND_GRP          character varying(20) DEFAULT '1' NOT NULL,
+            ROUTE_ID             character varying(20),
+            RPTDATE              DATE,
+            PRODUCT_CODE         character varying(10),
+            RSLT                 character varying(10),
+            RSLTDESC             character varying(1000),
+            TELCO                character varying(10),
+            ETC1                 character varying(64),
+            ETC2                 character varying(64),
+            ETC3                 character varying(64),
+            ETC4                 character varying(64),
+            ETC5                 character varying(64),
+            ETC6                 character varying(64)
+        )
+    </update>
+
+    <update id="createSendTableIndexes">
+        CREATE SEQUENCE ${tableName}_SEQ START WITH 1 MAXVALUE 99999999 MINVALUE 1 CYCLE CACHE 20;
+        CREATE INDEX ${tableName}_IDX1 ON ${tableName}(PHONE);
+        CREATE INDEX ${tableName}_IDX2 ON ${tableName}(REQDATE, RSLT);
+        CREATE INDEX ${tableName}_IDX3 ON ${tableName}(PRODUCT_CODE, RSLT);
+    </update>
+
+    <update id="createLogTableIndexes">
+        CREATE INDEX ${tableName}_IDX1 ON ${tableName}(PHONE);
+        CREATE INDEX ${tableName}_IDX2 ON ${tableName}(REQDATE, RSLT);
+        CREATE INDEX ${tableName}_IDX3 ON ${tableName}(PRODUCT_CODE, RSLT);
+    </update>
+
+    <!-- Send Messages Search -->
+    <select id="selectMessagesToSend" resultType="Rcs">
+        SELECT
+            MSGKEY                               AS key,
+            TYPE                                 AS message_type,
+            TO_CHAR(REQDATE, 'YYYYMMDDHH24MISS') AS request_date,
+            CALLBACK                             AS callback_number,
+            PHONE,
+            DEPT_CODE                            AS department_code,
+            GROUP_ID,
+            AGENCY_ID,
+            AGENCY_KEY,
+            BRAND_ID,
+            BRAND_KEY,
+            MSGBASE_ID                           AS messagebase_id,
+            MSG                                  AS message,
+            MSG_HEADER                           AS message_header,
+            MSG_TITLE                            AS message_title,
+            MSG_FOOTER                           AS message_footer,
+            MSG_COPYALLOWED                      AS copyallowed,
+            RCS_OBJECT                           AS rcs_object_string,
+            FALLBACK_YN,
+            FALLBACK_TYPE,
+            FALLBACK_TITLE,
+            FALLBACK_MSG                         AS fallback_message,
+            FALLBACK_KISACODE                    AS fallback_kisa_code,
+            IMG_GROUP_KEY                        AS image_group_key,
+            IMG_GROUP_CNT                        AS image_group_count,
+            BTN_OBJECT                           AS button_object_string,
+            BTN_CNT                              AS button_count,
+            BTN_INSERT_TYPE                      AS button_insert_type,
+            BTN_TEXT_1                           AS button_text_1,
+            BTN_TYPE_1                           AS button_type_1,
+            BTN_CONTENTS_1                       AS button_contents_1,
+            BTN_TEXT_2                           AS button_text_2,
+            BTN_TYPE_2                           AS button_type_2,
+            BTN_CONTENTS_2                       AS button_contents_2,
+            BTN_TEXT_3                           AS button_text_3,
+            BTN_TYPE_3                           AS button_type_3,
+            BTN_CONTENTS_3                       AS button_contents_3,
+            ETC1,
+            ETC2,
+            ETC3,
+            ETC4,
+            ETC5,
+            ETC6,
+            TELCO
+        FROM ${tableName}
+        WHERE
+            STATUS = '0' AND
+            SENDABLE = 'Y' AND
+            <![CDATA[REQDATE < NOW() ]]>
+        LIMIT 1000
+    </select>
+
+    <!-- Processing Collect Results -->
+    <update id="updateOnCollect">
+        UPDATE ${tableName}
+        SET
+            STATUS = '9'
+        WHERE
+            STATUS = '0' AND
+            <if test="parameter.key == null">MSGKEY IS NULL</if>
+            <if test="parameter.key != null">MSGKEY = CAST(#{parameter.key} AS numeric)</if>
+    </update>
+
+    <!-- Processing Collect Results -->
+    <update id="updateOnCollectBatch">
+        UPDATE ${tableName}
+        SET
+            STATUS = '9'
+        WHERE
+            STATUS = '0' AND
+            MSGKEY IN
+            <foreach collection="parameterList" item="item" index="index" open="(" separator="," close=")">
+                CAST(#{item.key} AS numeric)
+            </foreach>
+    </update>
+
+    <!-- Processing re ready -->
+    <update id="updateReReady">
+        UPDATE ${tableName}
+        SET
+            STATUS = '0'
+        WHERE
+            STATUS IN ('9')
+    </update>
+
+    <update id="updateResult">
+        UPDATE ${tableName}
+        SET
+            STATUS = CASE WHEN STATUS = '3' THEN STATUS ELSE #{parameter.messageStatus} END
+            <if test="parameter.doneCode != null">, RSLT = #{parameter.doneCode}</if>
+            <if test="parameter.doneCodeDescription != null">, RSLTDESC = #{parameter.doneCodeDescription}</if>
+            <if test="parameter.doneDate != null">, RPTDATE = TO_TIMESTAMP(#{parameter.doneDate}, 'YYYYMMDDHH24MISS')</if>
+            <if test="parameter.routeId != null">, ROUTE_ID = #{parameter.routeId}</if>
+            <if test="parameter.doneTelco != null">, TELCO = #{parameter.doneTelco}</if>
+            <if test="parameter.doneProduct != null">, PRODUCT_CODE = #{parameter.doneProduct}</if>
+            <if test="parameter.doneFallbackCode != null">, FALLBACK_REASON = #{parameter.doneFallbackCode}</if>
+            <if test="parameter.doneFallbackDetail != null">, FALLBACK_REASON_DESC = #{parameter.doneFallbackDetail}</if>
+        WHERE
+            <if test="parameter.key == null">MSGKEY IS NULL</if>
+            <if test="parameter.key != null">MSGKEY = CAST(#{parameter.key} AS numeric)</if>
+    </update>
+
+    <!-- expired Messages Search -->
+    <select id="selectMessagesToExpire" resultType="Rcs">
+        SELECT
+            MSGKEY                                  AS key,
+            TO_CHAR(REQDATE, 'YYYYMMDDHH24MISS')    AS sent_date
+        FROM ${tableName}
+        WHERE
+            STATUS = '9' AND
+            <![CDATA[REQDATE < TO_TIMESTAMP(#{expireDate}, 'YYYYMMDDHH24MISS') AND ]]>
+            ROUTE_ID IS NULL
+        LIMIT 100
+    </select>
+
+    <!-- expired Messages Search -->
+    <select id="selectMessagesSentToExpire" resultType="Rcs">
+        SELECT
+            MSGKEY                                  AS key,
+            TO_CHAR(REQDATE, 'YYYYMMDDHH24MISS')    AS sent_date
+        FROM ${tableName}
+        WHERE
+            STATUS = '2' AND
+            <![CDATA[REQDATE < TO_TIMESTAMP(#{expireDate}, 'YYYYMMDDHH24MISS') AND ]]>
+            FALLBACK_YN = 'N' AND
+            ROUTE_ID = #{routeId}
+        LIMIT 100
+    </select>
+
+    <!-- expired Messages Search -->
+    <select id="selectSentMessagesToExpireWithFallback" resultType="Rcs">
+        SELECT
+            MSGKEY                                  AS key,
+            TO_CHAR(REQDATE, 'YYYYMMDDHH24MISS')    AS sent_date
+        FROM ${tableName}
+        WHERE
+            STATUS = '2' AND
+            <![CDATA[REQDATE < TO_TIMESTAMP(#{expireDate}, 'YYYYMMDDHH24MISS') AND ]]>
+            FALLBACK_YN = 'Y' AND
+            ROUTE_ID = #{routeId}
+        LIMIT 100
+    </select>
+
+
+
+    <!-- Move Messages Search -->
+    <select id="selectMessagesToMove" resultType="Rcs">
+        SELECT
+            MSGKEY                                  AS key,
+            TO_CHAR(REQDATE, 'YYYYMMDDHH24MISS')    AS request_date
+        FROM ${tableName}
+        WHERE
+            STATUS = '3' AND
+            ROUTE_ID IS NOT NULL
+        LIMIT 100
+    </select>
+
+    <!-- Log Table Transfer -->
+    <insert id="insertMessagesIntoLog">
+        INSERT INTO ${logTableName} (
+            MSGKEY, TYPE, SENDABLE, STATUS, REQDATE, CALLBACK, PHONE, DEPT_CODE, GROUP_ID, AGENCY_ID, AGENCY_KEY, BRAND_ID,
+            BRAND_KEY, MSGBASE_ID,
+            MSG, MSG_HEADER, MSG_TITLE, MSG_FOOTER, MSG_COPYALLOWED,RCS_OBJECT,
+            FALLBACK_YN, FALLBACK_TYPE, FALLBACK_TITLE, FALLBACK_MSG, FALLBACK_KISACODE, FALLBACK_REASON,
+            FALLBACK_REASON_DESC,
+            IMG_GROUP_KEY, IMG_GROUP_CNT,
+            BTN_OBJECT, BTN_CNT, BTN_INSERT_TYPE, BTN_TEXT_1, BTN_TYPE_1, BTN_CONTENTS_1, BTN_TEXT_2, BTN_TYPE_2,
+            BTN_CONTENTS_2, BTN_TEXT_3, BTN_TYPE_3, BTN_CONTENTS_3,
+            WT_PRD_CODE, WT_REGDATE, WT_REG_USER_ID, WT_SEND_GRP, ROUTE_ID, RPTDATE, PRODUCT_CODE, RSLT, RSLTDESC, TELCO,
+            ETC1, ETC2, ETC3, ETC4, ETC5, ETC6
+        )
+        SELECT
+            MSGKEY, TYPE, SENDABLE, STATUS, REQDATE, CALLBACK, PHONE, DEPT_CODE, GROUP_ID, AGENCY_ID, AGENCY_KEY, BRAND_ID,
+            BRAND_KEY, MSGBASE_ID,
+            MSG, MSG_HEADER, MSG_TITLE, MSG_FOOTER, MSG_COPYALLOWED,RCS_OBJECT,
+            FALLBACK_YN, FALLBACK_TYPE, FALLBACK_TITLE, FALLBACK_MSG, FALLBACK_KISACODE, FALLBACK_REASON,
+            FALLBACK_REASON_DESC,
+            IMG_GROUP_KEY, IMG_GROUP_CNT,
+            BTN_OBJECT, BTN_CNT, BTN_INSERT_TYPE, BTN_TEXT_1, BTN_TYPE_1, BTN_CONTENTS_1, BTN_TEXT_2, BTN_TYPE_2,
+            BTN_CONTENTS_2, BTN_TEXT_3, BTN_TYPE_3, BTN_CONTENTS_3,
+            WT_PRD_CODE, WT_REGDATE, WT_REG_USER_ID, WT_SEND_GRP, ROUTE_ID, RPTDATE, PRODUCT_CODE, RSLT, RSLTDESC, TELCO,
+            ETC1, ETC2, ETC3, ETC4, ETC5, ETC6
+        FROM ${sendTableName}
+        WHERE
+            <if test="parameter.key == null">MSGKEY IS NULL</if>
+            <if test="parameter.key != null">MSGKEY = CAST(#{parameter.key} AS numeric)</if>
+    </insert>
+
+    <!-- Log Table Transfer Batch -->
+    <insert id="insertMessagesIntoLogBatch">
+        INSERT INTO ${logTableName} (
+            MSGKEY, TYPE, SENDABLE, STATUS, REQDATE, CALLBACK, PHONE, DEPT_CODE, GROUP_ID, AGENCY_ID, AGENCY_KEY, BRAND_ID,
+            BRAND_KEY, MSGBASE_ID,
+            MSG, MSG_HEADER, MSG_TITLE, MSG_FOOTER, MSG_COPYALLOWED,RCS_OBJECT,
+            FALLBACK_YN, FALLBACK_TYPE, FALLBACK_TITLE, FALLBACK_MSG, FALLBACK_KISACODE, FALLBACK_REASON,
+            FALLBACK_REASON_DESC,
+            IMG_GROUP_KEY, IMG_GROUP_CNT,
+            BTN_OBJECT, BTN_CNT, BTN_INSERT_TYPE, BTN_TEXT_1, BTN_TYPE_1, BTN_CONTENTS_1, BTN_TEXT_2, BTN_TYPE_2,
+            BTN_CONTENTS_2, BTN_TEXT_3, BTN_TYPE_3, BTN_CONTENTS_3,
+            WT_PRD_CODE, WT_REGDATE, WT_REG_USER_ID, WT_SEND_GRP, ROUTE_ID, RPTDATE, PRODUCT_CODE, RSLT, RSLTDESC, TELCO,
+            ETC1, ETC2, ETC3, ETC4, ETC5, ETC6
+        )
+        SELECT
+            MSGKEY, TYPE, SENDABLE, STATUS, REQDATE, CALLBACK, PHONE, DEPT_CODE, GROUP_ID, AGENCY_ID, AGENCY_KEY, BRAND_ID,
+            BRAND_KEY, MSGBASE_ID,
+            MSG, MSG_HEADER, MSG_TITLE, MSG_FOOTER, MSG_COPYALLOWED,RCS_OBJECT,
+            FALLBACK_YN, FALLBACK_TYPE, FALLBACK_TITLE, FALLBACK_MSG, FALLBACK_KISACODE, FALLBACK_REASON,
+            FALLBACK_REASON_DESC,
+            IMG_GROUP_KEY, IMG_GROUP_CNT,
+            BTN_OBJECT, BTN_CNT, BTN_INSERT_TYPE, BTN_TEXT_1, BTN_TYPE_1, BTN_CONTENTS_1, BTN_TEXT_2, BTN_TYPE_2,
+            BTN_CONTENTS_2, BTN_TEXT_3, BTN_TYPE_3, BTN_CONTENTS_3,
+            WT_PRD_CODE, WT_REGDATE, WT_REG_USER_ID, WT_SEND_GRP, ROUTE_ID, RPTDATE, PRODUCT_CODE, RSLT, RSLTDESC, TELCO,
+            ETC1, ETC2, ETC3, ETC4, ETC5, ETC6
+        FROM ${sendTableName}
+        WHERE
+            MSGKEY IN
+            <foreach collection="parameterList" item="item" index="index" open="(" separator="," close=")">
+                CAST(#{item.key} AS numeric)
+            </foreach>
+    </insert>
+
+    <!-- Delete Send Table Messages After Transfer -->
+    <update id="deleteMessagesFromSend">
+        DELETE FROM ${tableName}
+        WHERE
+            <if test="parameter.key == null">MSGKEY IS NULL</if>
+            <if test="parameter.key != null">MSGKEY = CAST(#{parameter.key} AS numeric)</if>
+    </update>
+
+    <!-- Delete Send Table Messages After Transfer Batch -->
+    <update id="deleteMessagesFromSendBatch">
+        DELETE FROM ${tableName}
+        WHERE
+            MSGKEY IN
+            <foreach collection="parameterList" item="item" index="index" open="(" separator="," close=")">
+                CAST(#{item.key} AS numeric)
+            </foreach>
+    </update>
+
+    <insert id="insertAlarmMessage">
+        INSERT INTO ${tableName} (
+        MSGKEY,
+        STATUS,
+        REQDATE,
+        PHONE,
+        CALLBACK,
+        SENDABLE,
+        MSG_HEADER,
+        MSG,
+        MSG_COPYALLOWED,
+        AGENCY_ID,
+        BRAND_ID,
+        MSGBASE_ID,
+        FALLBACK_YN
+        )
+        VALUES (
+        #{parameter.key},
+        '0',
+        NOW(),
+        #{parameter.phone},
+        #{parameter.callbackNumber},
+        'Y',
+        '0',
+        #{parameter.message},
+        'Y',
+        #{parameter.agencyId},
+        'dummy.data',
+        'SS000000',
+        'N'
+        )
+    </insert>
+</mapper>

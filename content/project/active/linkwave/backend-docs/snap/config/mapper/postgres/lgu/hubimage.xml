@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.co.uplus.agent.snap.mapper.image.MsghubImageMapper">
+
+    <select id="getTime" resultType="String">
+        SELECT TO_CHAR(NOW(), 'YYYYMMDDHH24MISS')
+    </select>
+
+    <select id="selectOneRow" resultType="Image">
+    <![CDATA[
+        SELECT ${columnName}
+        FROM ${tableName}
+        LIMIT 1
+    ]]>
+    </select>
+
+    <update id="alterTable">
+        ALTER TABLE ${tableName} ADD ${columnName} ${columnType} ${columnCondition}
+    </update>
+
+    <!-- Create Images Table -->
+    <update id="createImageTable">
+        CREATE TABLE ${tableName} (
+            IMG_KEY             character varying(40)    NOT NULL,
+            REQ_DATE            timestamp,
+            IMG_STATUS          character varying(10),
+            CHANNEL             character varying(10),
+            FILE_ID             character varying(40)    NOT NULL,
+            FILE_URL            character varying(200),
+            METADATA_HASH_CODE  character varying(11),
+            WIDE_YN             character varying(1),
+            IMG_PATH            character varying(200),
+            IMG_URL             character varying(200),
+            REG_DATE            timestamp,
+            EXP_DATE            timestamp,
+            DONE_CODE           character varying(10),
+            DONE_CODE_DESC      character varying(200),
+            DONE_DATE           timestamp,
+            CONSTRAINT PK_${tableName} PRIMARY KEY (IMG_KEY)
+        )
+    </update>
+
+    <update id="createImageTableIndexes">
+        CREATE INDEX ${tableName}_IDX1 ON ${tableName} (METADATA_HASH_CODE, EXP_DATE DESC);
+        CREATE INDEX ${tableName}_IDX2 ON ${tableName} (IMG_STATUS, REQ_DATE);
+        CREATE INDEX ${tableName}_IDX3 ON ${tableName} (IMG_STATUS, EXP_DATE);
+    </update>
+
+    <!-- Insert Images -->
+    <insert id="insertImage">
+        INSERT INTO ${tableName} (
+            IMG_KEY,
+            REQ_DATE,
+            IMG_STATUS,
+            CHANNEL,
+            FILE_ID,
+            METADATA_HASH_CODE,
+            WIDE_YN,
+            IMG_PATH,
+            IMG_URL
+        )
+        VALUES (
+            #{parameter.key},
+            NOW(),
+            #{parameter.imageStatus},
+            #{parameter.channel},
+            #{parameter.fileId},
+            #{parameter.metadataHashCode},
+            #{parameter.wideYn},
+            #{parameter.imagePath},
+            #{parameter.imageUrl}
+        )
+    </insert>
+
+    <!-- Unregistered Images Search-->
+    <select id="selectImagesToSend" resultType="Image">
+    <![CDATA[
+        SELECT /* +RULE*/
+            IMG_KEY             AS key,
+            CHANNEL,
+            FILE_ID,
+            METADATA_HASH_CODE  AS metadata_hash_code,
+            WIDE_YN,
+            IMG_PATH            AS image_path,
+            IMG_URL             AS image_url
+        FROM ${tableName}
+        WHERE
+            IMG_STATUS = 'ready' AND
+            REQ_DATE < NOW()
+        LIMIT 100
+    ]]>
+    </select>
+
+    <!-- Processing re ready -->
+    <update id="updateReReady">
+        UPDATE ${tableName}
+        SET
+            IMG_STATUS = 'ready'
+        WHERE
+            IMG_STATUS = 'pre-image'
+    </update>
+
+    <!-- Processing Images Registration Results -->
+    <update id="updateResult">
+        UPDATE ${tableName}
+        SET
+            IMG_STATUS = #{parameter.imageStatus}
+            <if test="parameter.metadataHashCode != null">, METADATA_HASH_CODE = #{parameter.metadataHashCode}</if>
+            <if test="parameter.imagePath != null">, IMG_PATH = #{parameter.imagePath}</if>
+            <if test="parameter.fileUrl != null">, FILE_URL = #{parameter.fileUrl}</if>
+            <if test="parameter.registerDate != null">, REG_DATE = TO_TIMESTAMP(#{parameter.registerDate}, 'YYYYMMDDHH24MISS')</if>
+            <if test="parameter.expireDate != null">, EXP_DATE = TO_TIMESTAMP(#{parameter.expireDate}, 'YYYYMMDDHH24MISS')</if>
+            <if test="parameter.doneDate != null">, DONE_DATE = TO_TIMESTAMP(#{parameter.doneDate}, 'YYYYMMDDHH24MISS')</if>
+            <if test="parameter.doneCode != null">, DONE_CODE = #{parameter.doneCode}</if>
+            <if test="parameter.doneCodeDescription != null">, DONE_CODE_DESC = #{parameter.doneCodeDescription}</if>
+        WHERE
+            <if test="parameter.key == null">IMG_KEY IS NULL</if>
+            <if test="parameter.key != null">IMG_KEY = #{parameter.key}</if>
+    </update>
+
+    <!-- Expired Images Search -->
+    <select id="selectRequestImagesToExpire" resultType="Image">
+    <![CDATA[
+        SELECT
+            IMG_KEY AS key
+        FROM ${tableName}
+        WHERE
+            IMG_STATUS = 'request' AND
+            REQ_DATE < NOW() - INTERVAL '30 seconds'
+        LIMIT 100
+    ]]>
+    </select>
+
+    <!-- 사전등록 성공 이미지 expire 대상 조회 -->
+    <select id="selectCompleteImagesToExpire" resultType="Image">
+    <![CDATA[
+        SELECT
+            IMG_KEY AS key,
+            METADATA_HASH_CODE
+        FROM ${tableName}
+        WHERE
+            IMG_STATUS = 'complete' AND
+            EXP_DATE < NOW()
+        LIMIT 100
+    ]]>
+    </select>
+
+    <!-- Images Registration Check -->
+    <select id="selectImageByMetadataHashCode" resultType="Image">
+    <![CDATA[
+        SELECT
+            IMG_KEY     AS key,
+            IMG_STATUS  AS image_status,
+            FILE_ID,
+            TO_CHAR(EXP_DATE, 'YYYYMMDDHH24MISS') AS expire_date,
+            DONE_CODE
+        FROM ${tableName}
+        WHERE
+            METADATA_HASH_CODE = #{metadataHashCode}
+        ORDER BY
+            EXP_DATE DESC
+        LIMIT 1
+    ]]>
+    </select>
+</mapper>

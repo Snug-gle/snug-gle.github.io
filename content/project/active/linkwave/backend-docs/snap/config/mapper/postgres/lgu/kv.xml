@@ -1,0 +1,389 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.co.uplus.agent.snap.mapper.message.KvMapper">
+
+    <select id="getTime" resultType="String">
+        SELECT TO_CHAR(NOW(), 'YYYYMMDDHH24MISS')
+    </select>
+
+    <select id="selectOneRow" resultType="Kv">
+        SELECT ${columnName}
+        FROM ${tableName}
+        LIMIT 1
+    </select>
+
+    <update id="alterTable">
+        ALTER TABLE ${tableName} ADD ${columnName} ${columnType} ${columnCondition}
+    </update>
+
+    <update id="createSendTable">
+        CREATE TABLE ${tableName} (
+            CLIENT_KEY      VARCHAR(40)	                        NOT NULL,
+            TRAFFIC_TYPE    VARCHAR(10)	    DEFAULT 'normal'    NOT NULL,
+            REQ_DATE        TIMESTAMP	                        NOT NULL,
+            MSG_STATUS      VARCHAR(10)	    DEFAULT 'ready'     NOT NULL,
+            KISA_ORIGCODE   VARCHAR(20),
+            RCS_AGENCY_ID   VARCHAR(100),
+            RCS_AGENCY_KEY  VARCHAR(64),
+            RCS_BRAND_KEY   VARCHAR(64),
+            TEMPLATE_CODE   VARCHAR(20)	                        NOT NULL,
+            CALLBACK_NUMBER VARCHAR(16),
+            CAMPAIGN_ID     VARCHAR(20),
+            DEPT_CODE       VARCHAR(20),
+            PHONE           VARCHAR(16),
+            KV_DATA         VARCHAR(4000),
+            KV_DATA2        VARCHAR(4000),
+            PUSH_USER_ID    VARCHAR(20),
+            FILE_DATA       VARCHAR(2000),
+            ROUTE_INFO      VARCHAR(20),
+            SENT_DATE       TIMESTAMP,
+            DONE_PRODUCT    VARCHAR(20),
+            DONE_DATE       TIMESTAMP,
+            DONE_CODE       VARCHAR(10),
+            DONE_CODE_DESC  VARCHAR(200),
+            DONE_FB_DETAIL  VARCHAR(1000),
+            DONE_TELCO      VARCHAR(10),
+            ETC1            VARCHAR(100),
+            ETC2            VARCHAR(100),
+            ETC3            VARCHAR(100),
+            ETC4            VARCHAR(100),
+            ETC5            VARCHAR(100),
+            ETC6            VARCHAR(100),
+            CONSTRAINT PK_${tableName} PRIMARY KEY (CLIENT_KEY)
+        );
+
+        COMMENT ON COLUMN ${tableName}.CLIENT_KEY IS        '메시지 고유 번호 (직접 고유 번호를 생성하여 입력 ex) datetime + business name + random string)';
+        COMMENT ON COLUMN ${tableName}.TRAFFIC_TYPE IS      '메시지 유형 - normal : 일반 (default) - real : 실시간/중요 - batch : 마케팅, 광고';
+        COMMENT ON COLUMN ${tableName}.REQ_DATE IS          '발송 요청 (시간 미래 시간으로 입력 시, 예약 발송됨)';
+        COMMENT ON COLUMN ${tableName}.MSG_STATUS IS        '발송 상태 - ready : 발송 대기 (insert 상태 값) - request : 발송 완료 - complete : 결과 수신 완료 - pre-send : select 완료 - pre-image : 이미지 등록 작업 중';
+        COMMENT ON COLUMN ${tableName}.KISA_ORIGCODE IS     'KISA 최초 발신사업자 구분 (코드 재판매고객은 건 별 입력, 일반 고객은 config파일에 설정한 값으로 사용)';
+        COMMENT ON COLUMN ${tableName}.RCS_AGENCY_ID IS     '대행사 ID ex) lguplus';
+        COMMENT ON COLUMN ${tableName}.RCS_AGENCY_KEY IS    '대행사 인증 Key (입력하는 agencyId가 대행사의 것일 경우, 해당 대행사의 agencyKey를 함께 전송해야 함)';
+        COMMENT ON COLUMN ${tableName}.RCS_BRAND_KEY IS     '발신자 인증 Key (기업에서 생성한 브랜드마다 부여되는 Key로, 메시지 전송 시 발신번호가 속한 브랜드의 Key를 함께 전송해야 함)';
+        COMMENT ON COLUMN ${tableName}.TEMPLATE_CODE IS     '메시지허브 템플릿 키 (허브 사용자 콘솔에 등록한 통합발송 템플릿 키)';
+        COMMENT ON COLUMN ${tableName}.CALLBACK_NUMBER IS   '발신번호 (문자나 RCS 발송 시 필수 입력)';
+        COMMENT ON COLUMN ${tableName}.CAMPAIGN_ID IS       '캠페인 ID (메시지 허브에서 캠페인 단위 통계내기위해 사용)';
+        COMMENT ON COLUMN ${tableName}.DEPT_CODE IS         '부서코드 (부서별 빌링이 필요한 경우 사용)';
+        COMMENT ON COLUMN ${tableName}.PHONE IS             '수신번호';
+        COMMENT ON COLUMN ${tableName}.KV_DATA IS           'Key-Value 변환데이터 (등록된 통합템플릿에 정의된 변수를 key로 하여 각 값 표기 ex) {”name”:”홍길동”, “shop”:”이마트 용산”})';
+        COMMENT ON COLUMN ${tableName}.KV_DATA2 IS          'Key-Value 변환데이터2 (kv_json에서 입력할 데이터가 부족할 경우 사용)';
+        COMMENT ON COLUMN ${tableName}.PUSH_USER_ID IS      'PUSH 앱 사용자 아이디';
+        COMMENT ON COLUMN ${tableName}.FILE_DATA IS         '템플릿 이미지 변경 발송 데이터 (”서비스명 . 변경할 이미지 번호 . 이미지 첨부 방식(.친구톡 이미지 Wide 여부)” key 와 값으로 이루어진 데이터 ex) {”rcs.1.path”:”pokemon.jpg”, “friendtalk.1.url.y”:”https://msghub.uplus.co.kr/image/digimon.jpg”})';
+        COMMENT ON COLUMN ${tableName}.ROUTE_INFO IS        '라우팅 정보 (실제 발송된 중계 및 API KEY 표기 ex) kt:a1234156, lgu:d324fdsare, dau:xxxxxxxx)';
+        COMMENT ON COLUMN ${tableName}.SENT_DATE IS         '발송 요청 시간 (Agent가 메시지허브 G/W 로 발송한 시간)';
+        COMMENT ON COLUMN ${tableName}.DONE_PRODUCT IS      '최종 발송 성공한 상품 종류';
+        COMMENT ON COLUMN ${tableName}.DONE_DATE IS         '단말 전달 시간 or 실패 최종 시간';
+        COMMENT ON COLUMN ${tableName}.DONE_CODE IS         '처리 결과 코드';
+        COMMENT ON COLUMN ${tableName}.DONE_CODE_DESC IS    '처리 결과 상세';
+        COMMENT ON COLUMN ${tableName}.DONE_FB_DETAIL IS    'fallback 발송 처리 상세 (각 채널이 발송 실패할 경우, 실패 코드와 설명 표기 ex) 첫 번째 채널이 실패하고 두 번째 채널로 발송성공할 경우, DONE_FB_DETAIL에는 첫 번째 채널의 실패 코드 및 설명 표기되며, 성공한 두 번째 채널에 대한 설명은 DONE_CODE와 DONE_CODE_DESC에 표기됨)';
+        COMMENT ON COLUMN ${tableName}.DONE_TELCO IS        '이통사 정보 (문자 및 RCS 발송 성공의 경우 이통사 코드 업데이트)';
+        COMMENT ON COLUMN ${tableName}.ETC1 IS              '기타 고객사 예비 필드1';
+        COMMENT ON COLUMN ${tableName}.ETC2 IS              '기타 고객사 예비 필드2';
+        COMMENT ON COLUMN ${tableName}.ETC3 IS              '기타 고객사 예비 필드3';
+        COMMENT ON COLUMN ${tableName}.ETC4 IS              '기타 고객사 예비 필드4';
+        COMMENT ON COLUMN ${tableName}.ETC5 IS              '기타 고객사 예비 필드5';
+        COMMENT ON COLUMN ${tableName}.ETC6 IS              '기타 고객사 예비 필드6';
+    </update>
+
+    <update id="createLogTable">
+        CREATE TABLE ${tableName} (
+            CLIENT_KEY      VARCHAR(40)	                        NOT NULL,
+            TRAFFIC_TYPE    VARCHAR(10)	    DEFAULT 'normal'    NOT NULL,
+            REQ_DATE        TIMESTAMP	                        NOT NULL,
+            MSG_STATUS      VARCHAR(10)	    DEFAULT 'ready'     NOT NULL,
+            KISA_ORIGCODE   VARCHAR(20),
+            RCS_AGENCY_ID   VARCHAR(100),
+            RCS_AGENCY_KEY  VARCHAR(64),
+            RCS_BRAND_KEY   VARCHAR(64),
+            TEMPLATE_CODE   VARCHAR(20)	                        NOT NULL,
+            CALLBACK_NUMBER VARCHAR(16),
+            CAMPAIGN_ID     VARCHAR(20),
+            DEPT_CODE       VARCHAR(20),
+            PHONE           VARCHAR(16),
+            KV_DATA         VARCHAR(4000),
+            KV_DATA2        VARCHAR(4000),
+            PUSH_USER_ID    VARCHAR(20),
+            FILE_DATA       VARCHAR(2000),
+            ROUTE_INFO      VARCHAR(20),
+            SENT_DATE       TIMESTAMP,
+            DONE_PRODUCT    VARCHAR(20),
+            DONE_DATE       TIMESTAMP,
+            DONE_CODE       VARCHAR(10),
+            DONE_CODE_DESC  VARCHAR(200),
+            DONE_FB_DETAIL  VARCHAR(1000),
+            DONE_TELCO      VARCHAR(10),
+            ETC1            VARCHAR(100),
+            ETC2            VARCHAR(100),
+            ETC3            VARCHAR(100),
+            ETC4            VARCHAR(100),
+            ETC5            VARCHAR(100),
+            ETC6            VARCHAR(100)
+        );
+
+        COMMENT ON COLUMN ${tableName}.CLIENT_KEY IS        '메시지 고유 번호 (직접 고유 번호를 생성하여 입력 ex) datetime + business name + random string)';
+        COMMENT ON COLUMN ${tableName}.TRAFFIC_TYPE IS      '메시지 유형 - normal : 일반 (default) - real : 실시간/중요 - batch : 마케팅, 광고';
+        COMMENT ON COLUMN ${tableName}.REQ_DATE IS          '발송 요청 (시간 미래 시간으로 입력 시, 예약 발송됨)';
+        COMMENT ON COLUMN ${tableName}.MSG_STATUS IS        '발송 상태 - ready : 발송 대기 (insert 상태 값) - request : 발송 완료 - complete : 결과 수신 완료 - pre-send : select 완료 - pre-image : 이미지 등록 작업 중';
+        COMMENT ON COLUMN ${tableName}.KISA_ORIGCODE IS     'KISA 최초 발신사업자 구분 (코드 재판매고객은 건 별 입력, 일반 고객은 config파일에 설정한 값으로 사용)';
+        COMMENT ON COLUMN ${tableName}.RCS_AGENCY_ID IS     '대행사 ID ex) lguplus';
+        COMMENT ON COLUMN ${tableName}.RCS_AGENCY_KEY IS    '대행사 인증 Key (입력하는 agencyId가 대행사의 것일 경우, 해당 대행사의 agencyKey를 함께 전송해야 함)';
+        COMMENT ON COLUMN ${tableName}.RCS_BRAND_KEY IS     '발신자 인증 Key (기업에서 생성한 브랜드마다 부여되는 Key로, 메시지 전송 시 발신번호가 속한 브랜드의 Key를 함께 전송해야 함)';
+        COMMENT ON COLUMN ${tableName}.TEMPLATE_CODE IS     '메시지허브 템플릿 키 (허브 사용자 콘솔에 등록한 통합발송 템플릿 키)';
+        COMMENT ON COLUMN ${tableName}.CALLBACK_NUMBER IS   '발신번호 (문자나 RCS 발송 시 필수 입력)';
+        COMMENT ON COLUMN ${tableName}.CAMPAIGN_ID IS       '캠페인 ID (메시지 허브에서 캠페인 단위 통계내기위해 사용)';
+        COMMENT ON COLUMN ${tableName}.DEPT_CODE IS         '부서코드 (부서별 빌링이 필요한 경우 사용)';
+        COMMENT ON COLUMN ${tableName}.PHONE IS             '수신번호';
+        COMMENT ON COLUMN ${tableName}.KV_DATA IS           'Key-Value 변환데이터 (등록된 통합템플릿에 정의된 변수를 key로 하여 각 값 표기 ex) {”name”:”홍길동”, “shop”:”이마트 용산”})';
+        COMMENT ON COLUMN ${tableName}.KV_DATA2 IS          'Key-Value 변환데이터2 (kv_json에서 입력할 데이터가 부족할 경우 사용)';
+        COMMENT ON COLUMN ${tableName}.PUSH_USER_ID IS      'PUSH 앱 사용자 아이디';
+        COMMENT ON COLUMN ${tableName}.FILE_DATA IS         '템플릿 이미지 변경 발송 데이터 (”서비스명 . 변경할 이미지 번호 . 이미지 첨부 방식(.친구톡 이미지 Wide 여부)” key 와 값으로 이루어진 데이터 ex) {”rcs.1.path”:”pokemon.jpg”, “friendtalk.1.url.y”:”https://msghub.uplus.co.kr/image/digimon.jpg”})';
+        COMMENT ON COLUMN ${tableName}.ROUTE_INFO IS        '라우팅 정보 (실제 발송된 중계 및 API KEY 표기 ex) kt:a1234156, lgu:d324fdsare, dau:xxxxxxxx)';
+        COMMENT ON COLUMN ${tableName}.SENT_DATE IS         '발송 요청 시간 (Agent가 메시지허브 G/W 로 발송한 시간)';
+        COMMENT ON COLUMN ${tableName}.DONE_PRODUCT IS      '최종 발송 성공한 상품 종류';
+        COMMENT ON COLUMN ${tableName}.DONE_DATE IS         '단말 전달 시간 or 실패 최종 시간';
+        COMMENT ON COLUMN ${tableName}.DONE_CODE IS         '처리 결과 코드';
+        COMMENT ON COLUMN ${tableName}.DONE_CODE_DESC IS    '처리 결과 상세';
+        COMMENT ON COLUMN ${tableName}.DONE_FB_DETAIL IS    'fallback 발송 처리 상세 (각 채널이 발송 실패할 경우, 실패 코드와 설명 표기 ex) 첫 번째 채널이 실패하고 두 번째 채널로 발송성공할 경우, DONE_FB_DETAIL에는 첫 번째 채널의 실패 코드 및 설명 표기되며, 성공한 두 번째 채널에 대한 설명은 DONE_CODE와 DONE_CODE_DESC에 표기됨)';
+        COMMENT ON COLUMN ${tableName}.DONE_TELCO IS        '이통사 정보 (문자 및 RCS 발송 성공의 경우 이통사 코드 업데이트)';
+        COMMENT ON COLUMN ${tableName}.ETC1 IS              '기타 고객사 예비 필드1';
+        COMMENT ON COLUMN ${tableName}.ETC2 IS              '기타 고객사 예비 필드2';
+        COMMENT ON COLUMN ${tableName}.ETC3 IS              '기타 고객사 예비 필드3';
+        COMMENT ON COLUMN ${tableName}.ETC4 IS              '기타 고객사 예비 필드4';
+        COMMENT ON COLUMN ${tableName}.ETC5 IS              '기타 고객사 예비 필드5';
+        COMMENT ON COLUMN ${tableName}.ETC6 IS              '기타 고객사 예비 필드6';
+    </update>
+
+    <update id="createSendTableIndexes">
+        CREATE SEQUENCE ${tableName}_SEQ START WITH 1 MAXVALUE 99999999 MINVALUE 1 CYCLE CACHE 20;
+        CREATE INDEX ${tableName}_IDX1 ON ${tableName}(MSG_STATUS, TRAFFIC_TYPE, REQ_DATE);
+        CREATE INDEX ${tableName}_IDX2 ON ${tableName}(PHONE);
+        CREATE INDEX ${tableName}_IDX3 ON ${tableName}(DONE_CODE, REQ_DATE);
+    </update>
+
+    <update id="createLogTableIndexes">
+        CREATE INDEX ${tableName}_IDX1 ON ${tableName}(PHONE);
+        CREATE INDEX ${tableName}_IDX2 ON ${tableName}(DONE_CODE, REQ_DATE);
+    </update>
+
+    <!-- Send Messages Search -->
+    <select id="selectMessagesToSend" resultType="Kv">
+        SELECT
+            CLIENT_KEY                              AS key,
+            TO_CHAR(REQ_DATE, 'YYYYMMDDHH24MISS')   AS request_date,
+            DEPT_CODE                               AS department_code,
+            PHONE                                   AS phone,
+            CALLBACK_NUMBER                         AS callback_number,
+            TEMPLATE_CODE,
+            COALESCE(KV_DATA, '') || COALESCE(KV_DATA2, '') AS kv_data_string,
+            CAMPAIGN_ID,
+            PUSH_USER_ID,
+            FILE_DATA                               AS file_data_string,
+            KISA_ORIGCODE                           AS kisa_origin_code,
+            RCS_AGENCY_ID,
+            RCS_AGENCY_KEY,
+            RCS_BRAND_KEY
+        FROM ${tableName}
+        WHERE
+            MSG_STATUS = 'ready' AND
+            TRAFFIC_TYPE = #{lineType} AND
+            <![CDATA[REQ_DATE < NOW() ]]>
+        LIMIT 1000
+    </select>
+
+    <!-- Processing Collect Results -->
+    <update id="updateOnCollect">
+        UPDATE ${tableName}
+        SET
+            MSG_STATUS = 'pre-send'
+        WHERE
+            MSG_STATUS = 'ready' AND
+            <if test="parameter.key == null">CLIENT_KEY IS NULL</if>
+            <if test="parameter.key != null">CLIENT_KEY = #{parameter.key}</if>
+    </update>
+
+    <!-- Processing Collect Results Batch -->
+    <update id="updateOnCollectBatch">
+        UPDATE ${tableName}
+        SET
+            MSG_STATUS = 'pre-send'
+        WHERE
+            MSG_STATUS = 'ready' AND
+            CLIENT_KEY IN
+            <foreach collection="parameterList" item="item" index="index" open="(" separator="," close=")">
+                #{item.key}
+            </foreach>
+    </update>
+
+    <!-- Processing re ready -->
+    <update id="updateReReady">
+        UPDATE ${tableName}
+        SET
+            MSG_STATUS = 'ready'
+        WHERE
+            MSG_STATUS IN ('pre-send', 'pre-image')
+    </update>
+
+    <!-- Processing Client Fail & RPT & Expire Results -->
+    <update id="updateResult">
+        UPDATE ${tableName}
+        SET
+            MSG_STATUS = CASE WHEN MSG_STATUS = 'complete' THEN MSG_STATUS ELSE #{parameter.messageStatus} END
+            <if test="parameter.sentDate != null">, SENT_DATE = TO_TIMESTAMP(#{parameter.sentDate}, 'YYYYMMDDHH24MISS')</if>
+            <if test="parameter.doneCode != null">, DONE_CODE = #{parameter.doneCode}</if>
+            <if test="parameter.doneCodeDescription != null">, DONE_CODE_DESC = #{parameter.doneCodeDescription}</if>
+            <if test="parameter.doneDate != null">, DONE_DATE = TO_TIMESTAMP(#{parameter.doneDate}, 'YYYYMMDDHH24MISS')</if>
+            <if test="parameter.routeId != null">, ROUTE_INFO = #{parameter.routeId}</if>
+            <if test="parameter.doneTelco != null">, DONE_TELCO = #{parameter.doneTelco}</if>
+            <if test="parameter.doneProduct != null">, DONE_PRODUCT = #{parameter.doneProduct}</if>
+            <if test="parameter.doneFallbackDetail != null">, DONE_FB_DETAIL = #{parameter.doneFallbackDetail}</if>
+        WHERE
+            <if test="parameter.key == null">CLIENT_KEY is null</if>
+            <if test="parameter.key != null">CLIENT_KEY = #{parameter.key}</if>
+    </update>
+
+    <!-- expired Messages Search -->
+    <select id="selectMessagesToExpire" resultType="Kv">
+        SELECT
+            CLIENT_KEY                              AS key,
+            TO_CHAR(SENT_DATE, 'YYYYMMDDHH24MISS')  AS sent_date
+        FROM ${tableName}
+        WHERE
+            MSG_STATUS IN ('pre-send', 'pre-image') AND
+            TRAFFIC_TYPE = #{lineType} AND
+            <![CDATA[REQ_DATE < TO_TIMESTAMP(#{expireDate}, 'YYYYMMDDHH24MISS') AND ]]>
+            ROUTE_INFO is null
+        LIMIT 100
+    </select>
+
+    <!-- expired Messages Search -->
+    <select id="selectMessagesSentToExpire" resultType="Kv">
+        SELECT
+            CLIENT_KEY                              AS key,
+            TO_CHAR(SENT_DATE, 'YYYYMMDDHH24MISS')  AS sent_date
+        FROM ${tableName}
+        WHERE
+            MSG_STATUS = 'request' AND
+            TRAFFIC_TYPE = #{lineType} AND
+            <![CDATA[REQ_DATE < TO_TIMESTAMP(#{expireDate}, 'YYYYMMDDHH24MISS') AND ]]>
+            ROUTE_INFO = #{routeId}
+        LIMIT 100
+    </select>
+
+    <update id="updateReExpire">
+        UPDATE ${tableName}
+        SET
+            MSG_STATUS = 'request'
+        WHERE
+            MSG_STATUS = 'pre-expire'
+    </update>
+
+    <!-- Move Messages Search -->
+    <select id="selectMessagesToMove" resultType="Kv">
+        SELECT
+            CLIENT_KEY                              AS key,
+            TO_CHAR(REQ_DATE, 'YYYYMMDDHH24MISS')   AS request_date
+        FROM ${tableName}
+        WHERE
+            MSG_STATUS = 'complete' AND
+            TRAFFIC_TYPE = #{lineType} AND
+            ROUTE_INFO IS NOT NULL
+        LIMIT 100
+    </select>
+
+    <!-- Pre-Image Search -->
+    <select id="selectMessagesInImageReg" resultType="Kv">
+        SELECT
+            CLIENT_KEY      AS key,
+            FILE_DATA       AS file_data_string
+        FROM ${tableName}
+        WHERE
+            MSG_STATUS = 'pre-image' AND
+            TRAFFIC_TYPE = #{lineType}
+        LIMIT 100
+    </select>
+
+    <!-- Log Table Transfer -->
+    <insert id="insertMessagesIntoLog">
+        INSERT INTO ${logTableName} (
+            CLIENT_KEY, TRAFFIC_TYPE, MSG_STATUS, REQ_DATE, TEMPLATE_CODE, CALLBACK_NUMBER, KISA_ORIGCODE,
+            RCS_AGENCY_ID, RCS_AGENCY_KEY,  RCS_BRAND_KEY,  CAMPAIGN_ID, DEPT_CODE, PHONE, KV_DATA, KV_DATA2,
+            PUSH_USER_ID, FILE_DATA, ROUTE_INFO, SENT_DATE, DONE_PRODUCT, DONE_DATE, DONE_CODE,
+            DONE_CODE_DESC, DONE_FB_DETAIL, DONE_TELCO, ETC1, ETC2, ETC3, ETC4, ETC5, ETC6
+        )
+        SELECT
+            CLIENT_KEY, TRAFFIC_TYPE, MSG_STATUS, REQ_DATE, TEMPLATE_CODE, CALLBACK_NUMBER, KISA_ORIGCODE,
+            RCS_AGENCY_ID, RCS_AGENCY_KEY,  RCS_BRAND_KEY,  CAMPAIGN_ID, DEPT_CODE, PHONE, KV_DATA, KV_DATA2,
+            PUSH_USER_ID, FILE_DATA, ROUTE_INFO, SENT_DATE, DONE_PRODUCT, DONE_DATE, DONE_CODE,
+            DONE_CODE_DESC, DONE_FB_DETAIL, DONE_TELCO, ETC1, ETC2, ETC3, ETC4, ETC5, ETC6
+        FROM ${sendTableName}
+        WHERE
+            <if test="parameter.key == null">CLIENT_KEY is null</if>
+            <if test="parameter.key != null">CLIENT_KEY = #{parameter.key}</if>
+    </insert>
+
+    <!-- Log Table Transfer Batch -->
+    <insert id="insertMessagesIntoLogBatch">
+        INSERT INTO ${logTableName} (
+            CLIENT_KEY, TRAFFIC_TYPE, MSG_STATUS, REQ_DATE, TEMPLATE_CODE, CALLBACK_NUMBER, KISA_ORIGCODE,
+            RCS_AGENCY_ID, RCS_AGENCY_KEY,  RCS_BRAND_KEY,  CAMPAIGN_ID, DEPT_CODE, PHONE, KV_DATA, KV_DATA2,
+            PUSH_USER_ID, FILE_DATA, ROUTE_INFO, SENT_DATE, DONE_PRODUCT, DONE_DATE, DONE_CODE,
+            DONE_CODE_DESC, DONE_FB_DETAIL, DONE_TELCO, ETC1, ETC2, ETC3, ETC4, ETC5, ETC6
+        )
+        SELECT
+            CLIENT_KEY, TRAFFIC_TYPE, MSG_STATUS, REQ_DATE, TEMPLATE_CODE, CALLBACK_NUMBER, KISA_ORIGCODE,
+            RCS_AGENCY_ID, RCS_AGENCY_KEY,  RCS_BRAND_KEY,  CAMPAIGN_ID, DEPT_CODE, PHONE, KV_DATA, KV_DATA2,
+            PUSH_USER_ID, FILE_DATA, ROUTE_INFO, SENT_DATE, DONE_PRODUCT, DONE_DATE, DONE_CODE,
+            DONE_CODE_DESC, DONE_FB_DETAIL, DONE_TELCO, ETC1, ETC2, ETC3, ETC4, ETC5, ETC6
+        FROM ${sendTableName}
+        WHERE
+            CLIENT_KEY IN
+            <foreach collection="parameterList" item="item" index="index" open="(" separator="," close=")">
+                #{item.key}
+            </foreach>
+    </insert>
+
+    <!-- Delete Send Table Messages After Transfer -->
+    <update id="deleteMessagesFromSend">
+        DELETE FROM ${tableName}
+        WHERE
+            <if test="parameter.key == null">CLIENT_KEY is null</if>
+            <if test="parameter.key != null">CLIENT_KEY = #{parameter.key}</if>
+    </update>
+
+    <!-- Delete Send Table Messages After Transfer Batch -->
+    <update id="deleteMessagesFromSendBatch">
+        DELETE FROM ${tableName}
+        WHERE
+            CLIENT_KEY IN
+            <foreach collection="parameterList" item="item" index="index" open="(" separator="," close=")">
+                #{item.key}
+            </foreach>
+    </update>
+
+    <insert id="insertAlarmMessage">
+        INSERT INTO ${tableName} (
+        CLIENT_KEY,
+        TRAFFIC_TYPE,
+        REQ_DATE,
+        MSG_STATUS,
+        KISA_ORIGCODE,
+        RCS_AGENCY_ID,
+        TEMPLATE_CODE,
+        CALLBACK_NUMBER,
+        PHONE,
+        KV_DATA
+        )
+        VALUES (
+        #{parameter.key},
+        #{parameter.lineType},
+        NOW(),
+        'ready',
+        #{parameter.kisaOriginCode},
+        #{parameter.rcsAgencyId},
+        'templatecode',
+        #{parameter.callbackNumber},
+        #{parameter.phone},
+        '{"msg":' || #{parameter.kvDataString} || '}'
+        )
+    </insert>
+</mapper>

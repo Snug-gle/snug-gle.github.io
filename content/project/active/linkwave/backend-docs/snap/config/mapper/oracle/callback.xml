@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.co.uplus.agent.snap.mapper.callback.CallbackMapper">
+
+    <select id="gettime" resultType="String">
+        SELECT TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+        FROM DUAL
+    </select>
+
+    <select id="selectOneRow" resultType="Callback">
+    <![CDATA[
+        SELECT ${columnName}
+        FROM ${tableName}
+        WHERE ROWNUM < 2
+    ]]>
+    </select>
+
+    <update id="alterTable">
+        ALTER TABLE ${tableName} ADD ${columnName} ${columnType} ${columnCondition}
+    </update>
+
+    <update id="createPhoneTable">
+        CREATE TABLE ${TNAME} (
+            SEQ		   NUMBER(11)	NOT NULL,
+            CHANNEL    VARCHAR2(20) NOT NULL,
+            CALLBACK   VARCHAR2(20) NOT NULL,
+            USE_YN     VARCHAR2(1),
+            REG_DATE   DATE,
+            REG_ID     VARCHAR2(12),
+            MOD_TIME   DATE,
+            MOD_ID     VARCHAR2(12),
+            REMARK     VARCHAR2(100),
+            CONSTRAINT PK_${tableName} PRIMARY KEY ( SEQ )
+        )
+    </update>
+
+    <update id="createPhoneTableIndexes">
+        CREATE SEQUENCE ${tableName}_SEQ START WITH 1 MAXVALUE 99999999 MINVALUE 1 CYCLE CACHE 20 NOORDER;
+    </update>
+
+	<select id="selectCallbackToCheck" resultType="Callback">
+		SELECT
+            SEQ         AS sequence,
+            CHANNEL,
+            CALLBACK,
+            USE_YN,
+            REG_DATE    AS registration_time,
+            REG_ID      AS registration_id,
+            MOD_DATE    AS modification_date,
+            MOD_ID      AS modification_id,
+            REMARK
+        FROM ${tableName}
+        WHERE
+            USE_YN = #{parameter.useYn} AND
+            CHANNEL = #{parameter.channel} AND
+            CALLBACK = #{parameter.phone}
+	</select>
+
+</mapper>

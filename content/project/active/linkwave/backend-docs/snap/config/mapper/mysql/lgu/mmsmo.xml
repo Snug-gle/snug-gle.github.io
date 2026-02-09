@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.co.uplus.agent.snap.mapper.mo.MmsMoMapper">
+    <select id="getTime" resultType="String">
+        SELECT DATE_FORMAT(NOW(),'%Y%m%d%H%i%s')
+    </select>
+
+    <select id="selectOneRow" resultType="MmsMo">
+        SELECT ${columnName}
+        FROM ${tableName}
+        LIMIT 1
+    </select>
+
+    <update id="alterTable">
+        ALTER TABLE ${tableName} ADD ${columnName} ${columnType} ${columnCondition}
+    </update>
+
+    <update id="createMoTable">
+        CREATE TABLE ${tableName} (
+            NUM					INT			    NOT NULL    AUTO_INCREMENT,
+            ID					VARCHAR(50),
+            MONUMBER			VARCHAR(20),
+
+            SENDER				VARCHAR(20),
+            CALLBACK			VARCHAR(20),
+            SUBJECT				VARCHAR(60),
+            NETCODE				VARCHAR(3),
+            STATUS				CHAR(1)		DEFAULT 'I'	NOT NULL,
+            SND_DATE			VARCHAR(14),
+            RCV_DATE			VARCHAR(14),
+            INS_DATE			VARCHAR(14),
+            MESSAGE				VARCHAR(4000),
+
+            CONTENT_COUNT		INT DEFAULT '0' NOT NULL,
+
+            CONTENT1_EXT		VARCHAR(10),
+            CONTENT1_NAME		VARCHAR(128),
+            CONTENT1_SIZE		INT,
+            CONTENT1_PATH		VARCHAR(256),
+
+            CONTENT2_EXT		VARCHAR(10),
+            CONTENT2_NAME		VARCHAR(128),
+            CONTENT2_SIZE		INT,
+            CONTENT2_PATH		VARCHAR(256),
+
+            CONTENT3_EXT		VARCHAR(10),
+            CONTENT3_NAME		VARCHAR(128),
+            CONTENT3_SIZE		INT,
+            CONTENT3_PATH		VARCHAR(256),
+
+            CONTENT4_EXT		VARCHAR(10),
+            CONTENT4_NAME		VARCHAR(128),
+            CONTENT4_SIZE		INT,
+            CONTENT4_PATH		VARCHAR(256),
+
+            CONTENT5_EXT		VARCHAR(10),
+            CONTENT5_NAME		VARCHAR(128),
+            CONTENT5_SIZE		INT,
+            CONTENT5_PATH		VARCHAR(256),
+
+            CONTENT6_EXT		VARCHAR(10),
+            CONTENT6_NAME		VARCHAR(128),
+            CONTENT6_SIZE		INT,
+            CONTENT6_PATH		VARCHAR(256),
+
+            CONTENT7_EXT		VARCHAR(10),
+            CONTENT7_NAME		VARCHAR(128),
+            CONTENT7_SIZE		INT,
+            CONTENT7_PATH		VARCHAR(256),
+
+            CONTENT8_EXT		VARCHAR(10),
+            CONTENT8_NAME		VARCHAR(128),
+            CONTENT8_SIZE		INT,
+            CONTENT8_PATH		VARCHAR(256),
+
+            CONTENT9_EXT		VARCHAR(10),
+            CONTENT9_NAME		VARCHAR(128),
+            CONTENT9_SIZE		INT,
+            CONTENT9_PATH		VARCHAR(256),
+
+            CONTENT10_EXT		VARCHAR(10),
+            CONTENT10_NAME		VARCHAR(128),
+            CONTENT10_SIZE		INT,
+            CONTENT10_PATH		VARCHAR(256),
+            CONSTRAINT PK_${tableName} PRIMARY KEY ( NUM )
+        )
+    </update>
+
+    <update id="createMoTableIndexes">
+        CREATE INDEX ${tableName}_IDX1 ON ${tableName}(RCV_DATE);
+        CREATE INDEX ${tableName}_IDX2 ON ${tableName}(MONUMBER);
+        CREATE INDEX ${tableName}_IDX3 ON ${tableName}(STATUS);
+    </update>
+
+    <insert id="insertIntoMoTable">
+        INSERT INTO ${tableName} (
+            ID					,
+            MONUMBER			,
+            SENDER				,
+            CALLBACK			,
+            SUBJECT				,
+            NETCODE				,
+            STATUS				,
+            SND_DATE			,
+            RCV_DATE			,
+            INS_DATE			,
+            MESSAGE				,
+
+            CONTENT_COUNT		,
+
+            CONTENT1_EXT		,
+            CONTENT1_NAME		,
+            CONTENT1_SIZE		,
+            CONTENT1_PATH		,
+
+            CONTENT2_EXT		,
+            CONTENT2_NAME		,
+            CONTENT2_SIZE		,
+            CONTENT2_PATH		,
+
+            CONTENT3_EXT		,
+            CONTENT3_NAME		,
+            CONTENT3_SIZE		,
+            CONTENT3_PATH		,
+
+            CONTENT4_EXT		,
+            CONTENT4_NAME		,
+            CONTENT4_SIZE		,
+            CONTENT4_PATH		,
+
+            CONTENT5_EXT		,
+            CONTENT5_NAME		,
+            CONTENT5_SIZE		,
+            CONTENT5_PATH		,
+
+            CONTENT6_EXT		,
+            CONTENT6_NAME		,
+            CONTENT6_SIZE		,
+            CONTENT6_PATH		,
+
+            CONTENT7_EXT		,
+            CONTENT7_NAME		,
+            CONTENT7_SIZE		,
+            CONTENT7_PATH		,
+
+            CONTENT8_EXT		,
+            CONTENT8_NAME		,
+            CONTENT8_SIZE		,
+            CONTENT8_PATH		,
+
+            CONTENT9_EXT		,
+            CONTENT9_NAME		,
+            CONTENT9_SIZE		,
+            CONTENT9_PATH		,
+
+            CONTENT10_EXT		,
+            CONTENT10_NAME		,
+            CONTENT10_SIZE		,
+            CONTENT10_PATH
+        )
+        VALUES
+            (
+                #{parameter.moKey}					,
+                #{parameter.moNumber}				,
+                #{parameter.sender}				,
+                #{parameter.callback}				,
+                #{parameter.subject}				,
+                #{parameter.telco}				,
+                #{parameter.status}				,
+                #{parameter.receiveDate}			,
+                #{parameter.receiveDate}			,
+                DATE_FORMAT(NOW(),'%Y%m%d%H%i%s'),
+                #{parameter.message}				,
+
+                #{parameter.contentCount}		,
+
+                #{parameter.content1Ext}		,
+                #{parameter.content1Name}		,
+                #{parameter.content1Size}		,
+                #{parameter.content1Path}		,
+
+                #{parameter.content2Ext}		,
+                #{parameter.content2Name}		,
+                #{parameter.content2Size}		,
+                #{parameter.content2Path}		,
+
+                #{parameter.content3Ext}		,
+                #{parameter.content3Name}		,
+                #{parameter.content3Size}		,
+                #{parameter.content3Path}		,
+
+                #{parameter.content4Ext}		,
+                #{parameter.content4Name}		,
+                #{parameter.content4Size}		,
+                #{parameter.content4Path}		,
+
+                #{parameter.content5Ext}		,
+                #{parameter.content5Name}		,
+                #{parameter.content5Size}		,
+                #{parameter.content5Path}		,
+
+                #{parameter.content6Ext}		,
+                #{parameter.content6Name}		,
+                #{parameter.content6Size}		,
+                #{parameter.content6Path}		,
+
+                #{parameter.content7Ext}		,
+                #{parameter.content7Name}		,
+                #{parameter.content7Size}		,
+                #{parameter.content7Path}		,
+
+                #{parameter.content8Ext}		,
+                #{parameter.content8Name}		,
+                #{parameter.content8Size}		,
+                #{parameter.content8Path}		,
+
+                #{parameter.content9Ext}		,
+                #{parameter.content9Name}		,
+                #{parameter.content9Size}		,
+                #{parameter.content9Path}		,
+
+                #{parameter.content10Ext}		,
+                #{parameter.content10Name}		,
+                #{parameter.content10Size}		,
+                #{parameter.content10Path}
+            )
+    </insert>
+</mapper>

@@ -1,0 +1,15 @@
+{
+	"nodes":[
+		{"id":"986b36660e83574c","type":"text","text":"Developer","x":-31,"y":-20,"width":250,"height":60},
+		{"id":"902263b209b175dc","type":"text","text":"Lang","x":240,"y":-140,"width":250,"height":60},
+		{"id":"892d2634431ffb4a","type":"text","text":"OS","x":200,"y":180,"width":250,"height":60},
+		{"id":"f8c73827cd1293fe","x":-440,"y":120,"width":250,"height":60,"type":"text","text":"Network"},
+		{"id":"08e43c7245c5e91a","x":-340,"y":-170,"width":250,"height":60,"type":"text","text":"Interest"}
+	],
+	"edges":[
+		{"id":"318c05efcb5e640f","fromNode":"986b36660e83574c","fromSide":"right","toNode":"902263b209b175dc","toSide":"bottom"},
+		{"id":"ec751067665b7f2b","fromNode":"986b36660e83574c","fromSide":"bottom","toNode":"892d2634431ffb4a","toSide":"left"},
+		{"id":"4adc66d577e397b5","fromNode":"986b36660e83574c","fromSide":"left","toNode":"f8c73827cd1293fe","toSide":"right"},
+		{"id":"5b112615b692f6e3","fromNode":"986b36660e83574c","fromSide":"top","toNode":"08e43c7245c5e91a","toSide":"right"}
+	]
+}

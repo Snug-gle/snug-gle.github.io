@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.co.uplus.agent.snap.mapper.image.MsghubImageMapper">
+
+    <select id="getTime" resultType="String">
+        SELECT TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+        FROM DUAL
+    </select>
+
+    <select id="selectOneRow" resultType="Image">
+    <![CDATA[
+        SELECT ${columnName}
+        FROM ${tableName}
+        WHERE ROWNUM < 2
+    ]]>
+    </select>
+
+    <update id="alterTable">
+        ALTER TABLE ${tableName} ADD ${columnName} ${columnType} ${columnCondition}
+    </update>
+
+    <!-- Create Images Table -->
+    <update id="createImageTable">
+        CREATE TABLE ${tableName} (
+            IMG_KEY             VARCHAR2(40)    NOT NULL,
+            REQ_DATE            DATE,
+            IMG_STATUS          VARCHAR2(10),
+            CHANNEL             VARCHAR2(10),
+            FILE_ID             VARCHAR2(40)    NOT NULL,
+            FILE_URL            VARCHAR2(200),
+            METADATA_HASH_CODE  VARCHAR2(11),
+            WIDE_YN             VARCHAR2(1),
+            IMG_PATH            VARCHAR2(200),
+            IMG_URL             VARCHAR2(200),
+            REG_DATE            DATE,
+            EXP_DATE            DATE,
+            DONE_CODE           VARCHAR2(10),
+            DONE_CODE_DESC      VARCHAR2(200),
+            DONE_DATE           DATE,
+            CONSTRAINT PK_${tableName} PRIMARY KEY (IMG_KEY)
+        )
+    </update>
+
+    <update id="createImageTableIndexes">
+        {CALL
+            DECLARE
+                v_sql varchar2(500);
+            BEGIN
+                v_sql := 'CREATE INDEX ${tableName}_IDX1 ON ${tableName} (METADATA_HASH_CODE, EXP_DATE DESC)';
+                execute immediate v_sql;
+
+                v_sql := 'CREATE INDEX ${tableName}_IDX2 ON ${tableName} (IMG_STATUS, REQ_DATE)';
+                execute immediate v_sql;
+
+                v_sql := 'CREATE INDEX ${tableName}_IDX3 ON ${tableName} (IMG_STATUS, EXP_DATE)';
+                execute immediate v_sql;
+            END
+        }
+    </update>
+
+    <!-- Insert Images -->
+    <insert id="insertImage">
+        INSERT INTO ${tableName} (
+            IMG_KEY,
+            REQ_DATE,
+            IMG_STATUS,
+            CHANNEL,
+            FILE_ID,
+            METADATA_HASH_CODE,
+            WIDE_YN,
+            IMG_PATH,
+            IMG_URL
+        )
+        VALUES (
+            #{parameter.key},
+            SYSDATE,
+            #{parameter.imageStatus},
+            #{parameter.channel},
+            #{parameter.fileId},
+            #{parameter.metadataHashCode},
+            #{parameter.wideYn},
+            #{parameter.imagePath},
+            #{parameter.imageUrl}
+        )
+    </insert>
+
+    <!-- Unregistered Images Search-->
+    <select id="selectImagesToSend" resultType="Image">
+    <![CDATA[
+        SELECT /* +RULE*/
+            IMG_KEY             AS key,
+            CHANNEL,
+            FILE_ID,
+            METADATA_HASH_CODE  AS metadata_hash_code,
+            WIDE_YN,
+            IMG_PATH            AS image_path,
+            IMG_URL             AS image_url
+        FROM ${tableName}
+        WHERE
+            IMG_STATUS = 'ready' AND
+            REQ_DATE < SYSDATE AND
+            ROWNUM <= 100
+    ]]>
+    </select>
+
+    <!-- Processing re ready -->
+    <update id="updateReReady">
+        UPDATE ${tableName}
+        SET
+            IMG_STATUS = 'ready'
+        WHERE
+            IMG_STATUS = 'pre-image'
+    </update>
+
+    <!-- Processing Images Registration Results -->
+    <update id="updateResult">
+        UPDATE ${tableName}
+        SET
+            IMG_STATUS = #{parameter.imageStatus}
+            <if test="parameter.metadataHashCode != null">, METADATA_HASH_CODE = #{parameter.metadataHashCode}</if>
+            <if test="parameter.imagePath != null">, IMG_PATH = #{parameter.imagePath}</if>
+            <if test="parameter.fileUrl != null">, FILE_URL = #{parameter.fileUrl}</if>
+            <if test="parameter.registerDate != null">, REG_DATE = TO_DATE(#{parameter.registerDate}, 'YYYYMMDDHH24MISS')</if>
+            <if test="parameter.expireDate != null">, EXP_DATE = TO_DATE(#{parameter.expireDate}, 'YYYYMMDDHH24MISS')</if>
+            <if test="parameter.doneDate != null">, DONE_DATE = TO_DATE(#{parameter.doneDate}, 'YYYYMMDDHH24MISS')</if>
+            <if test="parameter.doneCode != null">, DONE_CODE = #{parameter.doneCode}</if>
+            <if test="parameter.doneCodeDescription != null">, DONE_CODE_DESC = #{parameter.doneCodeDescription}</if>
+        WHERE
+            <if test="parameter.key == null">IMG_KEY IS NULL</if>
+            <if test="parameter.key != null">IMG_KEY = #{parameter.key}</if>
+    </update>
+
+    <!-- Expired Images Search -->
+    <select id="selectRequestImagesToExpire" resultType="Image">
+    <![CDATA[
+        SELECT
+            IMG_KEY AS key
+        FROM ${tableName}
+        WHERE
+            IMG_STATUS = 'request' AND
+            REQ_DATE < SYSDATE - 30 / 24 / 60 / 60 AND
+            ROWNUM <= 100
+    ]]>
+    </select>
+
+    <!-- 사전등록 성공 이미지 expire 대상 조회 -->
+    <select id="selectCompleteImagesToExpire" resultType="Image">
+    <![CDATA[
+        SELECT
+            IMG_KEY AS key,
+            METADATA_HASH_CODE
+        FROM ${tableName}
+        WHERE
+            IMG_STATUS = 'complete' AND
+            EXP_DATE < SYSDATE AND
+            ROWNUM <= 100
+    ]]>
+    </select>
+
+    <!-- Images Registration Check -->
+    <select id="selectImageByMetadataHashCode" resultType="Image">
+    <![CDATA[
+        SELECT
+            IMG_KEY     AS key,
+            IMG_STATUS  AS image_status,
+            FILE_ID,
+            TO_CHAR(EXP_DATE, 'YYYYMMDDHH24MISS') AS expire_date,
+            DONE_CODE
+        FROM ${tableName}
+        WHERE
+            METADATA_HASH_CODE = #{metadataHashCode} AND
+            ROWNUM < 2
+        ORDER BY
+            EXP_DATE DESC
+    ]]>
+    </select>
+</mapper>

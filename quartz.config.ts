@@ -8,7 +8,7 @@ import * as Plugin from "./quartz/plugins"
  */
 const config: QuartzConfig = {
   configuration: {
-    pageTitle: "Quartz 4",
+    pageTitle: "Journey Continues",
     pageTitleSuffix: "",
     enableSPA: true,
     enablePopovers: true,
@@ -17,7 +17,33 @@ const config: QuartzConfig = {
     },
     locale: "en-US",
     baseUrl: "quartz.jzhao.xyz",
-    ignorePatterns: ["private", "templates", ".obsidian"],
+    ignorePatterns: [
+      // System
+      "**/private",
+      "**/templates",
+      ".obsidian",
+      // Root meta files
+      "CLAUDE.md",
+      "GEMINI.md",
+      "GEMINI-MCP-SETUP.md",
+      "README.md",
+      "PUBLISHING.md",
+      "AUTOMATION-EXAMPLES.md",
+      "VAULT-IMPROVEMENT-PLAN.md",
+      "VAULT-TRANSFORMATION-COMPLETE.md",
+      // PARA: non-public areas
+      "area/work/**",
+      "area/log/**",
+      "area/learning/**",
+      "area/career/interview-prep/**",
+      "project/inbox/**",
+      "archive/**",
+      "resource/daily/**",
+      // Non-content files
+      "**/*.base",
+      "**/*.url",
+      "**/*.canvas",
+    ],
     defaultDateType: "modified",
     theme: {
       fontOrigin: "googleFonts",
