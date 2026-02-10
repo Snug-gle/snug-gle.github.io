@@ -26,9 +26,9 @@ category: llm-ai
 - [[멀티 모달 LLM]] - 텍스트를 넘어선 AI
 
 ### 학습 자료
-- 📚 **[[resource/book/LLM을 활용한 실전 AI 애플리케이션 개발/Index|LLM을 활용한 실전 AI 애플리케이션 개발]]**
-  - [[resource/book/LLM을 활용한 실전 AI 애플리케이션 개발/1부 'LLM의 기초 뼈대 세우기'|LLM의 기초 뼈대 세우기]]
-  - [[resource/book/LLM을 활용한 실전 AI 애플리케이션 개발/허킹페이스'의 트랜스포머 라이브러리 사용법 익히는 것을 목표|Hugging Face Transformers 사용법]]
+- 📚 **[[LLM을 활용한 실전 AI 애플리케이션 개발]]**
+  - [[1부 'LLM의 기초 뼈대 세우기'|LLM의 기초 뼈대 세우기]]
+  - [[허킹페이스'의 트랜스포머 라이브러리 사용법 익히는 것을 목표|Hugging Face Transformers 사용법]]
 
 ---
 
@@ -67,7 +67,7 @@ FROM #llm AND #ops
 ## 🚀 실전 적용
 
 ### 실전 프로젝트
-- **[[project/active/performance-tester/|Performance Tester]]** - Spring AI + OpenAI 통합
+- **[[project/active/perf-script-pipeline/|Perf Script Pipeline]]** - Spring AI + OpenAI 통합
   - AI 기반 RegEx Extractor 추천
   - 프롬프트 엔지니어링 실전 경험
 

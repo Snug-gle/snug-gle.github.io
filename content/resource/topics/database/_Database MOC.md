@@ -26,11 +26,11 @@ category: database
 - 쿼리 최적화
 
 ### 학습 자료
-- 📚 **[[resource/book/RealMySQL 8.0|RealMySQL 8.0 책 노트]]**
-  - [[resource/book/RealMySQL 8.0/실행계획|실행계획 분석]]
-  - [[resource/book/RealMySQL 8.0/옵티마이저와 힌트|옵티마이저와 힌트]]
-  - [[resource/book/RealMySQL 8.0/고급 최적화|고급 최적화]]
-  - [[resource/book/RealMySQL 8.0/11.5 insert|Insert 최적화]]
+- 📚 **[[RealMySQL 8.0|RealMySQL 8.0 책 노트]]**
+  - [[실행계획|실행계획 분석]]
+  - [[옵티마이저와 힌트|옵티마이저와 힌트]]
+  - [[고급 최적화|고급 최적화]]
+  - [[11.5 insert|Insert 최적화]]
 
 ---
 
@@ -97,4 +97,4 @@ SORT file.ctime DESC
 - [ ] NoSQL과의 비교 학습
 
 ---
-*Last updated: 2025-10-29*
+*Last updated: 2026-02-10*

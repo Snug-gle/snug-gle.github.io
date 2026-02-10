@@ -32,6 +32,7 @@ const config: QuartzConfig = {
       "VAULT-IMPROVEMENT-PLAN.md",
       "VAULT-TRANSFORMATION-COMPLETE.md",
       // PARA: non-public areas
+      "project/active/perf-script-pipeline/**", // client project — not for public
       "area/work/**",
       "area/log/**",
       "area/learning/**",

@@ -36,13 +36,6 @@ tags:
 
 ## 📖 학습 자료
 
-### [[book/|Books]]
-독서 노트 모음
-- God of Java
-- RealMySQL 8.0
-- 자바 알고리즘 인터뷰 with 코틀린
-- LLM을 활용한 실전 AI 애플리케이션 개발
-
 ### [[lecture/|Lectures]]
 강의 노트 모음
 - Spring 강의
@@ -50,20 +43,17 @@ tags:
 - DateApp 강의
 - CS 기초
 
-### [[snippets/|Snippets]]
-코드 조각 & TIL (Today I Learned)
-- 일일 학습 내용
-- 유용한 코드 스니펫
-- 간단한 개념 정리
+### [[claude-agents/_Agent Index|Claude Agents]]
+AI Agent 설정 가이드
+- System Architect, Code Reviewer, TDD Test Architect 등
 
 ---
 
 ## 🎯 Resource 활용법
 
 1. **새 개념 학습 시**: 해당 topic의 MOC 확인
-2. **참고 자료 찾을 때**: 관련 book/lecture 노트 검색
-3. **코드 재사용**: snippets에서 검색
-4. **백링크 활용**: 관련 노트들 자동 연결
+2. **참고 자료 찾을 때**: 관련 lecture 노트 검색
+3. **백링크 활용**: 관련 노트들 자동 연결
 
 ---
 
@@ -75,4 +65,4 @@ Resources는:
 - ✅ 지속적으로 축적
 
 ---
-*Last updated: 2025-10-29*
+*Last updated: 2026-02-10*

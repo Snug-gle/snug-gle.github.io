@@ -1,47 +1,65 @@
 ---
 created: 2026-01-22
-title: 개발자 포트폴리오
+title: Portfolio
 ---
-# 포트폴리오
+# Sanghoon | Full-stack Developer
 
-> 더 나은 코드는 혼자 만들 수 없다 — Upstream First를 지향하는 풀스택 개발자
+> Upstream First — growing on open source, giving back to the community
 
-오픈소스 생태계 위에서 성장하고, 배운 것을 커뮤니티에 돌려주는 개발자가 되고자 합니다.
 Java/Spring + React/TypeScript | 2022 ~
 
 ---
 
-## Projects
+## About
 
-### [[linkwave-project-summary|LinkWave]] — 멀티채널 메시징 플랫폼
+| | |
+|------|------|
+| **Education** | Konkuk University, Seoul — B.A. in Law (2015) |
+| **Career** | IoTree Inc. (SI) — Full-stack Developer, 2022 ~ present |
+
+---
+
+## Featured Project: LinkWave
+
+**Multi-channel Messaging Platform** — B2B SaaS for SMS/LMS/MMS/KakaoTalk/RCS
+
 `Spring Boot` `React` `MySQL` `Redis` `JPA + MyBatis`
 
-- CQRS 기반 하이브리드 ORM으로 CRUD 생산성과 대량 처리 성능 동시 달성
-- JWT + Refresh Token Rotation 인증, 월별 파티션으로 조회 성능 80% 향상
-- 멀티테넌트 데이터 격리 + RBAC 접근 제어
+- **CQRS Hybrid ORM**: JPA for CRUD-heavy domains (User/Org), MyBatis for high-volume writes (Message/Log) — productivity and performance in one codebase
+- **JWT + Refresh Token Rotation**: RS256 asymmetric auth with sliding-window refresh for secure, scalable authentication
+- **Monthly Partitioned Tables**: 80% query improvement, 86% index size reduction on message history
+- **Multi-tenant Data Isolation + RBAC**: Organization-scoped data with role-based access control
+- **Design System**: shadcn/ui + Tailwind CSS component library ("Clarity Through Connection")
 
-### [[rally-point/architecture|Rally-Point]] — 테니스 매칭 플랫폼
-`MSA` `Kafka` `Redis` `Elasticsearch`
+---
 
-- Kafka 이벤트 기반 서비스 간 통신, Redis 분산 락
-- Elasticsearch 기반 매칭 검색
+## Work Experience
 
-### [[performance-tester/README|Performance Tester]] — 성능 테스트 도구
-`React` `TypeScript` `TanStack` `Spring AI`
+### Perf Script Pipeline — HAR-JMX Correlation Analyzer
+`React 19` `TypeScript` `TanStack` `Spring AI`
 
-- 가상 스크롤링으로 10,000건 렌더링 시간 90% 단축
-- React Query 캐싱으로 API 요청 80% 감소
+- Built a performance test analysis tool: HAR merge → JMX/JTL extraction → AI correlation → JMeter script optimization
+- Virtual scrolling cut 10,000-row render time by 90%; React Query caching reduced API requests by 80%
 
-### [[investFlow/README|InvestFlow]] — 주식 분석 플랫폼
-`Docker` `Nginx` `Raspberry Pi`
+### Mafra — Counseling System
+`Spring Boot` `Vue.js` `Oracle`
 
-- Raspberry Pi 위 Blue-Green 무중단 배포 파이프라인 구축
+- Delivered 15+ features (SMS, callbacks, campaign management, access logs)
+- First full-stack production project — learned Spring CRUD, DB design, Git collaboration, and QA processes
 
 ---
 
 ## Tech Stack
 
 **Backend**: Java 21, Spring Boot, JPA, MyBatis, MySQL, Redis
-**Frontend**: React, TypeScript, TanStack, Tailwind CSS, shadcn/ui
+**Frontend**: React, TypeScript, TanStack (Query/Router/Table), Tailwind CSS, shadcn/ui
 **DevOps**: Docker, Nginx, GitHub Actions, GitLab CI/CD
-**Architecture**: CQRS, MSA, Multi-tenant, RBAC, DDD
+**Architecture**: CQRS, Multi-tenant, RBAC, DDD
+
+---
+
+## Learning & Growth
+
+- 6+ technical books studied and applied — Real MySQL 8.0 → LinkWave partitioning, TanStack → Perf Script Pipeline virtualization
+- PARA-method knowledge vault (Obsidian) for systematic documentation
+- Daily KPT retrospectives and continuous improvement

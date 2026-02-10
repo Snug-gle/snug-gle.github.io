@@ -112,12 +112,12 @@ SORT difficulty ASC
 ## 📚 학습 자료
 
 ### 책
-- **[[resource/book/자바 알고리즘 인터뷰 with 코틀린/Index|자바 알고리즘 인터뷰 with 코틀린]]**
-  - [[resource/book/자바 알고리즘 인터뷰 with 코틀린/1부 '코딩 인터뷰를 준비하며'|1부: 코딩 인터뷰 준비]]
-  - [[resource/book/자바 알고리즘 인터뷰 with 코틀린/2부 '자바 & 코틀린'|2부: 자바 & 코틀린]]
-  - [[resource/book/자바 알고리즘 인터뷰 with 코틀린/5부 '알고리즘'|5부: 알고리즘]]
-- **[[resource/book/Algorithms for Problem Solving with Mathematics/1. 알고리즘과 수학의 관계|수학으로 풀어보는 알고리즘]]**
-  - [[resource/book/Algorithms for Problem Solving with Mathematics/2. 알고리즘을 위한 기본적인 수학|기본 수학 개념]]
+- **[[자바 알고리즘 인터뷰 with 코틀린]]**
+  - [[1부 '코딩 인터뷰를 준비하며'|1부: 코딩 인터뷰 준비]]
+  - [[2부 '자바 & 코틀린'|2부: 자바 & 코틀린]]
+  - [[5부 '알고리즘'|5부: 알고리즘]]
+- **[[1. 알고리즘과 수학의 관계|수학으로 풀어보는 알고리즘]]**
+  - [[2. 알고리즘을 위한 기본적인 수학|기본 수학 개념]]
 
 ### 온라인 플랫폼
 - LeetCode
@@ -161,4 +161,4 @@ SORT file.mtime DESC
 - [ ] 코딩 테스트 1일 1문제
 
 ---
-*Last updated: 2025-10-29*
+*Last updated: 2026-02-10*

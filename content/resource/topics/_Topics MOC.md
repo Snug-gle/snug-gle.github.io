@@ -1,9 +1,8 @@
 ---
 tags: [moc, index, knowledge-base]
 created: 2026-02-04
-updated: 2026-02-04
+modified: 2026-02-04
 ---
-
 # 지식 라이브러리 (Topics MOC)
 
 ## 개요
@@ -52,6 +51,14 @@ updated: 2026-02-04
 - LangChain, 프롬프트 엔지니어링
 - RAG, Fine-tuning
 
+### [[_OS MOC|Operating System]]
+- 운영체제 기본 개념
+- 프로세스, 메모리, 파일 시스템
+
+### [[_Conference MOC|Conference]]
+- 기술 컨퍼런스 발표 리뷰
+- Attiead 팀 스터디
+
 ## 최근 업데이트
 
 - 2026-02-04: [[역할 기반 분리 CQRS]]
@@ -61,5 +68,5 @@ updated: 2026-02-04
 ## 관련 섹션
 
 - [[_Quiz Index|퀴즈 연습]]
-- [[_Agents MOC|AI Agent 가이드]]
+- [[claude-agents/_Agent Index|Claude Agents 가이드]]
 - [[area/learning/learning-log/_Learning Log MOC|학습 로그]]

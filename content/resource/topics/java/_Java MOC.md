@@ -38,9 +38,12 @@ FROM #java AND #OOP
 
 ### Functional Programming
 - [[다양한 람다]] - 람다 표현식
-- 🔗 [[resource/snippets/리액티브 프로그래밍 with 람다|리액티브 프로그래밍]]
+- [[리액티브 프로그래밍 with 람다|리액티브 프로그래밍]]
 - Stream API
 - Optional
+
+### Utilities
+- [[string builder와 list 비교]] - StringBuilder vs List 성능 비교
 
 ### Modern Java (Java 21)
 - Record
@@ -53,10 +56,11 @@ FROM #java AND #OOP
 ## 📚 학습 자료
 
 ### 책
-- [[resource/book/gotOfJava/2023-11-12(Object class, interface, abstract)|God of Java - 객체지향]]
-- [[resource/book/gotOfJava/2023-11-13(exception)|God of Java - 예외처리]]
-- [[resource/book/gotOfJava/2023-11-06(enum)|God of Java - Enum]]
-- [[resource/book/자바 알고리즘 인터뷰 with 코틀린/Index|자바 알고리즘 인터뷰]]
+- [[2023-11-12(Object class, interface, abstract)|God of Java - 객체지향]]
+- [[2023-11-13(exception)|God of Java - 예외처리]]
+- [[2023-11-06(enum)|God of Java - Enum]]
+- [[자바 알고리즘 인터뷰 with 코틀린|자바 알고리즘 인터뷰]]
+- [[2부 '자바 & 코틀린'|자바 알고리즘 인터뷰 - 자바 & 코틀린]]
 
 ### 강의
 - [[resource/lecture/Kim's Java in Practice/Object-Oriented Programming|실무 자바 - 객체지향]]
@@ -83,4 +87,4 @@ FROM #java AND #OOP
 - [ ] Kotlin 비교 학습
 
 ---
-*Last updated: 2025-10-29*
+*Last updated: 2026-02-10*

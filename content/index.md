@@ -17,7 +17,7 @@ tags:
 - [[project/active/investFlow/README|📈 InvestFlow]] - 주식 분석 플랫폼 (Blue-Green 배포)
 
 ### ✅ Completed Projects
-- [[project/active/performance-tester/README|⚡ Performance Tester]] - JMeter 상관관계 분석 도구 (2025.10-11)
+- ⚡ Perf Script Pipeline - HAR-JMX 상관관계 분석 파이프라인 (2025.10-11)
   - 성능 최적화: 렌더링 90% 개선, API 요청 80% 감소
 
 ### 💼 Project Inbox
