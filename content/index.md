@@ -29,10 +29,7 @@ tags:
 ## 🌱 지속적 성장 (Areas)
 
 ### 💼 Career
-- [[area/career/portfolio-for-blog|📄 Developer Portfolio]] - 블로그 배포용 포트폴리오
-- [[area/career/portfolio-resume|📋 Portfolio Resume]] - 이력서
-- [[area/career/interview-prep/종합-가이드|💡 Interview Prep]] - 면접 준비 자료
-- [[area/career/Why Developer|❤️ Why Developer]] - 개발자가 된 이유
+- [[area/career/portfolio-for-blog|📄 포트폴리오]]
 
 ### 📚 Learning & Work
 - [[area/learning/learning-log/README|📖 Learning Journey]]

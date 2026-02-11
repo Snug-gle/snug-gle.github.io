@@ -1,11 +1,12 @@
 ---
 tags:
-  - project
-  - rally-point
-  - development
-  - principles
+  - spring
+  - java
+  - architecture
   - best-practices
-category: project
+  - ddd
+category: spring
+up: "[[resource/topics/spring/_Spring MOC]]"
 status: in-progress
 created: 2025-10-29
 modified: 2025-10-29

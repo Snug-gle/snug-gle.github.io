@@ -49,6 +49,7 @@ category: backend
 
 ### 실무 패턴
 - [[spring-boot-best-practices|Spring Boot 실무 패턴]] - 팩토리 메서드, Auditing, Snowflake ID, 테스트 전략
+- [[development-principles|개발 원칙 가이드]] - DDD 레이어 아키텍처, JPA, 보안, 테스트, API 설계
 
 ### 실전 이슈
 ```dataview

@@ -1,11 +1,11 @@
 ---
 tags:
-  - project
-  - rally-point
+  - infrastructure
   - git
   - git-flow
   - workflow
   - best-practices
+up: "[[resource/topics/infrastructure/_Infrastructure MOC]]"
 category: project
 status: in-progress
 created: 2025-10-29

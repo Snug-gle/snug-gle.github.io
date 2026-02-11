@@ -132,8 +132,8 @@ category: infrastructure
 ## 🚀 CI/CD
 
 ### 빌드 & 배포 자동화
+- [[github-actions-guide|GitHub Actions 가이드]] - CI/CD 파이프라인, 코드 품질, 보안 스캔
 - Jenkins
-- GitHub Actions
 - GitLab CI/CD
 - ArgoCD (GitOps)
 
@@ -142,6 +142,12 @@ category: infrastructure
 LIST
 FROM #cicd OR #pipeline
 ```
+
+---
+
+### Git & 프로젝트 관리
+- [[git-workflow-guide|Git Flow 가이드]] - 브랜치 전략, 커밋 컨벤션, 워크플로우
+- [[issue-and-tag-management|이슈 & 태그 관리]] - 이슈 템플릿, 라벨, Semantic Versioning
 
 ---
 

@@ -1,11 +1,11 @@
 ---
 tags:
-  - project
-  - rally-point
+  - infrastructure
   - ci-cd
   - github-actions
   - automation
-category: project
+category: infrastructure
+up: "[[resource/topics/infrastructure/_Infrastructure MOC]]"
 status: in-progress
 created: 2025-10-29
 modified: 2025-10-29

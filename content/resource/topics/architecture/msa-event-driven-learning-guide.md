@@ -1,11 +1,11 @@
 ---
 tags:
-  - project
-  - rally-point
-  - learning
+  - architecture
   - msa
   - event-driven
   - distributed-systems
+  - kafka
+up: "[[resource/topics/architecture/_Architecture MOC]]"
   - kafka
 category: learning
 status: active

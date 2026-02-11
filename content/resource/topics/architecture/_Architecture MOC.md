@@ -43,6 +43,7 @@ category: architecture
 - Hexagonal Architecture
 
 ### Microservices Architecture (MSA)
+- [[msa-event-driven-learning-guide|MSA & Event-Driven 학습 가이드]] - DDD, Kafka, Saga, 분산 추적
 - MSA 개념과 특징
 - 서비스 분리 전략
 - API Gateway 패턴
