@@ -1,9 +1,9 @@
 ---
 tags: [testing, mockito, spring-boot, unit-test]
 created: 2026-02-04
-updated: 2026-02-04
+modified: 2026-02-04
+up: "[[resource/topics/testing/_Testing MOC]]"
 ---
-
 # Mockito 테스트 어노테이션
 
 ## 개요

@@ -1,5 +1,7 @@
 ---
 created: 2026-02-04
+up: "[[resource/topics/spring/_Spring MOC]]"
+tags: [spring, spring-boot, best-practices, testing]
 ---
 # Spring Boot 실무 패턴 학습 노트
 

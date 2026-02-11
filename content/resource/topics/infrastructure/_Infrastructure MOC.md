@@ -14,7 +14,7 @@ category: infrastructure
 
 ## 📍 현재 위치
 - 학습 단계: **초중급**
-- 실전 적용: [[project/active/rally-point/architecture|Rally-Point 프로젝트]] 인프라 구축
+- 실전 적용: [[project/pending/rally-point/architecture|Rally-Point 프로젝트]] 인프라 구축
 
 ---
 
@@ -69,6 +69,7 @@ category: infrastructure
 ## 🔄 메시징 & 스트리밍
 
 ### Apache Kafka
+- [[attiead-kafka-study|Attiead Kafka 스터디]] - 팀 스터디
 - Kafka 아키텍처
 - Producer, Consumer
 - Topic, Partition
@@ -162,7 +163,7 @@ FROM #cicd OR #pipeline
 ## 🚀 실전 프로젝트 적용
 
 ### Rally-Point 인프라
-- [[project/active/rally-point/architecture|인프라 아키텍처]]
+- [[project/pending/rally-point/architecture|인프라 아키텍처]]
 - Docker Compose로 로컬 환경 구성
 - Kafka를 통한 이벤트 처리
 - Redis 캐싱 전략

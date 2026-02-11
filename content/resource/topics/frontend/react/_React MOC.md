@@ -15,7 +15,7 @@ category: frontend
 ## 📍 현재 위치
 - 학습 단계: **초중급**
 - React 버전: React 19+
-- 실전 적용: [[project/active/blog|블로그 프로젝트]]
+- 실전 적용: [[project/active/linkwave/index|LinkWave 프로젝트]]
 
 ---
 
@@ -117,11 +117,10 @@ FROM #react AND #testing
 
 ## 🔗 프로젝트 연결
 
-### 블로그 프로젝트
-- [[project/active/blog|블로그 프로젝트 개요]]
-- React 19 + Vite
-- TanStack Query 활용
-- Tailwind CSS 스타일링
+### LinkWave 프로젝트
+- [[project/active/linkwave/index|LinkWave 프로젝트 개요]]
+- React 19 + Vite + Zustand + TanStack Query/Router
+- [[project/active/linkwave/02-design/frontend-architecture|Frontend Architecture]]
 
 ---
 

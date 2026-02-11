@@ -38,6 +38,7 @@ category: frontend
 ## 🔧 고급 타입
 
 ### Type System
+- [[type-system-basics|타입 시스템 기초 가이드]] - typeof, keyof, as const, 인덱스 접근 타입
 - Union Types
 - Intersection Types
 - Type Aliases
@@ -86,7 +87,7 @@ category: frontend
 ## 🚀 실전 프로젝트
 
 ### 적용 예정 프로젝트
-- [[project/active/blog|블로그 프로젝트]]
+- [[project/active/linkwave/index|LinkWave 프로젝트]]
 - React + TypeScript
 - TanStack Query + TypeScript
 

@@ -67,9 +67,12 @@ FROM #llm AND #ops
 ## 🚀 실전 적용
 
 ### 실전 프로젝트
-- **[[project/active/perf-script-pipeline/|Perf Script Pipeline]]** - Spring AI + OpenAI 통합
+- **[[archive/projects/perf-script-pipeline/|Perf Script Pipeline]]** - Spring AI + OpenAI 통합
   - AI 기반 RegEx Extractor 추천
   - 프롬프트 엔지니어링 실전 경험
+
+### Attiead 스터디
+- [[attiead-llm-study|Attiead LLM 스터디]] - 팀 스터디
 
 ### 프로젝트 아이디어
 - RAG 기반 문서 QA 시스템

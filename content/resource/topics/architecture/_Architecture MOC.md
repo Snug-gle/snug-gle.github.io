@@ -14,7 +14,7 @@ category: architecture
 
 ## 📍 현재 위치
 - 학습 단계: **초중급**
-- 실전 적용: [[project/active/rally-point/architecture|Rally-Point 프로젝트]] MSA 설계
+- 실전 적용: [[project/pending/rally-point/architecture|Rally-Point 프로젝트]] MSA 설계
 
 ---
 
@@ -58,6 +58,10 @@ category: architecture
 - 오픈소스 기여 방법론
 - 커뮤니티 주도 개발
 
+### Attiead 스터디
+- [[attiead-clean-architecture|Clean Architecture 스터디]] - Attiead 팀
+- [[attiead-ddd-study|DDD 스터디]] - Attiead 팀
+
 ### 구현 전략
 - [[기능-구현-우선순위-결정-의존성-기반-사고법|🎯 기능 구현 우선순위 결정]] - 의존성 기반 사고법
 
@@ -77,7 +81,7 @@ category: architecture
 - CQRS (Command Query Responsibility Segregation)
 
 ### 메시징 & 이벤트
-- 🔗 [[resource/topics/infrastructure/Kafka|Apache Kafka]]
+- 🔗 [[resource/topics/infrastructure/attiead-kafka-study|Apache Kafka]]
 - Message Queue 패턴
 - Pub/Sub 패턴
 - Event Sourcing
@@ -92,7 +96,7 @@ category: architecture
 - 🔗 [[resource/topics/database/_Database MOC|Database 설계]]
 
 ### 캐싱 전략
-- 🔗 [[resource/topics/infrastructure/Redis|Redis 활용]]
+- Redis 활용 (캐싱 전략, Session 관리)
 - CDN 활용
 - Cache Invalidation
 
@@ -101,7 +105,7 @@ category: architecture
 ## 🚀 실전 프로젝트 적용
 
 ### Rally-Point 아키텍처
-- [[project/active/rally-point/architecture|전체 아키텍처 설계]]
+- [[project/pending/rally-point/architecture|전체 아키텍처 설계]]
 - MSA 도메인 분리
 - 서비스 간 통신 전략
 - 데이터 일관성 유지

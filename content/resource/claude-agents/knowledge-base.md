@@ -97,7 +97,7 @@ date: {{date:YYYY-MM-DD}}
 
 ### 🚀 프로젝트 진행
 - **[[project/active/linkwave/|📱 LinkWave]]**:
-- **[[project/active/rally-point/|🎾 Rally-Point]]**:
+- **[[project/pending/rally-point/|🎾 Rally-Point]]**:
 ```
 
 ## Portfolio Management

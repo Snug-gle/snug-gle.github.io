@@ -122,7 +122,7 @@ category: cloud
 - Event-Driven Architecture
 
 ### 예정 프로젝트
-- [[project/active/rally-point/architecture|Rally-Point]] AWS 배포
+- [[project/pending/rally-point/architecture|Rally-Point]] AWS 배포
 - CI/CD 파이프라인 구축
 - 모니터링 대시보드 구성
 

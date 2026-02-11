@@ -56,9 +56,10 @@ FROM #java AND #OOP
 ## 📚 학습 자료
 
 ### 책
-- [[2023-11-12(Object class, interface, abstract)|God of Java - 객체지향]]
-- [[2023-11-13(exception)|God of Java - 예외처리]]
-- [[2023-11-06(enum)|God of Java - Enum]]
+- [[java-oop-basics|God of Java - 객체지향]]
+- [[java-exception|God of Java - 예외처리]]
+- [[java-enum|God of Java - Enum]]
+- [[java-io|God of Java - I/O]]
 - [[자바 알고리즘 인터뷰 with 코틀린|자바 알고리즘 인터뷰]]
 - [[2부 '자바 & 코틀린'|자바 알고리즘 인터뷰 - 자바 & 코틀린]]
 
@@ -72,8 +73,8 @@ FROM #java AND #OOP
 ## 🚀 실전 프로젝트 적용
 
 ### Rally-Point
-- [[project/active/rally-point/architecture|Architecture]] - Java 21 사용
-- [[project/active/rally-point/user-domain|User Service]] - Spring Boot with Java
+- [[project/pending/rally-point/architecture|Architecture]] - Java 21 사용
+- [[project/pending/rally-point/user-domain|User Service]] - Spring Boot with Java
 
 ---
 

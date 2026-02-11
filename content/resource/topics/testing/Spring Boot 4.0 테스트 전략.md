@@ -1,9 +1,9 @@
 ---
 tags: [spring-boot, testing, test-strategy, junit5]
 created: 2026-02-04
-updated: 2026-02-04
+modified: 2026-02-04
+up: "[[resource/topics/testing/_Testing MOC]]"
 ---
-
 # Spring Boot 4.0 테스트 전략
 
 ## 개요

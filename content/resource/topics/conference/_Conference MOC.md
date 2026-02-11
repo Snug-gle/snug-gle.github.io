@@ -42,7 +42,7 @@ category: conference
 ---
 
 ## 🔗 관련
-- [[project/active/conference-study/_index|컨퍼런스 스터디 프로젝트]]
+- [[project/active/conference-study/index|컨퍼런스 스터디 프로젝트]]
 
 ---
 *Last updated: 2026-02-10*

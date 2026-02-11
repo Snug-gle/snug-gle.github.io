@@ -50,7 +50,7 @@ LinkWave는 웹 기반 다채널 메시지 발송 플랫폼입니다. 사용자�
 - [[04-deployment/backend-deployment|Backend Deployment]] — JAR 배포 + CI/CD
 - [[04-deployment/frontend-deployment|Frontend Deployment]] — 정적 파일 배포 + Nginx
 
-### [[05-future/_index|05. Future]] — 계획된 기능
+### [[05-future/index|05. Future]] — 계획된 기능
 - [[05-future/contact-book|Contact Book]] — 수신번호 관리
 - [[05-future/message-template|Message Template]] — 메시지 템플릿
 - [[05-future/recipient-sender|Recipient/Sender/Template]] — 통합 관리

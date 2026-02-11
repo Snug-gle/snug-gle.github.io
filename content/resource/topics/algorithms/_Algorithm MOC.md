@@ -143,7 +143,7 @@ SORT file.mtime DESC
 - 시간 복잡도 분석 연습
 
 ### 프로젝트 활용
-- [[project/active/rally-point/architecture|Rally-Point]] - 효율적 자료구조 선택
+- [[project/pending/rally-point/architecture|Rally-Point]] - 효율적 자료구조 선택
 - 성능 최적화 사례
 
 ---

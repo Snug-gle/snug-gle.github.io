@@ -1,5 +1,7 @@
 ---
 created: 2025-04-07
+up: "[[resource/topics/frontend/vue/_Vue MOC]]"
+tags: [frontend, scss, css]
 ---
 ### ✅ 왜 `$`를 사용하는가?
 

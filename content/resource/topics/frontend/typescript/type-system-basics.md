@@ -1,5 +1,7 @@
 ---
 created: 2025-12-26
+up: "[[resource/topics/frontend/typescript/_TypeScript MOC]]"
+tags: [typescript, type-system, frontend]
 ---
 # TypeScript 타입 시스템 기초 가이드
 

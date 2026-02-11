@@ -12,9 +12,12 @@ tags:
 ## 🎯 현재 집중 (Projects)
 
 ### 🚀 Active Projects
-- [[project/active/linkwave-project-summary|📱 LinkWave]] - 멀티채널 메시징 플랫폼 (CQRS, JWT+RTR, Multi-tenant)
-- [[project/active/rally-point/architecture|🎾 Rally-Point]] - MSA 기반 테니스 매칭 플랫폼
-- [[project/active/investFlow/README|📈 InvestFlow]] - 주식 분석 플랫폼 (Blue-Green 배포)
+- [[project/active/linkwave/index|📱 LinkWave]] - 멀티채널 메시징 플랫폼 (CQRS, JWT+RTR, Multi-tenant)
+- [[project/active/conference-study/index|🎤 Conference Study]] - Attiead 팀 컨퍼런스 스터디
+
+### ⏸️ Pending Projects
+- [[project/pending/rally-point/architecture|🎾 Rally-Point]] - MSA 기반 테니스 매칭 플랫폼 (중단)
+- [[project/pending/investFlow/2025-11-13_Deployment_Setup_and_Refactoring|📈 InvestFlow]] - 주식 분석 플랫폼 (중단)
 
 ### ✅ Completed Projects
 - ⚡ Perf Script Pipeline - HAR-JMX 상관관계 분석 파이프라인 (2025.10-11)
@@ -26,8 +29,8 @@ tags:
 ## 🌱 지속적 성장 (Areas)
 
 ### 💼 Career
-- [[area/career/개발자 포트폴리오|📄 Developer Portfolio]] - 종합 포트폴리오
-- [[area/career/portfolio-for-blog|🌐 Portfolio for Blog]] - 블로그 배포용
+- [[area/career/portfolio-for-blog|📄 Developer Portfolio]] - 블로그 배포용 포트폴리오
+- [[area/career/portfolio-resume|📋 Portfolio Resume]] - 이력서
 - [[area/career/interview-prep/종합-가이드|💡 Interview Prep]] - 면접 준비 자료
 - [[area/career/Why Developer|❤️ Why Developer]] - 개발자가 된 이유
 
@@ -87,8 +90,6 @@ LIMIT 10
 
 ### 🛠️ Vault Management
 - [[VAULT-IMPROVEMENT-PLAN|🎯 Vault Improvement Plan]] - Vault 개선 계획
-- [[PHASE-1-COMPLETE|✅ Phase 1 Complete]] - 대청소 완료
-- [[PHASE-2-COMPLETE|✅ Phase 2 Complete]] - 통합 및 정리 완료
 
 ---
 

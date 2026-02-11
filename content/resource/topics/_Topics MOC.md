@@ -31,9 +31,10 @@ modified: 2026-02-04
 - 자바 기본, 컬렉션, 람다
 - 동시성, 성능 최적화
 
-### [[_Frontend MOC|Frontend]]
-- React, Vue, TypeScript
-- 상태 관리, 성능 최적화
+### Frontend
+- [[resource/topics/frontend/react/_React MOC|⚛️ React]] — Hooks, 상태 관리, TanStack Query
+- [[resource/topics/frontend/vue/_Vue MOC|💚 Vue.js]] — Vuex, 컴포넌트 패턴
+- [[resource/topics/frontend/typescript/_TypeScript MOC|📘 TypeScript]] — 타입 시스템, 제네릭
 
 ### [[_Infrastructure MOC|Infrastructure]]
 - Docker, Kubernetes, CI/CD
@@ -43,7 +44,7 @@ modified: 2026-02-04
 - EC2, S3, RDS
 - Lambda, CloudWatch
 
-### [[_Algorithms MOC|Algorithms]]
+### [[_Algorithm MOC|Algorithms]]
 - 자료구조, 알고리즘
 - 코딩 테스트 패턴
 

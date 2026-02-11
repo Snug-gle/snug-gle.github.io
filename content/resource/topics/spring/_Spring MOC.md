@@ -14,7 +14,7 @@ category: backend
 
 ## 📍 현재 위치
 - 학습 단계: **중급** (JPA 최적화 집중)
-- 실전 적용: [[project/active/rally-point/architecture|Rally-Point 프로젝트]]
+- 실전 적용: [[project/pending/rally-point/architecture|Rally-Point 프로젝트]]
 
 ---
 
@@ -47,6 +47,9 @@ category: backend
 - 🔗 연결: [[resource/topics/database/교착 상태|교착 상태 해결]]
 - 🔗 연결: [[resource/topics/database/잠금|데이터베이스 잠금]]
 
+### 실무 패턴
+- [[spring-boot-best-practices|Spring Boot 실무 패턴]] - 팩토리 메서드, Auditing, Snowflake ID, 테스트 전략
+
 ### 실전 이슈
 ```dataview
 LIST
@@ -58,8 +61,8 @@ FROM #spring AND #troubleshooting
 ## 🚀 실전 프로젝트 연결
 
 ### Rally-Point에서의 Spring 활용
-- [[project/active/rally-point/architecture#도메인 설계|MSA 도메인 설계]]
-- [[project/active/rally-point/user-domain|User Service]] - Spring Boot + JPA
+- [[project/pending/rally-point/architecture#도메인 설계|MSA 도메인 설계]]
+- [[project/pending/rally-point/user-domain|User Service]] - Spring Boot + JPA
 - Redis 연동, Kafka 이벤트 처리
 
 ### 배운 점 & 회고

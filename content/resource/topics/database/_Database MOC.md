@@ -14,7 +14,7 @@ category: database
 
 ## 📍 현재 위치
 - 학습 단계: **중급** (MySQL 성능 최적화 집중)
-- 실전 적용: [[project/active/rally-point/architecture|Rally-Point 프로젝트]]
+- 실전 적용: [[project/pending/rally-point/architecture|Rally-Point 프로젝트]]
 
 ---
 
@@ -67,12 +67,12 @@ FROM #database AND #troubleshooting
 ## 🚀 실전 프로젝트 연결
 
 ### Rally-Point에서의 Database 활용
-- [[project/active/rally-point/architecture#데이터베이스 설계|DB 스키마 설계]]
+- [[project/pending/rally-point/architecture#데이터베이스 설계|DB 스키마 설계]]
 - 인덱스 전략
 - 쿼리 성능 튜닝
 
 ### LinkWave에서의 Database 활용
-- [[project/active/linkwave-project-summary|LinkWave 프로젝트]]
+- [[project/active/linkwave/index|LinkWave 프로젝트]]
   - CQRS 패턴: JPA (User Domain) + MyBatis (Message Domain)
   - 월별 파티션 테이블로 대용량 메시지 로그 관리
   - DEDUP_HASH 인덱스 활용한 중복 방지
