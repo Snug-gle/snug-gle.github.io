@@ -1,6 +1,24 @@
 ---
 created: 2023-11-12
+tags:
+  - resource
+  - java
+  - OOP
+  - lambda
+  - functional-programming
+category: java
+up: "[[resource/topics/java/_Java MOC|Java MOC]]"
 ---
+
+## OOP 4대 특성
+
+- **캡슐화** - 속성을 변수에, 행위를 메소드에 담아 클래스로 묶고 정보를 은닉
+- **추상화** - 복잡한 시스템에서 핵심 개념/기능을 간추려내는 것 (예: 핸들=방향전환, 엑셀=가속)
+- **상속** - 한 객체를 또 다른 객체가 이어받아 부모 코드를 재사용
+- **다형성** - 오버로딩(이름은 같으나 파라미터가 다름), 오버라이딩(상속받아 메소드를 재정의)
+
+---
+
 ### Object
 #### 왜 모든 클래스는 Object 클래스의 상속을 받을까?
 - Object 클래스에 있는 메소드를 통해서 클래스의 기본적인 행동을 정의할 수 있기 때문.
@@ -130,8 +148,82 @@ public class FinalReferenceType {
     private void checkDTO() {  
         System.out.println(dto);  
         // dto = new MemberDTO(); // 컴파일X  
-        dto.name = "Sangmin"; // 컴파일O.. --> dto 객체는 두 번 이상 생성할 수 없음, 객체 안에 있는 객체들은 final로 선언되지 않음  
-        System.out.println(dto);  
-    }  
+        dto.name = "Sangmin"; // 컴파일O.. --> dto 객체는 두 번 이상 생성할 수 없음, 객체 안에 있는 객체들은 final로 선언되지 않음
+        System.out.println(dto);
+    }
 }
+```
+
+---
+
+## 제네릭 (Generics)
+- 클래스나 메소드에서 사용할 자료형을 컴파일 타임에 미리 지정하는 방식
+- 런타임이 아닌 컴파일 시점에 타입 검사 → 버그를 미리 수정
+- 다이아몬드 연산자로 간결하게 사용: `Map<String, Integer> mapNames = new HashMap<>();`
+
+---
+
+## 람다 표현식 (Lambda)
+- 함수형 인터페이스를 간결하게 구현: `(파라미터) -> 내용`
+- 함수형 인터페이스란 추상 메소드를 하나만 갖는 인터페이스
+
+```java
+@FunctionalInterface
+interface MathInterface {
+    double getPiValue();
+}
+
+// 기존 익명 클래스
+MathInterface math = new MathInterface() {
+    @Override
+    public double getPiValue() {
+        return 3.141592;
+    }
+};
+
+// 람다 표현식
+MathInterface math = () -> 3.141592;
+
+// 정렬 - 익명 클래스 vs 람다
+Collections.sort(members, new Comparator<Member>() {
+    @Override
+    public int compare(Member o1, Member o2) {
+        return o2.age - o1.age;
+    }
+});
+members.sort((o1, o2) -> o2.age - o1.age);
+```
+
+### java.util.function 함수형 인터페이스
+- **Function** - 인자 있고, 리턴값 있음. 매개값 연산 후 결과 리턴. `T -> R`
+- **Consumer** - 인자 있고, 리턴값 없음. `T -> void`
+- **Supplier** - 인자 없고, 리턴값 있음. `() -> R`
+- **Operator** - 인자 있고, 리턴값 있음. 매개값 연산 후 결과 리턴. `T -> R`
+- **Predicate** - 인자 있고, 리턴값은 boolean. 매개값 조사 후 true/false 리턴
+
+---
+
+## 스트림 API (Stream)
+- 컬렉션을 스트림 파이프라인으로 처리
+
+```java
+// 기존 방식
+List<String> chosenMembers = new ArrayList<>();
+for (Member member : members) {
+    if (member.age == 24) {
+        chosenMembers.add(member.name);
+    }
+}
+Collections.sort(chosenMembers);
+for (String name : chosenMembers) {
+    System.out.println(name);
+}
+
+// 스트림 API
+members.stream()
+    .filter(m -> m.age == 24)
+    .map(m -> m.name)
+    .sorted()
+    .collect(Collectors.toList())
+    .forEach(System.out::println);
 ```

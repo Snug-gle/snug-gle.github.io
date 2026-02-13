@@ -20,8 +20,6 @@ category: backend
 ## 🌱 기초 개념
 
 ### 핵심 문법
-- [[Null]] - Null 처리
-- [[Package]] - 패키지 구조
 - 변수와 타입
 - 제어문
 - 메서드
@@ -37,9 +35,8 @@ FROM #java AND #OOP
 ## 🔥 고급 기능
 
 ### Functional Programming
-- [[다양한 람다]] - 람다 표현식
-- [[리액티브 프로그래밍 with 람다|리액티브 프로그래밍]]
-- Stream API
+- [[java-oop-basics#람다 표현식 (Lambda)|람다 & 함수형 인터페이스]]
+- [[java-oop-basics#스트림 API (Stream)|Stream API]]
 - Optional
 
 ### Utilities
@@ -59,9 +56,7 @@ FROM #java AND #OOP
 - [[java-oop-basics|God of Java - 객체지향]]
 - [[java-exception|God of Java - 예외처리]]
 - [[java-enum|God of Java - Enum]]
-- [[java-io|God of Java - I/O]]
 - [[자바 알고리즘 인터뷰 with 코틀린|자바 알고리즘 인터뷰]]
-- [[2부 '자바 & 코틀린'|자바 알고리즘 인터뷰 - 자바 & 코틀린]]
 
 ### 강의
 - [[resource/lecture/Kim's Java in Practice/Object-Oriented Programming|실무 자바 - 객체지향]]
