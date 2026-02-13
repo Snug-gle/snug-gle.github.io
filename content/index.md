@@ -23,19 +23,6 @@ tags:
 - ⚡ Perf Script Pipeline - HAR-JMX 상관관계 분석 파이프라인 (2025.10-11)
   - 성능 최적화: 렌더링 90% 개선, API 요청 80% 감소
 
-### 💼 Project Inbox
-- [[project/inbox/README|📥 New Ideas]] - 빠른 아이디어 캡처
-
-## 🌱 지속적 성장 (Areas)
-
-### 💼 Career
-- [[area/career/portfolio-for-blog|📄 포트폴리오]]
-
-### 📚 Learning & Work
-- [[area/learning/learning-log/README|📖 Learning Journey]]
-- [[area/work/README|🏢 Work Notes]] - MAFRA 프로젝트 등
-- [[area/log/README|📅 Daily Logs]] - 일일 기록
-
 ## 📚 지식 베이스 (Resources)
 
 ### Core Technologies
@@ -57,40 +44,5 @@ tags:
 - [[resource/topics/algorithms/_Algorithm MOC|🧮 Algorithms]]
 - [[resource/topics/architecture/_Architecture MOC|🏛️ Architecture]]
 
-## 📊 최근 활동
-
-### 이번 주 학습
-```dataview
-LIST
-FROM #learning-log
-WHERE file.ctime >= date(today) - dur(7 days)
-SORT file.ctime DESC
-LIMIT 5
-```
-
-### 최근 수정된 자료
-```dataview
-TABLE file.mtime as "Updated", tags as "Tags"
-FROM #resource
-SORT file.mtime DESC
-LIMIT 10
-```
-
 ## 🏷️ 주요 태그
 `#java` `#spring` `#react` `#typescript` `#aws` `#llm` `#msa`
-
----
-## 🗂️ Quick Links
-
-### 📁 Archive
-- [[archive/README|📦 Archived Items]] - 완료된 프로젝트 및 비활성 자료
-
-### 🛠️ Vault Management
-- [[VAULT-IMPROVEMENT-PLAN|🎯 Vault Improvement Plan]] - Vault 개선 계획
-
----
-
-**Vault 건강도: 7.5/10** 📈 (Phase 1+2 완료)
-
-*Last updated: 2026-01-22*
-*PARA 방법론 기반 vault 재구조화 진행 중 (Phase 3)*
