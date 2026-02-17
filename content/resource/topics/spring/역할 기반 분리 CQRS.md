@@ -1,9 +1,8 @@
 ---
 tags: [spring, cqrs, architecture, jpa, mybatis]
 created: 2026-02-04
-updated: 2026-02-04
+modified: 2026-02-04
 ---
-
 # 역할 기반 분리 (Role-Based CQRS)
 
 ## 개요

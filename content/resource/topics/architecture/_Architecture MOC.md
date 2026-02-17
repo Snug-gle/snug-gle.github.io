@@ -49,6 +49,7 @@ category: architecture
 - API Gateway 패턴
 - Service Mesh
 - Event-Driven Architecture
+  - [[event-driven-architecture-practice]] - LinkWave 사례로 분석하는 Event-Driven Architecture (EDA): 메시지 히스토리 구현 전략
 
 ---
 
@@ -169,4 +170,4 @@ SORT file.mtime DESC
 - [ ] 아키텍처 리팩토링 경험
 
 ---
-*Last updated: 2025-10-29*
+*Last updated: 2026-02-13*

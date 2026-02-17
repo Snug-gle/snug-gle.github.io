@@ -8,9 +8,8 @@ category: frontend
 topic: watcher로 데이터 감시하는 법
 status: complete
 created: 2024-01-01
-updated: 2025-10-29
+modified: 2025-10-29
 ---
-
 ``` vue
 <script>
 export default {

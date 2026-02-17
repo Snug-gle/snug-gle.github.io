@@ -6,6 +6,7 @@ tags:
   - distributed-systems
   - kafka
 up: "[[resource/topics/architecture/_Architecture MOC]]"
+  - kafka
 category: learning
 status: active
 created: 2025-11-16

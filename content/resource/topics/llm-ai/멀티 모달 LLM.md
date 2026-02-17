@@ -9,9 +9,8 @@ category: llm-ai
 topic: 멀티 모달 LLM
 status: complete
 created: 2024-01-01
-updated: 2025-10-29
+modified: 2025-10-29
 ---
-
 - 멀티모달 대규모 언어 모델(Multimodel Large Language Models, LLMs)은 텍스트뿐만 아니라 이미지, 비디오등 여러 형태의 데이터를 이해하고 처리할 수 있는 인공지능 모델
 - 주요 기능
 	- 데이터 융합: 다양한 모달리티의 데이터를 결합하여, 각각의 데이터 유형에서 얻을 수 있는 정보의 이점을 최대화함

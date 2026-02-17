@@ -10,9 +10,8 @@ category: llm-ai
 topic: LLMOps
 status: complete
 created: 2024-01-01
-updated: 2025-10-29
+modified: 2025-10-29
 ---
-
 - MLOps
 	- MLOps는 머신 러닝 시스템의 개발, 개포, 유지관리를 체계화하고 자동화하는 관행
 	- 소프트웨어 엔지니어링의 DevOps 원칙을 머신 러닝에 적용하여, 모델의 생산성과 품질을 높이는 것을 목표

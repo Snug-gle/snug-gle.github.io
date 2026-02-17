@@ -59,6 +59,14 @@ FROM #spring AND #troubleshooting
 
 ---
 
+## ✨ 실전 주제 심층 분석 (Deep Dive Topics)
+- [[spring-internals-bean-lifecycle-event]] - Spring Bean 라이프사이클, 의존성 주입, 이벤트 및 @Async 동작 원리
+- [[spring-jwt-refresh-token]] - JWT Refresh Token RTR 패턴 및 Redis 기반 관리
+- [[spring-jwt-security-analysis]] - JWT 인증 보안 취약점 분석 및 강화 가이드
+- [[spring-transaction-distributed-lock-redis]] - Spring 트랜잭션, 분산 락, Redis 전략
+- [[spring-jjwt-vs-oauth2]] - JJWT vs Spring Security OAuth2 비교 분석
+- [[spring-rfc9457-error-handling]] - RFC 9457 기반 API 에러 처리 표준화 가이드
+
 ## 🚀 실전 프로젝트 연결
 
 ### Rally-Point에서의 Spring 활용
@@ -86,4 +94,4 @@ SORT file.ctime DESC
 - [ ] Spring Batch 실전 적용
 
 ---
-*Last updated: 2025-10-29*
+*Last updated: 2026-02-13*

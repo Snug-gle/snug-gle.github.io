@@ -9,7 +9,7 @@ category: database
 topic: JOIN
 status: complete
 created: 2024-01-01
-updated: 2025-10-29
+modified: 2025-10-29
 ---
 ## 1. 테이블 간의 관계
 ### Foreign Key

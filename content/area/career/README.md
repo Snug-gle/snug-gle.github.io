@@ -23,7 +23,7 @@ created: 2026-01-22
 ## 관련 프로젝트
 
 - [[project/active/linkwave/]] - LinkWave 메시징 플랫폼 (active)
-- [[project/active/perf-script-pipeline/]] - Perf Script Pipeline (비공개)
+- [[archive/projects/perf-script-pipeline/]] - Perf Script Pipeline (비공개)
 - [[project/pending/rally-point/]] - RallyPoint 테니스 매칭 (pending)
 - [[project/pending/investFlow/]] - InvestFlow 주식 분석 (pending)
 

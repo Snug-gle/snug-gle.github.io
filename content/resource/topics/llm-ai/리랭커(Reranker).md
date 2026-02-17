@@ -9,9 +9,8 @@ category: llm-ai
 topic: 리랭커(Reranker)
 status: complete
 created: 2024-01-01
-updated: 2025-10-29
+modified: 2025-10-29
 ---
-
 - 검색, 추천 시스템, 또는 기타 정보 검색 시스템에서 초기 검색 결과를 더욱 정확하게 정렬하기 위해 사용되는 기법
 - 가장 관련성이 높은 결과를 상위에 위치시키는 데 초점
 - 작동원리

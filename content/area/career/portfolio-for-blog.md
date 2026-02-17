@@ -2,9 +2,9 @@
 created: 2026-01-22
 title: Portfolio
 ---
-# Sanghoon | Full-stack Developer
+# 상훈 | Full-stack Developer
 
-> Upstream First — growing on open source, giving back to the community
+> Upstream First — 오픈소스 생태계 위에서 성장하고, 배운 것을 커뮤니티에 돌려주는 개발자
 
 Java/Spring + React/TypeScript | 2022 ~
 
@@ -14,42 +14,42 @@ Java/Spring + React/TypeScript | 2022 ~
 
 | | |
 |------|------|
-| **Education** | Konkuk University, Seoul — B.A. in Law (2015) |
-| **Career** | IoTree Inc. (SI) — Full-stack Developer, 2022 ~ present |
+| **학력** | 건국대학교 (서울캠퍼스) 법학과 졸업 (2015) |
+| **경력** | 아이오트리 (SI) — Full-stack Developer, 2022 ~ 현재 |
 
 ---
 
-## Featured Project: LinkWave
+## 주요 프로젝트: LinkWave
 
-**Multi-channel Messaging Platform** — B2B SaaS for SMS/LMS/MMS/KakaoTalk/RCS
+**멀티채널 메시징 플랫폼** — B2B SaaS (SMS/LMS/MMS/KakaoTalk/RCS)
 
 `Spring Boot` `React` `MySQL` `Redis` `JPA + MyBatis`
 
-- **CQRS Hybrid ORM**: JPA for CRUD-heavy domains (User/Org), MyBatis for high-volume writes (Message/Log) — productivity and performance in one codebase
-- **JWT + Refresh Token Rotation**: RS256 asymmetric auth with sliding-window refresh for secure, scalable authentication
-- **Monthly Partitioned Tables**: 80% query improvement, 86% index size reduction on message history
-- **Multi-tenant Data Isolation + RBAC**: Organization-scoped data with role-based access control
-- **Design System**: shadcn/ui + Tailwind CSS component library ("Clarity Through Connection")
+- **CQRS 하이브리드 ORM**: CRUD 중심 도메인(User/Org)은 JPA, 대용량 쓰기(Message/Log)는 MyBatis — 생산성과 성능 동시 달성
+- **JWT + Refresh Token Rotation**: RS256 비대칭 인증, 슬라이딩 윈도우 리프레시로 보안성과 확장성 확보
+- **월별 파티션 테이블**: 조회 성능 80% 향상, 인덱스 크기 86% 감소
+- **멀티테넌트 데이터 격리 + RBAC**: 조직별 데이터 분리와 역할 기반 접근 제어
+- **디자인 시스템**: shadcn/ui + Tailwind CSS 컴포넌트 라이브러리 ("Clarity Through Connection")
 
 ---
 
-## Work Experience
+## 실무 경험
 
-### Perf Script Pipeline — HAR-JMX Correlation Analyzer
+### Perf Script Pipeline — HAR-JMX 상관관계 분석 도구
 `React 19` `TypeScript` `TanStack` `Spring AI`
 
-- Built a performance test analysis tool: HAR merge → JMX/JTL extraction → AI correlation → JMeter script optimization
-- Virtual scrolling cut 10,000-row render time by 90%; React Query caching reduced API requests by 80%
+- HAR 병합 → JMX/JTL 추출 → AI 상관관계 분석 → JMeter 스크립트 최적화
+- 가상 스크롤링으로 10,000건 렌더링 시간 90% 단축, React Query 캐싱으로 API 요청 80% 감소
 
-### Mafra — Counseling System
+### Mafra — 상담 시스템
 `Spring Boot` `Vue.js` `Oracle`
 
-- Delivered 15+ features (SMS, callbacks, campaign management, access logs)
-- First full-stack production project — learned Spring CRUD, DB design, Git collaboration, and QA processes
+- 15개 이상 기능 개발 (SMS, 콜백, 캠페인 관리, 접속 로그)
+- 첫 실무 프로젝트 — Spring CRUD, DB 설계, Git 협업, QA 프로세스 경험
 
 ---
 
-## Tech Stack
+## 기술 스택
 
 **Backend**: Java 21, Spring Boot, JPA, MyBatis, MySQL, Redis
 **Frontend**: React, TypeScript, TanStack (Query/Router/Table), Tailwind CSS, shadcn/ui
@@ -58,8 +58,8 @@ Java/Spring + React/TypeScript | 2022 ~
 
 ---
 
-## Learning & Growth
+## 학습과 성장
 
-- 6+ technical books studied and applied — Real MySQL 8.0 → LinkWave partitioning, TanStack → Perf Script Pipeline virtualization
-- PARA-method knowledge vault (Obsidian) for systematic documentation
-- Daily KPT retrospectives and continuous improvement
+- 6권 이상 기술 서적 학습 및 실전 적용 — Real MySQL 8.0 → LinkWave 파티셔닝, TanStack → Perf Script Pipeline 가상화
+- PARA 방법론 기반 Obsidian vault로 체계적 지식 관리
+- 매일 KPT 회고 작성, 지속적 개선

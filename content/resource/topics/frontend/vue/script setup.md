@@ -9,9 +9,8 @@ category: frontend
 topic: script setup
 status: complete
 created: 2024-01-01
-updated: 2025-10-29
+modified: 2025-10-29
 ---
-
 - <script setup/>은 Vue3에서 새롭게 도입된 Composion API의 SFC(Single File Component) 전용 문법
 - Vue2에 없던 정적 컴파일 기반의  setup sugar 문법, 더 간경하고 빠른 코드 작성
 ## ✅ Vue 2와의 차이점

@@ -8,9 +8,8 @@ category: frontend
 topic: 사용자의 input을 받는 법(v-model)
 status: complete
 created: 2024-01-01
-updated: 2025-10-29
+modified: 2025-10-29
 ---
-
 ``` vue
 <template>
 <!-- 모달창 -->

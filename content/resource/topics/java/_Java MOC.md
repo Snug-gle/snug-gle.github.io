@@ -50,6 +50,12 @@ FROM #java AND #OOP
 
 ---
 
+## ✨ 심층 분석 (Deep Dive Topics)
+- [[java-reflection]] - Java 리플렉션 완벽 가이드
+- [[java-lombok-bean-injection-troubleshooting]] - Lombok @RequiredArgsConstructor와 @Value 충돌 트러블슈팅
+
+---
+
 ## 📚 학습 자료
 
 ### 책
@@ -83,4 +89,4 @@ FROM #java AND #OOP
 - [ ] Kotlin 비교 학습
 
 ---
-*Last updated: 2026-02-10*
+*Last updated: 2026-02-13*

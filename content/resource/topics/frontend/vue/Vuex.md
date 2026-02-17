@@ -9,9 +9,8 @@ category: frontend
 topic: Vuex
 status: complete
 created: 2024-01-01
-updated: 2025-10-29
+modified: 2025-10-29
 ---
-
 - Vue.js 애플리케이션에서 전역 상태 관리를 위한 라이브러리
 - 모든 컴포넌트에서 공유할 수 있는 중앙 저장소 역할
 

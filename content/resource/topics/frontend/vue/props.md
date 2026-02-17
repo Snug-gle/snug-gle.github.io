@@ -7,9 +7,8 @@ category: frontend
 topic: props
 status: complete
 created: 2024-01-01
-updated: 2025-10-29
+modified: 2025-10-29
 ---
-
 1. 부모[[ app.vue ]]에서 props 등록
 	``` vue
 	<product-modal :원룸들="원룸들" :누른거="누른거" :모달창열렸니="모달창열렸니"/>

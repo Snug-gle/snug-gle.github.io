@@ -9,9 +9,8 @@ category: frontend
 topic: TanStack
 status: complete
 created: 2024-01-01
-updated: 2025-10-29
+modified: 2025-10-29
 ---
-
 좋습니다! TanStack Query의 핵심 개념들을 이론과 함께 설명하고, axios와 비교해서 왜 더 좋은지 자세히 설명해드리겠습니다.
 
 ## 🧠 **1. QueryClient 기본 설정과 이론**

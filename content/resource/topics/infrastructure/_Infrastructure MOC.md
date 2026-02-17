@@ -127,6 +127,9 @@ category: infrastructure
 - Secrets 관리
 - 방화벽 설정
 
+### ✨ 실전 트러블슈팅 (Real-world Troubleshooting)
+- [[cors-cicd-deployment-troubleshooting]] - CORS 오류와 CI/CD 배포 환경 설정 트러블슈팅
+
 ---
 
 ## 🚀 CI/CD
@@ -217,4 +220,4 @@ SORT file.mtime DESC
 - [ ] Terraform으로 IaC 실습
 
 ---
-*Last updated: 2025-10-29*
+*Last updated: 2026-02-13*
