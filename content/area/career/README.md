@@ -8,7 +8,6 @@ created: 2026-01-22
 ## 포트폴리오
 
 - [[portfolio-for-blog]] - 블로그 배포용 포트폴리오 (English)
-- [[portfolio-resume]] - 이력서용 포트폴리오 (Korean, draft)
 
 ## Interview Prep (면접 준비)
 
