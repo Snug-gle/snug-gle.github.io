@@ -19,7 +19,7 @@ description: Spring Bean 생성, 의존성 주입, 이벤트 및 비동기 처�
 
 # Spring Bean 라이프사이클과 의존성 주입 심층 분석
 
-## 🎯 Summary
+## Summary
 
 * Spring 컨테이너의 Bean 생성 및 의존성 주입 메커니즘 심층 분석
 * Bean 인스턴스화 순서 결정 기준과 의존성 그래프 이해

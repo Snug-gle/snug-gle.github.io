@@ -14,6 +14,9 @@
   "scripts": {
     "quartz": "./quartz/bootstrap-cli.mjs",
     "ensure-dates": "node ensure-dates.mjs",
+    "sync": "bash sync.sh",
+    "sync-build": "npm run sync && npm run build",
+    "sync-serve": "npm run sync && npm run serve",
     "build": "npm run ensure-dates && npx quartz build -d content",
     "serve": "npm run ensure-dates && npx quartz build --serve -d content",
     "docs": "npx quartz build --serve -d docs",

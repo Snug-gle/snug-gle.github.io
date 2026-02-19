@@ -123,3 +123,16 @@ JWT의 주요 장점은 서버가 사용자 세션 상태를 저장할 필요가
 
 Refresh Token은 Access Token보다 긴 유효 기간을 가지므로, 탈취되었을 경우 더 큰 위험을 초래할 수 있습니다. `refresh` 과정에서 `refreshTokenStore.matches()`를 통해 클라이언트가 제공한 Refresh Token과 서버에 저장된 토큰을 비교하는 것은 매우 중요합니다.
 여기에 더해, 만약 이 두 토큰이 일치하지 않을 경우(예: 공격자가 오래된 또는 탈취된 Refresh Token으로 재사용을 시도할 때), 단순히 요청을 거부하는 것을 넘어 **서버에 저장된 모든 Refresh Token을 즉시 삭제**하는 것이 강력한 보안 조치입니다. 이는 일명 "Refresh Token Rotation Attack" 방어 전략의 핵심입니다. 공격 시도를 감지하면 해당 사용자의 모든 활성 세션을 강제로 종료시켜, 공격자가 탈취한 토큰을 사용하여 추가적인 Access Token을 발급받지 못하도록 완전히 차단합니다. 이를 통해 사용자는 재로그인을 요구받게 되어 비정상적인 활동이 있었음을 인지하게 되고, 관리자도 공격 시도를 포착할 수 있는 단서를 얻을 수 있습니다.
+
+## 정리
+
+- JWT의 Stateless 특성은 로그아웃 시 즉시 무효화를 어렵게 하므로, Redis 기반 Access Token Blacklist로 보완해야 한다
+- Refresh Token Rotation에서 불일치가 감지되면 단순 거부가 아닌 전체 세션 무효화로 대응하는 것이 보안상 안전하다
+- Access Token Blacklist의 TTL은 토큰의 남은 만료 시간과 동일하게 설정하여 불필요한 저장소 점유를 방지한다
+- 보안 취약점 분석 시 "공격이 실패한 후의 후속 조치"까지 고려하는 습관이 중요하다
+
+## References
+
+- [OWASP JWT Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/JSON_Web_Token_for_Java_Cheat_Sheet.html)
+- [Auth0 - Refresh Token Rotation](https://auth0.com/docs/secure/tokens/refresh-tokens/refresh-token-rotation)
+- [Spring Data Redis Documentation](https://spring.io/projects/spring-data-redis)

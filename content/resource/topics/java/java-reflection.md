@@ -21,7 +21,7 @@ description: Java Reflection API의 기본 개념부터 심층 동작 원리, Sp
 
 > 비유와 예시로 배우는 리플렉션 완벽 가이드
 
-## 🎯 학습 목표
+## 학습 목표
 
 - 리플렉션이 무엇인지 쉬운 비유로 이해하기
 - Spring에서 @Service가 어떻게 동작하는지 알아보기
@@ -31,7 +31,7 @@ description: Java Reflection API의 기본 개념부터 심층 동작 원리, Sp
 
 ## 1. 리플렉션이란? - 택배 센터 비유
 
-### 📦 상황: 택배 분류 센터
+###상황: 택배 분류 센터
 
 당신이 택배 분류 센터를 운영한다고 생각해보세요.
 
@@ -93,7 +93,7 @@ void processPackage(Object item) {
 
 ## 2. 게임 캐릭터 비유
 
-### 🎮 RPG 게임의 캐릭터 정보창
+###RPG 게임의 캐릭터 정보창
 
 **게임 개발자 입장:**
 
@@ -740,7 +740,7 @@ class UserServiceTest {
 
 # Java Reflection 심층 분석
 
-## 🎯 Summary
+## Summary
 
 * Java Reflection API의 동작 원리와 내부 메커니즘
 * Spring Framework에서 리플렉션 활용 사례

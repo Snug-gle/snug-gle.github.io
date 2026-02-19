@@ -228,7 +228,7 @@ stateDiagram-v2
 
 `SNAP` 모듈은 `ums_msg`에서 데이터를 읽어 처리한 후 `ums_log`로 이동시키고 원본을 삭제합니다. 따라서 우리는 두 단계로 나누어 이력을 저장해야 합니다.
 
-**💡 설계 근거: 왜 2단계(PENDING → COMPLETE)인가?**
+**설계 근거: 왜 2단계(PENDING → COMPLETE)인가?**
 1.  **SNAP의 블랙박스 특성**: `ums_msg`에 넣으면 언젠가 사라지고, `ums_log`에 결과가 생깁니다. 그 중간 과정(`pre-send` 등)은 너무 빨라서 잡기 힘들고, 삭제 타이밍과 겹치면 데이터가 증발한 것처럼 보일 수 있습니다. (Race Condition)
 2.  **데이터 정합성**: "내가 요청했다(PENDING)"는 사실만 먼저 기록하고, 확실한 "결과(COMPLETE)"가 나왔을 때 업데이트하는 것이 가장 안전합니다. 중간 상태를 어설프게 추적하려다간 "보냈는데 이력이 없는" 최악의 버그를 만날 수 있습니다.
 
@@ -253,7 +253,7 @@ stateDiagram-v2
 #### 4.1 이벤트 정의
 
 세 가지 도메인 이벤트가 정의되어 있으며, 모두 `DomainEvent` 인터페이스를 구현합니다.
-**💡 설계 근거: `DomainEvent` 인터페이스**
+**설계 근거: `DomainEvent` 인터페이스**
 단순 POJO나 Map을 쓰지 않고 인터페이스를 정의한 이유는 **표준화** 때문입니다. `eventId`, `occurredAt`, `version`과 같은 필드는 나중에 Kafka 등으로 확장할 때 필수적인 역할을 합니다.
 
 | 이벤트 | 발행 시점 | 역할 |
@@ -300,7 +300,7 @@ stateDiagram-v2
 
 **목표**: 이벤트를 수신하여 `message_history` (Read Model)를 JPA로 동기화
 
-**💡 설계 근거: 비동기(`@Async`) 처리**
+**설계 근거: 비동기(`@Async`) 처리**
 이력 저장은 **부가 작업**입니다. 이력 저장 때문에 사용자 응답이 느려지거나, 이력 DB 장애 때문에 발송 자체가 실패하면 안 됩니다. 메인 로직(발송)과 서브 로직(이력)을 분리하여 **장애 격리(Fault Tolerance)와 응답 속도 향상**을 꾀합니다.
 
 #### 6.1 QuerySyncEventHandler
@@ -343,7 +343,7 @@ public class QuerySyncEventHandler {
 
 ### 7. 구현 Phase 4 — Query Side (사용자 조회)
 
-**💡 설계 근거: 왜 MyBatis인가?**
+**설계 근거: 왜 MyBatis인가?**
 1.  **Cursor Pagination**: JPA로 커서 기반 페이징을 구현하는 것은 복잡하며 쿼리 튜닝이 어렵습니다. MyBatis는 SQL을 직접 작성하므로 인덱스 힌트나 복잡한 WHERE 절 최적화가 직관적입니다.
 2.  **데이터 조회 전용**: 조회용 모델(DTO)은 엔티티와 다릅니다. 불필요한 연관 관계 로딩 없이 필요한 컬럼만 가져오기 위해 MyBatis가 유리합니다.
 3.  **통계 쿼리**: `GROUP BY date, status`와 같은 집계 쿼리는 ORM보다 SQL이 훨씬 강력합니다.
@@ -533,7 +533,7 @@ WHERE requested_at < DATE_SUB(NOW(), INTERVAL 3 MONTH);
 
 이제 **이 가이드를 따라 직접 구현해야 할 과제들**입니다. (구현의 편의를 위해 순서를 조정했습니다)
 
-#### ⬜ 과제 3 (우선순위 1): `MessageController` 리팩토링
+####과제 3 (우선순위 1): `MessageController` 리팩토링
 
 현재 컨트롤러가 이벤트를 발행하지 않는 레거시 서비스(`MessageSendService`)를 사용하고 있습니다. 
 이를 이벤트 기반의 `MessageCommandService`로 교체해야 `message_history`에 데이터가 쌓이기 시작합니다.
@@ -551,7 +551,7 @@ WHERE requested_at < DATE_SUB(NOW(), INTERVAL 3 MONTH);
      }
 ```
 
-#### ⬜ 과제 2 (우선순위 2): `MessageQueryService` MyBatis 전환
+####과제 2 (우선순위 2): `MessageQueryService` MyBatis 전환
 
 현재 `MessageQueryService`는 JPA 레포지토리(`MessageHistoryRepository`)를 사용하여 전체 목록을 가져오는 임시 코드로 되어 있습니다.
 위에서 설명한 `MessageHistoryQueryMapper`(MyBatis)를 사용하도록 변경하여 커서 페이징을 지원해야 합니다.
@@ -564,7 +564,7 @@ messageHistoryRepository.findAllByUserId(userId, pageable);
 messageHistoryQueryMapper.findSentMessages(userId, status, cursorVal, cursorId, limit);
 ```
 
-#### ⬜ 과제 1 (우선순위 3): SNAP 동기화 스케줄러 구현
+####과제 1 (우선순위 3): SNAP 동기화 스케줄러 구현
 
 `ums_log` 테이블을 폴링하여 `MessageCompletedEvent`를 발행하는 스케줄러(`MessageStatusSyncScheduler`)를 새로 만들어야 합니다.
 이게 없으면 메시지 상태가 영원히 `PENDING`으로 남습니다.
@@ -578,7 +578,7 @@ public void sync() {
 }
 ```
 
-#### ⬜ 과제 4 (선택): 메트릭 수집
+####과제 4 (선택): 메트릭 수집
 
 `QuerySyncEventHandler`나 스케줄러에 `MeterRegistry`를 주입받아 카운터를 증가시킵니다.
 - `message.sent.count` (tag: result=raw_code)
@@ -627,4 +627,19 @@ public void sync() {
 4.  **문서를 곁에 두세요.**
     이 가이드를 띄워놓고 코드를 작성하세요. 길을 잃었을 때 나침반이 될 겁니다.
 
-Good Luck, LinkWave Team! 🚀
+Good Luck, LinkWave Team!
+
+## 정리
+
+- 외부 모듈(SNAP)이 원본 데이터를 삭제하는 환경에서는 이벤트 드리븐 방식으로 이력을 별도 저장하여 데이터 유실을 방지한다
+- CQRS 패턴(Command: JPA+MyBatis, Query: MyBatis)을 적용하면 쓰기와 읽기의 요구사항을 독립적으로 최적화할 수 있다
+- `@TransactionalEventListener(AFTER_COMMIT)` + `@Async`로 핵심 로직과 부가 로직을 분리하면 장애 격리와 응답 속도 향상을 동시에 달성할 수 있다
+- `EventPublisher` 인터페이스 추상화를 통해 Spring Event에서 Kafka로의 전환을 비즈니스 코드 변경 없이 수행할 수 있다
+- 2단계 상태 관리(PENDING → COMPLETED)는 블랙박스 외부 시스템과 협업할 때 가장 안전한 데이터 정합성 전략이다
+
+## References
+
+- [Spring Framework - Application Events](https://docs.spring.io/spring-framework/reference/core/beans/context-introduction.html#context-functionality-events)
+- [Spring @TransactionalEventListener](https://docs.spring.io/spring-framework/reference/data-access/transaction/event.html)
+- [Martin Fowler - CQRS](https://martinfowler.com/bliki/CQRS.html)
+- [Apache Kafka Documentation](https://kafka.apache.org/documentation/)

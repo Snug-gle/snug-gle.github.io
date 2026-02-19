@@ -26,6 +26,16 @@ jobs:
           node-version: 22
 
       - run: npm ci
+
+      - name: Verify content exists
+        run: |
+          count=$(find content -name "*.md" | wc -l)
+          echo "Markdown files: $count"
+          if [ "$count" -lt 10 ]; then
+            echo "ERROR: Too few markdown files. Sync may have failed."
+            exit 1
+          fi
+
       - run: npm run build
 
       - uses: actions/upload-pages-artifact@v3

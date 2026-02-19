@@ -1,4 +1,4 @@
---- 
+---
 tags: [spring, error-handling, rfc9457, api, rest, design, frontend, backend]
 category: spring
 created: 2026-02-13

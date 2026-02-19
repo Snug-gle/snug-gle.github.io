@@ -19,7 +19,7 @@ description: JWT Refresh Token Rotation(RTR) 패턴과 Redis 기반 토큰 관�
 
 # Refresh Token 구현 가이드
 
-## 📋 목차
+## 목차
 1. [개요](#개요)
 2. [현재 상태 분석](#현재-상태-분석)
 3. [Refresh Token 플로우](#refresh-token-플로우)
@@ -56,7 +56,7 @@ JWT **Access Token**과 **Refresh Token**을 활용한 안전한 인증 시스�
 
 ### 백엔드 현황
 
-#### ✅ 이미 구현된 부분
+####이미 구현된 부분
 
 1. **RefreshToken 엔티티** (`domain/RefreshToken.java`)
    ```java
@@ -93,7 +93,7 @@ JWT **Access Token**과 **Refresh Token**을 활용한 안전한 인증 시스�
      refresh-token-expiration: 604800000  # 7일 (밀리초)
    ```
 
-#### ❌ 미구현된 부분
+####미구현된 부분
 
 1. **AuthService에 Refresh Token 저장 로직 없음**
    - 현재 `login()`, `signupAndIssueToken()`에서 Refresh Token 생성/저장 안 함
@@ -183,7 +183,7 @@ Response Interceptor
 
 ### 1단계: DTO 정의
 
-#### 📁 `application/dto/request/auth/RefreshTokenRequest.java`
+####`application/dto/request/auth/RefreshTokenRequest.java`
 
 ```java
 package io.iotree.linkwave.application.dto.request.auth;
@@ -196,7 +196,7 @@ public record RefreshTokenRequest(
 ) {}
 ```
 
-#### 📁 `application/dto/response/auth/RefreshTokenResponse.java`
+####`application/dto/response/auth/RefreshTokenResponse.java`
 
 ```java
 package io.iotree.linkwave.application.dto.response.auth;
@@ -226,7 +226,7 @@ public record RefreshTokenResponse(
 
 ### 2단계: AuthService 확장
 
-#### 📁 `application/service/AuthService.java` (수정)
+####`application/service/AuthService.java` (수정)
 
 ```java
 package io.iotree.linkwave.application.service;
@@ -368,7 +368,7 @@ public class AuthService {
 }
 ```
 
-**💡 구현 인사이트**:
+**구현 인사이트**:
 1. **Refresh Token 저장**:
    ```java
    String refreshToken = jwtTokenProvider.generateRefreshToken();
@@ -400,7 +400,7 @@ public class AuthService {
 
 ### 3단계: AuthController 확장
 
-#### 📁 `api/AuthController.java` (수정)
+####`api/AuthController.java` (수정)
 
 ```java
 package io.iotree.linkwave.api;
@@ -464,7 +464,7 @@ public class AuthController {
 
 ### 4단계: LoginResponse 수정
 
-#### 📁 `application/dto/response/auth/LoginResponse.java` (수정)
+####`application/dto/response/auth/LoginResponse.java` (수정)
 
 ```java
 package io.iotree.linkwave.application.dto.response.auth;
@@ -503,7 +503,7 @@ public record LoginResponse(
 
 ### 5단계: ErrorCode 확인
 
-#### 📁 `common/exception/ErrorCode.java`
+####`common/exception/ErrorCode.java`
 
 ```java
 // 이미 정의되어 있음 (확인만 하면 됨)
@@ -578,7 +578,7 @@ curl -X POST http://localhost:8080/api/v1/auth/logout \
 
 ### 1단계: 타입 정의
 
-#### 📁 `types/auth.ts` (수정)
+####`types/auth.ts` (수정)
 
 ```typescript
 // 기존 타입에 refreshToken 추가, userId 제거
@@ -617,7 +617,7 @@ export interface RefreshTokenResponse {
 
 ### 2단계: authStore 수정
 
-#### 📁 `stores/authStore.ts` (수정)
+####`stores/authStore.ts` (수정)
 
 ```typescript
 import { create } from 'zustand'
@@ -713,7 +713,7 @@ export const useAuthStore = create<AuthState>()(
 
 ### 3단계: authApi 수정
 
-#### 📁 `api/authApi.ts` (수정)
+####`api/authApi.ts` (수정)
 
 ```typescript
 import type { LoginRequest, LoginResponse, RefreshTokenResponse } from '@/types/auth'
@@ -776,7 +776,7 @@ export const authApi = {
 
 ### 4단계: client.ts 수정 (401 처리)
 
-#### 📁 `api/client.ts` (수정)
+####`api/client.ts` (수정)
 
 ```typescript
 import axios from 'axios'
@@ -876,7 +876,7 @@ client.interceptors.response.use(
 export { client }
 ```
 
-**💡 구현 인사이트**:
+**구현 인사이트**:
 1. **isRefreshing 플래그**: 중복 refresh 요청 방지
 2. **failedQueue**: refresh 중인 동안 대기하는 요청들을 큐에 추가
 3. **processQueue()**: refresh 완료 후 큐의 모든 요청을 재시도
@@ -891,7 +891,7 @@ export { client }
 
 ### 5단계: LoginPage 수정
 
-#### 📁 `pages/LoginPage.tsx` (수정)
+####`pages/LoginPage.tsx` (수정)
 
 ```typescript
 // login mutation의 onSuccess에서 refreshToken 처리
@@ -1010,4 +1010,18 @@ const loginMutation = useMutation({
 
 구현 중 막히는 부분이 있으면 기존 코드를 참고하세요!
 
-**Happy Coding! 🚀**
+## 정리
+
+- JWT Access Token + Refresh Token 이중 토큰 구조로 보안과 사용자 경험을 모두 확보할 수 있다
+- Refresh Token Rotation(RTR) 패턴을 적용하면 탈취된 Refresh Token의 재사용을 방지할 수 있다
+- Redis를 Refresh Token 저장소로 활용하면 TTL 기반 자동 만료 관리와 빠른 조회가 가능하다
+- 프론트엔드의 401 인터셉터에서 자동 갱신(Silent Refresh) 구현 시, 동시 요청 큐잉(`isRefreshing` + `failedQueue`)이 필수적이다
+- HttpOnly Cookie + SameSite 설정이 localStorage보다 안전한 Refresh Token 저장 방식이다
+
+## References
+
+- [OWASP JWT Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/JSON_Web_Token_for_Java_Cheat_Sheet.html)
+- [Auth0 - Refresh Token Rotation](https://auth0.com/docs/secure/tokens/refresh-tokens/refresh-token-rotation)
+- [Spring Data Redis](https://spring.io/projects/spring-data-redis)
+- [OWASP HttpOnly Cookie](https://owasp.org/www-community/HttpOnly)
+- [SameSite Cookies Explained](https://web.dev/samesite-cookies-explained/)
