@@ -1,4 +1,7 @@
 ---
+created: 2026-02-09
+---
+---
 tags:
   - resource
   - vue
