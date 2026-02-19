@@ -4,6 +4,8 @@ set -euo pipefail
 VAULT="$(dirname "$0")/links/MyJourneyContinues"
 CONTENT="$(dirname "$0")/content"
 
+node "$(dirname "$0")/ensure-dates.mjs" "$VAULT"
+
 rsync -av --delete \
   --exclude=".git/" \
   --exclude=".obsidian/" \
