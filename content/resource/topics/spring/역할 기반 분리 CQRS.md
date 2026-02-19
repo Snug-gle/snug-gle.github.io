@@ -1,7 +1,4 @@
 ---
-created: 2026-02-09
----
----
 tags: [spring, cqrs, architecture, jpa, mybatis]
 created: 2026-02-04
 modified: 2026-02-04

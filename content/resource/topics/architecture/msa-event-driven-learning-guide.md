@@ -1,7 +1,4 @@
 ---
-created: 2026-02-13
----
----
 tags:
   - architecture
   - msa

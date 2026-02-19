@@ -10,15 +10,6 @@ Java/Spring + React/TypeScript | 2022 ~
 
 ---
 
-## About
-
-| | |
-|------|------|
-| **학력** | 건국대학교 (서울캠퍼스) 법학과 졸업 (2015) |
-| **경력** | 아이오트리 (SI) — Full-stack Developer, 2022 ~ 현재 |
-
----
-
 ## 주요 프로젝트: LinkWave
 
 **멀티채널 메시징 플랫폼** — B2B SaaS (SMS/LMS/MMS/KakaoTalk/RCS)
