@@ -43,6 +43,7 @@ LinkWave는 웹 기반 다채널 메시지 발송 플랫폼입니다. 사용자�
 - [[03-implementation/developer-handbook|Developer Handbook]] — 코딩 표준, Git 워크플로우
 - [[03-implementation/tdd-guide|TDD Guide]] — 테스트 주도 개발 가이드
 - [[03-implementation/event-driven-cqrs|Event-Driven CQRS]] — 이벤트 기반 CQRS 구현
+- [[03-implementation/message-history-read-model|Message History Read Model]] — 영구 Read Model 아키텍처 결정 (2026-02-19)
 - [[03-implementation/message-inbox-onpremise|Message Inbox]] — 메시지 수신함 온프레미스 설계
 - [[03-implementation/https-certificate|HTTPS Certificate]] — 인증서 설정 가이드
 
@@ -51,7 +52,7 @@ LinkWave는 웹 기반 다채널 메시지 발송 플랫폼입니다. 사용자�
 - [[04-deployment/frontend-deployment|Frontend Deployment]] — 정적 파일 배포 + Nginx
 
 ### [[05-future/index|05. Future]] — 계획된 기능
-- [[05-future/contact-book|Contact Book]] — 수신번호 관리
+- [[05-future/contact-book|Contact Book]] — 수신번호 관리 *(구현 중: Phase 4 Step 2 완료, Step 3 예정)*
 - [[05-future/message-template|Message Template]] — 메시지 템플릿
 - [[05-future/recipient-sender|Recipient/Sender/Template]] — 통합 관리
 - [[05-future/rs256-migration|RS256 Migration]] — JWT 마이그레이션

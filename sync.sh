@@ -6,7 +6,7 @@ CONTENT="$(dirname "$0")/content"
 
 node "$(dirname "$0")/ensure-dates.mjs" "$VAULT"
 
-rsync -av --delete \
+rsync -av --delete --delete-excluded \
   --exclude=".git/" \
   --exclude=".obsidian/" \
   --exclude=".idea/" \
@@ -22,6 +22,7 @@ rsync -av --delete \
   --exclude="area/career/interview-prep/" \
   --exclude="area/career/portfolio-resume.md" \
   --exclude="project/inbox/" \
+  --exclude="project/pending/" \
   --exclude="resource/daily/" \
   --exclude="*.base" \
   --exclude="*.url" \

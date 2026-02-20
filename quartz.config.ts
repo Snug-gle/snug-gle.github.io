@@ -18,29 +18,10 @@ const config: QuartzConfig = {
     locale: "en-US",
     baseUrl: "snug-gle.github.io",
     ignorePatterns: [
-      // System
+      // sync.sh가 파일 시스템 레벨에서 이미 처리함.
+      // 여기서는 sync.sh가 잡지 못하는 파일만 필터링.
       "**/private",
       "**/templates",
-      ".obsidian",
-      // Root meta files
-      "CLAUDE.md",
-      "GEMINI.md",
-      "GEMINI-MCP-SETUP.md",
-      "README.md",
-      "PUBLISHING.md",
-      "AUTOMATION-EXAMPLES.md",
-      "VAULT-IMPROVEMENT-PLAN.md",
-      "VAULT-TRANSFORMATION-COMPLETE.md",
-      // PARA: non-public areas
-      "archive/projects/perf-script-pipeline/**", // client project — not for public
-      "area/work/**",
-      "area/log/**",
-      "area/learning/**",
-      "area/career/interview-prep/**",
-      "project/inbox/**",
-      "archive/**",
-      "resource/daily/**",
-      // Non-content files
       "**/*.base",
       "**/*.url",
       "**/*.canvas",

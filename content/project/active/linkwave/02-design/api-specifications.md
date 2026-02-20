@@ -91,7 +91,9 @@ Response (201):
 ### 2.2 메시지 목록 조회
 | Method | Endpoint | 인증 | 상태 |
 |--------|----------|------|------|
-| GET | `/messages?startDate=&endDate=&status=&page=&size=` | ✅ | 구현 예정 |
+| GET | `/messages?cursorRequestedAt=&cursorClientKey=&limit=&status=` | ✅ | 구현 예정 |
+
+> **커서 페이징 사용 이유**: 대량 메시지 데이터 조회 성능 최적화. Offset 방식(`page`, `size`)은 깊은 페이지일수록 DB 부하가 증가하지만, 커서 방식은 인덱스를 활용하여 일정한 성능을 보장. 프론트엔드는 TanStack Query `useInfiniteQuery`로 연동. 상세 설계: [[../03-implementation/message-history-read-model|Message History Read Model]]
 
 ### 2.3 메시지 상세 조회
 | Method | Endpoint | 인증 | 상태 |
