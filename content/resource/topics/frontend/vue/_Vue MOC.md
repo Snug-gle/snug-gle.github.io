@@ -35,7 +35,7 @@ category: frontend
 - [[custom event]] - 자식→부모 이벤트 발생
 
 ### 양방향 바인딩
-- [[사용자의 input을 받는 법(v-model)]] - v-model 디렉티브
+- [[input-v-model]] - v-model 디렉티브
 
 ---
 

@@ -55,7 +55,7 @@ FROM #database AND #troubleshooting
 ### JPA 성능 최적화
 - 🔗 [[resource/topics/spring/지연 로딩|지연 로딩 전략]]
 - 🔗 [[resource/topics/spring/더티 체킹|변경 감지]]
-- 🔗 [[resource/topics/spring/ManyToOne(fetch = FetchType.LAZY)|Lazy Fetching]]
+- 🔗 [[manytoone-lazy-loading|Lazy Fetching]]
 
 ### N+1 문제 해결
 - Fetch Join 활용

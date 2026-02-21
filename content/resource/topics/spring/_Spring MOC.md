@@ -41,7 +41,7 @@ category: backend
 - [[엔티티 관계]] - 관계 설정
 
 ### 성능 최적화 ⚡
-- [[ManyToOne(fetch = FetchType.LAZY)]] - 지연 로딩 전략
+- [[manytoone-lazy-loading]] - 지연 로딩 전략
 - [[지연 로딩]] - Lazy Loading 깊이 이해
 - [[더티 체킹]] - 변경 감지 메커니즘
 - 🔗 연결: [[resource/topics/database/교착 상태|교착 상태 해결]]
