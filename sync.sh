@@ -1,10 +1,31 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-VAULT="$(dirname "$0")/links/MyJourneyContinues"
-CONTENT="$(dirname "$0")/content"
+REPO_DIR="$(cd "$(dirname "$0")" && pwd)"
+CONTENT="$REPO_DIR/content"
 
-node "$(dirname "$0")/ensure-dates.mjs" "$VAULT"
+# Vault 경로 결정: 환경변수 → .sync-config → 오류
+if [ -n "${OBSIDIAN_VAULT:-}" ]; then
+  VAULT="$OBSIDIAN_VAULT"
+elif [ -f "$REPO_DIR/.sync-config" ]; then
+  VAULT="$(cat "$REPO_DIR/.sync-config")"
+else
+  echo "Error: Obsidian vault path not configured." >&2
+  echo "" >&2
+  echo "  Option 1: export OBSIDIAN_VAULT=/path/to/vault" >&2
+  echo "  Option 2: echo '/path/to/vault' > $REPO_DIR/.sync-config" >&2
+  exit 1
+fi
+
+if [ ! -d "$VAULT" ]; then
+  echo "Error: Vault directory not found: $VAULT" >&2
+  exit 1
+fi
+
+echo "Vault : $VAULT"
+echo "Content: $CONTENT"
+
+node "$REPO_DIR/ensure-dates.mjs" "$VAULT"
 
 rsync -av --delete --delete-excluded \
   --exclude=".git/" \
@@ -12,9 +33,9 @@ rsync -av --delete --delete-excluded \
   --exclude=".idea/" \
   --exclude=".makemd/" \
   --exclude=".claude.json" \
+  --exclude=".links/" \
   --exclude="private/" \
   --exclude="templates/" \
-  --exclude="links/" \
   --exclude="archive/" \
   --exclude="area/work/" \
   --exclude="area/log/" \
