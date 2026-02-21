@@ -27,33 +27,9 @@ echo "Content: $CONTENT"
 
 node "$REPO_DIR/ensure-dates.mjs" "$VAULT"
 
-rsync -av --delete --delete-excluded \
-  --exclude=".git/" \
-  --exclude=".obsidian/" \
-  --exclude=".idea/" \
-  --exclude=".makemd/" \
-  --exclude=".claude.json" \
-  --exclude=".links/" \
-  --exclude="private/" \
-  --exclude="templates/" \
-  --exclude="archive/" \
-  --exclude="area/work/" \
-  --exclude="area/log/" \
-  --exclude="area/learning/" \
-  --exclude="area/career/interview-prep/" \
-  --exclude="area/career/portfolio-resume.md" \
-  --exclude="project/inbox/" \
-  --exclude="project/pending/" \
-  --exclude="resource/daily/" \
-  --exclude="*.base" \
-  --exclude="*.url" \
-  --exclude="*.canvas" \
-  --exclude="CLAUDE.md" \
-  --exclude="GEMINI.md" \
-  --exclude="GEMINI-MCP-SETUP.md" \
-  --exclude="README.md" \
-  --exclude="PUBLISHING.md" \
-  --exclude="AUTOMATION-EXAMPLES.md" \
-  --exclude="VAULT-IMPROVEMENT-PLAN.md" \
-  --exclude="VAULT-TRANSFORMATION-COMPLETE.md" \
+# GNU rsync 우선 사용 (macOS 기본 openrsync는 --exclude-from 미지원)
+RSYNC=$(command -v /opt/homebrew/bin/rsync || command -v /usr/local/bin/rsync || command -v rsync)
+
+"$RSYNC" -av --delete --delete-excluded \
+  --exclude-from="$REPO_DIR/.syncignore" \
   "$VAULT/" "$CONTENT/"

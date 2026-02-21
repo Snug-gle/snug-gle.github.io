@@ -1,0 +1,44 @@
+# Obsidian & IDE system files
+.git/
+.obsidian/
+.idea/
+.makemd/
+.claude.json
+.links/
+
+# Private & sensitive
+private/
+area/work/
+area/log/
+area/learning/
+area/career/interview-prep/
+area/career/portfolio-resume.md
+
+# Project management (not for public)
+project/inbox/
+project/pending/
+
+# Deployment & server info (sensitive)
+project/active/linkwave/04-deployment/
+resource/topics/infrastructure/cors-cicd-deployment-troubleshooting.md
+resource/topics/aws/
+
+# PARA structure (not for public)
+archive/
+templates/
+resource/daily/
+
+# Obsidian file types
+*.base
+*.url
+*.canvas
+
+# Vault meta files
+CLAUDE.md
+GEMINI.md
+GEMINI-MCP-SETUP.md
+README.md
+PUBLISHING.md
+AUTOMATION-EXAMPLES.md
+VAULT-IMPROVEMENT-PLAN.md
+VAULT-TRANSFORMATION-COMPLETE.md
