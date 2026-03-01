@@ -40,6 +40,20 @@ agent tdd-test-architect를 사용해서 ContactService 테스트 코드 생성�
 agent code-reviewer를 사용해서 이 코드 리뷰해줘
 ```
 
+## Slash Commands (Skills)
+
+> [!info] Agents vs Skills
+> **Agents**: Claude가 자율적으로 다단계 작업을 수행하는 서브프로세스
+> **Skills**: `/명령어`로 호출하는 프롬프트 템플릿 (`~/.claude/commands/`에 위치)
+
+### 🎓 학습 지원
+- [[guide-me]] — `/guide-me` : 구현하며 배우는 학습 지원 모드 (Senior/Peer 멘토 역할)
+
+### 📓 로깅
+- [[mjc-log]] — `/mjc-log` : 세션 종료 후 MyJourneyContinues Vault 일일 로그 자동 작성
+
+---
+
 ## 관련 문서
 
 - [[QUIZ-GENERATOR]] - Gemini MCP 퀴즈 자동화
