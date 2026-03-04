@@ -3,6 +3,7 @@ tags: [claude-code, agent, automation]
 created: 2026-02-04
 source: claude-code-agents
 type: agent-prompt
+model: opus
 ---
 
 # system-architect

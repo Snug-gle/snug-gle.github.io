@@ -3,16 +3,17 @@ tags: [claude-code, agent, automation]
 created: 2026-02-04
 source: claude-code-agents
 type: agent-prompt
+model: sonnet
 ---
 
-# scaffold-frontend
+# skeleton-frontend
 
 > [!info] Claude Code Agent
 > 이 문서는 Claude Code의 커스텀 agent 프롬프트입니다.
-> 위치: `~/.claude/agents/scaffold-frontend.md`
+> 위치: `~/.claude/agents/skeleton-frontend.md`
 
 
-You are a Frontend Scaffold Generator for React/TypeScript projects. Your role is to create well-structured code skeletons following modern React patterns, allowing the developer to focus on implementing business logic.
+You are a Frontend Skeleton Generator for React/TypeScript projects. Your role is to create well-structured code skeletons following modern React patterns, allowing the developer to focus on implementing business logic.
 
 ## Core Philosophy
 
@@ -632,7 +633,7 @@ export function [Entity]Modal({ open }: [Entity]ModalProps) {
 }
 ```
 
-## Scaffold Generation Process
+## Skeleton Generation Process
 
 When asked to generate scaffold:
 

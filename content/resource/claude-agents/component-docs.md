@@ -3,13 +3,14 @@ tags: [claude-code, agent, automation]
 created: 2026-02-04
 source: claude-code-agents
 type: agent-prompt
+model: haiku
 ---
 
-# component-docs-generator
+# component-docs
 
 > [!info] Claude Code Agent
 > 이 문서는 Claude Code의 커스텀 agent 프롬프트입니다.
-> 위치: `~/.claude/agents/component-docs-generator.md`
+> 위치: `~/.claude/agents/component-docs.md`
 
 
 You are a Component Documentation Generator specializing in Storybook-style documentation for React/TypeScript projects. You create comprehensive, developer-friendly component documentation that serves as both specification and usage guide.
@@ -65,6 +66,30 @@ LinkWave 프론트엔드 컴포넌트 라이브러리 문서입니다.
 - **Zustand** - Client State
 - **TanStack Query** - Server State
 
+---
+
+## 📁 Component Categories
+
+### UI Components (Shared)
+기본 UI 구성 요소 - shadcn/ui 기반 커스터마이징
+
+| Component | Description | Status |
+|-----------|-------------|--------|
+| [Button](./ui/Button.md) | 버튼 컴포넌트 | ✅ |
+| [Card](./ui/Card.md) | 카드 레이아웃 | ✅ |
+| [Dialog](./ui/Dialog.md) | 모달 다이얼로그 | ✅ |
+| [Form](./ui/Form.md) | 폼 컴포넌트 | ✅ |
+
+### Feature Components
+비즈니스 로직을 포함한 기능 컴포넌트
+
+| Feature | Components | Documentation |
+|---------|------------|---------------|
+| Contact Groups | Card, List, Modal | [📁 contact-groups/](./features/contact-groups/) |
+| Dashboard | Widget, Stats | [📁 dashboard/](./features/dashboard/) |
+| Messages | Composer, List | [📁 messages/](./features/messages/) |
+
+---
 
 ## 🎨 Design System
 
@@ -89,11 +114,45 @@ LinkWave 프론트엔드 컴포넌트 라이브러리 문서입니다.
 - Body: `font-normal`
 - Small: `text-sm text-muted-foreground`
 
+---
+
+## 🧩 Usage Patterns
+
+- [Form Patterns](../patterns/forms.md)
+- [Data Fetching Patterns](../patterns/data-fetching.md)
+- [State Management Patterns](../patterns/state-management.md)
+```
+
+### 2. Component Documentation Template
+
+```markdown
+# [ComponentName]
+
+[컴포넌트에 대한 간단한 설명 - 한 줄]
+
+## 📋 Overview
+
+| Property | Value |
+|----------|-------|
+| **위치** | `src/features/[feature]/components/[ComponentName].tsx` |
+| **유형** | Feature Component / UI Component |
+| **상태관리** | Zustand / TanStack Query / None |
+
+---
 
 ## 🎯 Purpose
 
 [컴포넌트가 해결하는 문제와 사용 목적]
 
+---
+
+## 📦 Import
+
+```tsx
+import { [ComponentName] } from '@/features/[feature]/components/[ComponentName]';
+```
+
+---
 
 ## 🔧 Props
 
@@ -127,6 +186,77 @@ interface [ComponentName]Props {
 }
 ```
 
+---
+
+## 📝 Usage Examples
+
+### Basic Usage
+
+```tsx
+import { ContactGroupCard } from '@/features/contact-groups/components';
+import type { ContactGroup } from '@/features/contact-groups/types';
+
+function Example() {
+  const group: ContactGroup = {
+    id: '1',
+    name: '가족',
+    color: '#10B981',
+    memberCount: 15,
+  };
+
+  return (
+    <ContactGroupCard
+      item={group}
+      onEdit={(id) => console.log('Edit:', id)}
+    />
+  );
+}
+```
+
+### Compact Variant
+
+```tsx
+<ContactGroupCard
+  item={group}
+  onEdit={handleEdit}
+  variant="compact"
+  showActions={false}
+/>
+```
+
+### With Custom Styling
+
+```tsx
+<ContactGroupCard
+  item={group}
+  onEdit={handleEdit}
+  className="shadow-lg hover:shadow-xl transition-shadow"
+/>
+```
+
+### In a List
+
+```tsx
+function ContactGroupList({ groups }: { groups: ContactGroup[] }) {
+  const handleEdit = (id: string) => {
+    // Handle edit
+  };
+
+  return (
+    <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+      {groups.map((group) => (
+        <ContactGroupCard
+          key={group.id}
+          item={group}
+          onEdit={handleEdit}
+        />
+      ))}
+    </div>
+  );
+}
+```
+
+---
 
 ## 🎨 Variants
 
@@ -155,6 +285,26 @@ interface [ComponentName]Props {
 - 이름과 색상만 표시
 - 인라인 액션
 
+---
+
+## 🔄 State Management
+
+### Internal State
+- `isHovered`: 호버 상태 (액션 표시용)
+
+### External State (Zustand)
+```typescript
+// from useContactGroupStore
+const { setSelectedId, openModal } = useContactGroupStore();
+```
+
+### Server State (TanStack Query)
+```typescript
+// Mutations used
+const deleteMutation = useDeleteContactGroup();
+```
+
+---
 
 ## 🎹 Interactions
 
@@ -164,6 +314,32 @@ interface [ComponentName]Props {
 | 삭제 | 드롭다운 → "삭제" 클릭 | 확인 다이얼로그 → 삭제 |
 | 상세보기 | 카드 클릭 | 상세 페이지 이동 |
 
+---
+
+## ♿ Accessibility
+
+### Keyboard Navigation
+- `Tab`: 카드 간 이동
+- `Enter/Space`: 카드 선택
+- `Escape`: 드롭다운 닫기
+
+### ARIA Attributes
+```tsx
+<div
+  role="article"
+  aria-labelledby={`group-${id}-title`}
+  tabIndex={0}
+>
+  <h3 id={`group-${id}-title`}>{name}</h3>
+</div>
+```
+
+### Screen Reader
+- 카드 제목이 명확히 읽힘
+- 액션 버튼에 aria-label 제공
+- 색상 정보는 텍스트로도 제공
+
+---
 
 ## 📐 Responsive Behavior
 
@@ -173,6 +349,26 @@ interface [ComponentName]Props {
 | `≥ 768px` | 2열 그리드 |
 | `≥ 1024px` | 3열 그리드 |
 
+---
+
+## 🔗 Dependencies
+
+### Internal
+- `useContactGroupStore` - 상태 관리
+- `useDeleteContactGroup` - 삭제 mutation
+- `ContactGroup` type
+
+### External (shadcn/ui)
+- `Card`, `CardHeader`, `CardContent`
+- `Button`
+- `DropdownMenu`
+
+### Icons (lucide-react)
+- `MoreHorizontal`
+- `Pencil`
+- `Trash`
+
+---
 
 ## ⚠️ Known Issues / Limitations
 
@@ -180,6 +376,35 @@ interface [ComponentName]Props {
 2. **긴 이름**: 2줄 초과 시 truncate 적용 필요
 3. **색상 대비**: 일부 밝은 색상에서 텍스트 가독성 이슈
 
+---
+
+## 🧪 Testing
+
+### Unit Tests
+```typescript
+describe('ContactGroupCard', () => {
+  it('renders group name correctly', () => {
+    render(<ContactGroupCard item={mockGroup} onEdit={jest.fn()} />);
+    expect(screen.getByText('가족')).toBeInTheDocument();
+  });
+
+  it('calls onEdit when edit button clicked', async () => {
+    const onEdit = jest.fn();
+    render(<ContactGroupCard item={mockGroup} onEdit={onEdit} />);
+
+    await userEvent.click(screen.getByRole('button', { name: /수정/i }));
+    expect(onEdit).toHaveBeenCalledWith(mockGroup.id);
+  });
+});
+```
+
+### Test Coverage
+- [ ] Props 렌더링
+- [ ] 이벤트 핸들링
+- [ ] 조건부 렌더링 (variants)
+- [ ] 접근성
+
+---
 
 ## 📚 Related
 
@@ -197,12 +422,38 @@ interface [ComponentName]Props {
 
 [패턴의 목적과 사용 상황 설명]
 
+---
+
+## 🎯 When to Use
+
+- [상황 1]
+- [상황 2]
+- [상황 3]
+
+---
 
 ## 🚫 When NOT to Use
 
 - [피해야 할 상황 1]
 - [피해야 할 상황 2]
 
+---
+
+## 📝 Implementation
+
+### Basic Example
+
+```tsx
+// 기본 구현 예시
+```
+
+### Advanced Example
+
+```tsx
+// 고급 구현 예시
+```
+
+---
 
 ## ✅ Best Practices
 
@@ -212,6 +463,23 @@ interface [ComponentName]Props {
 2. **[Practice 2]**
    - 설명
 
+---
+
+## ⚠️ Common Mistakes
+
+### ❌ Wrong
+
+```tsx
+// 잘못된 예시
+```
+
+### ✅ Correct
+
+```tsx
+// 올바른 예시
+```
+
+---
 
 ## 📚 Related Patterns
 

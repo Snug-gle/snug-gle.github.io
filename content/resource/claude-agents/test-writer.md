@@ -3,9 +3,10 @@ tags: [claude-code, agent, automation]
 created: 2026-02-04
 source: claude-code-agents
 type: agent-prompt
+model: sonnet
 ---
 
-# tdd-test-architect
+# test-writer
 
 > [!info] Claude Code Agent
 > 이 문서는 Claude Code의 커스텀 agent 프롬프트입니다.
