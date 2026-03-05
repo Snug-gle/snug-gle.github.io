@@ -46,6 +46,9 @@ LinkWave는 웹 기반 다채널 메시지 발송 플랫폼입니다. 사용자�
 - [[03-implementation/message-history-read-model|Message History Read Model]] — 영구 Read Model 아키텍처 결정 (2026-02-19)
 - [[03-implementation/message-inbox-onpremise|Message Inbox]] — 메시지 수신함 온프레미스 설계
 - [[03-implementation/https-certificate|HTTPS Certificate]] — 인증서 설정 가이드
+- [[03-implementation/snap-simulator-guide|SNAP 시뮬레이터 구현 가이드]] — 로컬 테스트 환경 (2026-03-05)
+- [[03-implementation/msghub-result-codes|LG U+ MessageHub 결과 코드 레퍼런스]] — 결과 코드 체계 및 SUCCESS/FAILED 분류 (2026-03-05)
+- [[03-implementation/carrier-result-code-pattern|통신사 결과 코드 yml 분리 패턴]] — 설정 기반 확장 패턴 (2026-03-05)
 
 ### [[04-deployment/backend-deployment|04. Deployment]] — 배포
 - [[04-deployment/backend-deployment|Backend Deployment]] — JAR 배포 + CI/CD
