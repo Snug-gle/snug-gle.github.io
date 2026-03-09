@@ -61,6 +61,7 @@ FROM #spring AND #troubleshooting
 
 ## ✨ 실전 주제 심층 분석 (Deep Dive Topics)
 - [[spring-internals-bean-lifecycle-event]] - Spring Bean 라이프사이클, 의존성 주입, 이벤트 및 @Async 동작 원리
+- [[spring-event-cqrs-sync-pattern]] - Spring Event 기반 CQRS 동기화 패턴, 스케줄러, 트랜잭션 관리
 - [[spring-jwt-refresh-token]] - JWT Refresh Token RTR 패턴 및 Redis 기반 관리
 - [[spring-jwt-security-analysis]] - JWT 인증 보안 취약점 분석 및 강화 가이드
 - [[spring-transaction-distributed-lock-redis]] - Spring 트랜잭션, 분산 락, Redis 전략
