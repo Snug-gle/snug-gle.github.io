@@ -3,6 +3,7 @@
 .obsidian/
 .idea/
 .makemd/
+.claude/
 .claude.json
 .links/
 
@@ -17,6 +18,7 @@ area/career/portfolio-resume.md
 # Project management (not for public)
 project/inbox/
 project/pending/
+project/active/2026-h1-learning-plan.md
 
 # Deployment & server info (sensitive)
 project/active/linkwave/04-deployment/
@@ -42,3 +44,4 @@ PUBLISHING.md
 AUTOMATION-EXAMPLES.md
 VAULT-IMPROVEMENT-PLAN.md
 VAULT-TRANSFORMATION-COMPLETE.md
+daily-dev-document-style-guide.md
