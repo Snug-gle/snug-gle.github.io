@@ -5,10 +5,13 @@ created: 2026-03-11
 created: 2026-03-11
 ---
 ---
+created: 2026-03-11
+---
+---
 created: 2026-01-22
 title: Portfolio
 ---
-# 상훈 | Full-stack Developer
+# 상훈 | Backend Developer
 
 > Upstream First (목표) — Star는 열심히 눌렀다. PR은 준비 중이다. 오픈소스 생태계에서 배우며 언젠간 돌려줄 개발자
 
@@ -34,6 +37,15 @@ Java/Spring + React/TypeScript | 2022 ~
 ---
 
 ## 실무 경험
+
+### LinkWave — 멀티채널 메시징 플랫폼
+`Spring Boot` `React` `MySQL` `Redis` `JPA + MyBatis`
+**2025.12 ~ 현재 | 본사**
+
+- 이벤트 기반 CQRS + 하이브리드 ORM 설계 및 구현
+- 커서 기반 페이징, JWT 인증, 월별 파티션 테이블, 멀티테넌트 RBAC 구축
+
+→ [[area/career/projects/linkwave|자세히 보기]]
 
 ### Perf Script Pipeline — AI 성능 테스트 자동화
 `React 19` `TypeScript` `TanStack` `Spring AI`
