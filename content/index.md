@@ -23,4 +23,4 @@ Java/Spring 백엔드 개발자의 기술 학습과 프로젝트 기록입니다
 
 ## Career
 
-- [📄 포트폴리오](area/career/portfolio-for-blog)
+- [📄 포트폴리오](area/career/about-me)

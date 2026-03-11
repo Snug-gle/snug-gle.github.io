@@ -2,12 +2,15 @@
 created: 2026-03-11
 ---
 ---
+created: 2026-03-11
+---
+---
 created: 2026-01-22
 title: Portfolio
 ---
 # 상훈 | Full-stack Developer
 
-> Upstream First — 오픈소스 생태계 위에서 성장하고, 배운 것을 커뮤니티에 돌려주는 개발자
+> Upstream First (목표) — Star는 열심히 눌렀다. PR은 준비 중이다. 오픈소스 생태계에서 배우며 언젠간 돌려줄 개발자
 
 Java/Spring + React/TypeScript | 2022 ~
 
@@ -19,7 +22,7 @@ Java/Spring + React/TypeScript | 2022 ~
 
 `Spring Boot` `React` `MySQL` `Redis` `JPA + MyBatis`
 
-- **CQRS 하이브리드 ORM**: CRUD 중심 도메인(User/Org)은 JPA, 대용량 쓰기(Message/Log)는 MyBatis — 생산성과 성능 동시 달성 → [[resource/topics/architecture/cqrs-hybrid-orm-linkwave|구현 상세]]
+- **이벤트 기반 CQRS + 하이브리드 ORM**: Write Model(`UmsMsg`/MyBatis 배치 삽입) → `MessageSendRequestedEvent` 발행 → `@TransactionalEventListener(AFTER_COMMIT) + @Async` → Read Model(`MessageHistory`/JPA) 동기화. CRUD 도메인은 JPA, 복잡한 조회는 MyBatis QueryMapper 분리 → [[resource/topics/architecture/cqrs-hybrid-orm-linkwave|구현 상세]]
 - **커서 기반 페이징 (Keyset Pagination)**: 이중 커서(requestedAt + clientKey)로 후반 페이지도 O(1) 성능, Base64 불투명 커서 → [[resource/topics/database/cursor-pagination-linkwave|구현 상세]]
 - **JWT HS256 기반 인증 + Refresh Token Rotation**: HMAC-SHA256 대칭키 인증, 슬라이딩 윈도우 리프레시로 보안성 확보
 - **월별 파티션 테이블**: 조회 성능 80% 향상, 인덱스 크기 86% 감소
