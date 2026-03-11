@@ -1,10 +1,12 @@
 ---
-created: 2026-02-13
+created: 2026-03-11
 ---
 ---
-tags: [moc, index, knowledge-base]
 created: 2026-02-04
-modified: 2026-02-04
+tags:
+  - moc
+  - index
+  - knowledge-base
 ---
 # 지식 라이브러리 (Topics MOC)
 

@@ -1,4 +1,7 @@
 ---
+created: 2026-03-11
+---
+---
 created: 2026-02-05
 tags:
   - moc
@@ -112,6 +115,10 @@ category: architecture
 - 서비스 간 통신 전략
 - 데이터 일관성 유지
 
+### LinkWave 아키텍처
+- [[cqrs-hybrid-orm-linkwave|CQRS 하이브리드 ORM 전략]] - JPA + MyBatis 역할 분리, Event-Driven 읽기 모델 동기화
+- [[fair-distribution-scheduler|균등 분배 스케줄러]] - @Scheduled + Redis + WebSocket 파이프라인 (SI 익명화)
+
 ### 아키텍처 결정 기록 (ADR)
 ```dataview
 LIST
@@ -170,4 +177,4 @@ SORT file.mtime DESC
 - [ ] 아키텍처 리팩토링 경험
 
 ---
-*Last updated: 2026-02-13*
+*Last updated: 2026-03-10*

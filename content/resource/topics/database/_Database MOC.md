@@ -1,4 +1,7 @@
 ---
+created: 2026-03-11
+---
+---
 created: 2026-01-22
 tags:
   - moc
@@ -76,6 +79,7 @@ FROM #database AND #troubleshooting
   - CQRS 패턴: JPA (User Domain) + MyBatis (Message Domain)
   - 월별 파티션 테이블로 대용량 메시지 로그 관리
   - DEDUP_HASH 인덱스 활용한 중복 방지
+  - [[cursor-pagination-linkwave|커서 기반 페이징 구현기]] - Keyset 방식, 이중 커서, size+1 트릭
 
 ### 배운 점 & 회고
 ```dataview
@@ -97,4 +101,4 @@ SORT file.ctime DESC
 - [ ] NoSQL과의 비교 학습
 
 ---
-*Last updated: 2026-02-10*
+*Last updated: 2026-03-10*

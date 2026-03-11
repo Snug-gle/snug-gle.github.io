@@ -1,4 +1,7 @@
 ---
+created: 2026-03-11
+---
+---
 created: 2025-11-28
 tags:
   - moc
@@ -77,6 +80,7 @@ category: frontend
 - 렌더링 최적화
 - Bundle Size 최적화
 - Lazy Loading
+- [[react-large-table-optimization|React 19 대용량 테이블 최적화]] - TanStack Virtual, 가상화, 렌더링 90% 단축
 
 ---
 
@@ -152,4 +156,4 @@ SORT file.mtime DESC
 - [ ] 블로그 프로젝트 완성
 
 ---
-*Last updated: 2025-10-29*
+*Last updated: 2026-03-10*
