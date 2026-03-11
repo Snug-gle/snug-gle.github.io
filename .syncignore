@@ -1,47 +1,57 @@
+# rsync --filter-from 규칙: + include, - exclude
+# 순서 중요 — 먼저 매칭된 규칙이 적용됨
+
 # Obsidian & IDE system files
-.git/
-.obsidian/
-.idea/
-.makemd/
-.claude/
-.claude.json
-.links/
+- .git/
+- .obsidian/
+- .idea/
+- .makemd/
+- .claude/
+- .claude.json
+- .links/
 
 # Private & sensitive
-private/
-area/work/
-area/log/
-area/learning/
-area/career/interview-prep/
-area/career/portfolio-resume.md
+- private/
+- area/work/
+- area/log/
+- area/learning/
+- area/career/interview-prep/
+- area/career/portfolio-resume.md
 
 # Project management (not for public)
-project/inbox/
-project/pending/
-project/active/2026-h1-learning-plan.md
+- project/inbox/
+- project/pending/
+- project/active/2026-h1-learning-plan.md
 
 # Deployment & server info (sensitive)
-project/active/linkwave/04-deployment/
-resource/topics/infrastructure/cors-cicd-deployment-troubleshooting.md
-resource/topics/aws/
+- project/active/linkwave/04-deployment/
+- resource/topics/infrastructure/cors-cicd-deployment-troubleshooting.md
+- resource/topics/aws/
 
 # PARA structure (not for public)
-archive/
-templates/
-resource/daily/
+- archive/
+- templates/
+- resource/daily/
+
+# Vault navigation: 루트 index.md는 Quartz 홈 페이지로 유지, 나머지 제외
++ /index.md
+- index.md
+
+# MOC 파일: Obsidian 내부 탐색용, 블로그 불필요
+- *MOC*.md
 
 # Obsidian file types
-*.base
-*.url
-*.canvas
+- *.base
+- *.url
+- *.canvas
 
 # Vault meta files
-CLAUDE.md
-GEMINI.md
-GEMINI-MCP-SETUP.md
-README.md
-PUBLISHING.md
-AUTOMATION-EXAMPLES.md
-VAULT-IMPROVEMENT-PLAN.md
-VAULT-TRANSFORMATION-COMPLETE.md
-daily-dev-document-style-guide.md
+- CLAUDE.md
+- GEMINI.md
+- GEMINI-MCP-SETUP.md
+- README.md
+- PUBLISHING.md
+- AUTOMATION-EXAMPLES.md
+- VAULT-IMPROVEMENT-PLAN.md
+- VAULT-TRANSFORMATION-COMPLETE.md
+- daily-dev-document-style-guide.md

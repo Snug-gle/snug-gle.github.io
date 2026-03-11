@@ -27,9 +27,9 @@ echo "Content: $CONTENT"
 
 node "$REPO_DIR/ensure-dates.mjs" "$VAULT"
 
-# GNU rsync 우선 사용 (macOS 기본 openrsync는 --exclude-from 미지원)
+# GNU rsync 우선 사용 (macOS 기본 openrsync는 --filter 미지원)
 RSYNC=$(command -v /opt/homebrew/bin/rsync || command -v /usr/local/bin/rsync || command -v rsync)
 
 "$RSYNC" -av --delete --delete-excluded \
-  --exclude-from="$REPO_DIR/.syncignore" \
+  --filter="merge $REPO_DIR/.syncignore" \
   "$VAULT/" "$CONTENT/"
