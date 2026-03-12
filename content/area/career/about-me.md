@@ -91,8 +91,12 @@ Java/Spring + React/TypeScript | 2022 ~
 
 ---
 
-## 학습과 성장
+## 팀 스터디 — Attiead
 
-- 6권 이상 기술 서적 학습 및 실전 적용 — Real MySQL 8.0 → LinkWave 파티셔닝, TanStack → Perf Script Pipeline 가상화
-- PARA 방법론 기반 Obsidian vault로 체계적 지식 관리
-- 매일 KPT 회고 작성, 지속적 개선
+[github.com/Attiead](https://github.com/Attiead)
+
+Spring Cloud 기반 MSA 과외 플랫폼 팀 프로젝트 (2023.08 ~ 2024.06) + 서적 스터디 (2023.02 ~ 2023.04)
+
+- **Notice 도메인** (Java/Spring Boot/JPA): 공지사항·첨부파일 관리 API
+- **Student 도메인** (Kotlin/Spring Boot): 피과외자 CRUD, Spring REST Docs, Detekt
+- **서적 스터디**: 도메인 주도 설계 · 클린 아키텍처 · 아파치 카프카 · LLM 실전 AI 애플리케이션 개발

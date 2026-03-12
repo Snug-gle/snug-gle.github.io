@@ -1,4 +1,7 @@
 ---
+created: 2026-03-12
+---
+---
 created: 2026-03-11
 ---
 ---
@@ -75,7 +78,7 @@ ORDER BY requested_at DESC, client_key DESC
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
-<mapper namespace="io.iotree.linkwave.infra.mybatis.mapper.MessageHistoryQueryMapper">
+<mapper namespace="com.example.messaging.infra.mybatis.mapper.MessageHistoryQueryMapper">
 
     <select id="findSentMessages"
             resultType="...MessageHistoryQueryMapper$MessageHistoryListDto">

@@ -3,63 +3,63 @@ tags: [claude-code, agent, index, automation]
 created: 2026-02-04
 ---
 
-# Claude Code Agent 인덱스
+# Claude Code Agent Index
 
-> [!tip] Claude Code 커스텀 Agent
-> 반복적인 작업을 자동화하기 위한 커스텀 agent 프롬프트 모음입니다.
-> 원본 위치: `~/.claude/agents/`
+> [!tip] Claude Code Custom Agents
+> A collection of custom agent prompts for automating repetitive tasks.
+> Source location: `~/.claude/agents/`
 
-## Agent 목록
+## Agent List
 
-> [!tip] 모델 전략
-> `haiku` — 파일 R/W, 템플릿 문서화 | `sonnet` — 코드 생성/분석 | `opus` — 아키텍처 결정
+> [!tip] Model Strategy
+> `haiku` — file R/W, template documentation | `sonnet` — code generation/analysis | `opus` — architecture decisions
 
-### 📝 문서화 (haiku)
-- [[api-docs]] - API 문서 자동 생성 (Spring REST Docs 스타일)
-- [[component-docs]] - React 컴포넌트 문서 생성 (Storybook 스타일)
+### Documentation (haiku)
+- [[api-docs]] - API documentation generation (Spring REST Docs style)
+- [[component-docs]] - React component documentation (Storybook style)
 
-### 🔍 코드 품질 (sonnet)
-- [[code-reviewer]] - 코드 리뷰 (Java/Kotlin, TypeScript/React)
-- [[test-writer]] - TDD 기반 테스트 코드 생성 (JUnit5/Jest)
+### Code Quality (sonnet)
+- [[code-reviewer]] - Code review (Java/Kotlin, TypeScript/React)
+- [[test-writer]] - TDD-based test generation (JUnit5/Jest)
 
-### 🦴 스켈레톤 생성 (sonnet)
-- [[skeleton-backend]] - Spring Boot 백엔드 레이어 뼈대 생성
-- [[skeleton-frontend]] - React 컴포넌트/훅/스토어 뼈대 생성
+### Skeleton Generation (sonnet)
+- [[skeleton-backend]] - Spring Boot backend layer scaffolding
+- [[skeleton-frontend]] - React component/hook/store scaffolding
 
-### 📚 지식 관리
-- [[knowledge-base]] `haiku` — Obsidian 노트 생성/관리, **Vault 일일 로그 작성 포함**
-- [[system-architect]] `opus` — 시스템 아키텍처 설계 및 DDD
+### Knowledge Management
+- [[knowledge-base]] `haiku` — Obsidian note creation/management, **including daily log writing**
+- [[system-architect]] `opus` — System architecture design and DDD
 
-## 사용법
+## Usage
 
-Claude Code에서 agent 호출:
+Invoke an agent in Claude Code:
 ```
-agent <agent-name>을 사용해서 <작업 내용>
+Use agent <agent-name> to <task description>
 ```
 
-예시:
+Examples:
 ```
-agent test-writer를 사용해서 ContactService 테스트 코드 생성해줘
-agent code-reviewer를 사용해서 이 코드 리뷰해줘
-vault에 기록해줘  →  knowledge-base agent 직접 호출
+Use agent test-writer to generate tests for ContactService
+Use agent code-reviewer to review this code
+Log to vault  →  invoke knowledge-base agent directly
 ```
 
 ## Slash Commands (Skills)
 
 > [!info] Agents vs Skills
-> **Agents**: 독립 실행 서브프로세스, 파일 R/W 등 도구 접근 가능
-> **Skills**: `/명령어`로 호출하는 프롬프트 주입 템플릿 (`~/.claude/commands/`에 위치)
-> → 도구가 필요한 작업은 Agent, 행동 모드 변경은 Skill
+> **Agents**: Independent subprocess with tool access (file R/W, etc.)
+> **Skills**: Prompt injection templates invoked via `/command` (located in `~/.claude/commands/`)
+> → Use Agent for tool-required tasks, Skill for behavior mode changes
 
-### 🎓 학습 지원
-- [[guide-me]] — `/guide-me` : 구현하며 배우는 학습 지원 모드 (Senior/Peer 멘토 역할)
+### Learning Support
+- [[guide-me]] — `/guide-me` : Learning-by-doing mode (Senior/Peer mentor role)
 
-> [!note] mjc-log 제거 (2026-03-04)
-> `/mjc-log` skill 삭제됨 — knowledge-base agent에 daily log 형식이 내장되어 직접 호출로 대체
+> [!note] mjc-log removed (2026-03-04)
+> `/mjc-log` skill deleted — daily log format is now built into the knowledge-base agent; invoke it directly instead
 
 ---
 
-## 관련 문서
+## Related Documents
 
-- [[QUIZ-GENERATOR]] - Gemini MCP 퀴즈 자동화
-- [[AUTOMATION-EXAMPLES]] - 자동화 예제 모음
+- [[QUIZ-GENERATOR]] - Gemini MCP quiz automation
+- [[AUTOMATION-EXAMPLES]] - Automation example collection

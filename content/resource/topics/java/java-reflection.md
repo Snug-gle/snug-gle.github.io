@@ -287,7 +287,7 @@ public class AuthService {
 public class SpringApplication {
     public void run() {
         // 1. 클래스패스에서 모든 .class 파일 찾기
-        scanAllClasses("io.iotree.linkwave");
+        scanAllClasses("com.example.messaging");
     }
 }
 ```
@@ -297,14 +297,14 @@ public class SpringApplication {
 ```java
 void scanAllClasses(String basePackage) {
     // 패키지 경로를 파일 경로로 변환
-    // io.iotree.linkwave → io/iotree/linkwave
+    // com.example.messaging → com/example/messaging
 
     // 해당 경로의 모든 .class 파일 찾기
     List<String> classFiles = [
-        "io/iotree/linkwave/application/service/AuthService.class",
-        "io/iotree/linkwave/application/service/UserService.class",
-        "io/iotree/linkwave/infra/redis/RefreshTokenStore.class",
-        "io/iotree/linkwave/api/controller/AuthController.class",
+        "com/example/messaging/application/service/AuthService.class",
+        "com/example/messaging/application/service/UserService.class",
+        "com/example/messaging/infra/redis/RefreshTokenStore.class",
+        "com/example/messaging/api/controller/AuthController.class",
         // ... 수백 개의 클래스
     ];
 
@@ -319,7 +319,7 @@ void scanAllClasses(String basePackage) {
 ```java
 void processClass(String classFile) {
     // 1. 클래스 로드 (설계도 가져오기)
-    Class<?> clazz = Class.forName("io.iotree.linkwave.application.service.AuthService");
+    Class<?> clazz = Class.forName("com.example.messaging.application.service.AuthService");
 
     // 2. 이 클래스에 @Service가 붙어있나 확인
     if (clazz.isAnnotationPresent(Service.class)) {
@@ -335,7 +335,7 @@ void processClass(String classFile) {
 // AuthService.class 파일 내부 구조 (바이트코드를 읽으면)
 /*
 [Class Info]
-이름: io.iotree.linkwave.application.service.AuthService
+이름: com.example.messaging.application.service.AuthService
 어노테이션: [@Service, @Slf4j]  ← 여기 저장되어 있음!
 필드: [userRepository, refreshTokenStore, ...]
 메서드: [login, logout, ...]
@@ -381,8 +381,8 @@ void registerAsBean(Class<?> clazz) {
             System.out.println("  - " + param.getType().getName());
         }
         // 출력:
-        //   - io.iotree.linkwave.infra.jpa.repository.UserRepository
-        //   - io.iotree.linkwave.infra.redis.RefreshTokenStore
+        //   - com.example.messaging.infra.jpa.repository.UserRepository
+        //   - com.example.messaging.infra.redis.RefreshTokenStore
 
         // 2. 의존성 찾기 (Spring Container에서)
         Object[] dependencies = new Object[params.length];
@@ -455,7 +455,7 @@ void registerAsBean(Class<?> clazz) {
 public class ReflectionDemo {
     public static void main(String[] args) throws Exception {
         // 1. AuthService 클래스 정보 가져오기
-        Class<?> clazz = Class.forName("io.iotree.linkwave.application.service.AuthService");
+        Class<?> clazz = Class.forName("com.example.messaging.application.service.AuthService");
 
         System.out.println("=== 클래스 정보 ===");
         System.out.println("클래스 이름: " + clazz.getName());
@@ -504,7 +504,7 @@ public class ReflectionDemo {
 **실행 결과 예상:**
 ```
 === 클래스 정보 ===
-클래스 이름: io.iotree.linkwave.application.service.AuthService
+클래스 이름: com.example.messaging.application.service.AuthService
 간단한 이름: AuthService
 
 === 어노테이션 ===
@@ -516,7 +516,7 @@ public class ReflectionDemo {
 @Service 있음? true
 
 === 생성자 정보 ===
-생성자: io.iotree.linkwave.application.service.AuthService
+생성자: com.example.messaging.application.service.AuthService
   파라미터: UserRepository
   파라미터: OrganizationRepository
   파라미터: UserQueryMapper
@@ -635,11 +635,11 @@ void runTests(Class<?> testClass) {
 
 ```java
 // 테스트 대상
-package io.iotree.linkwave.infra.redis;
+package com.example.messaging.infra.redis;
 public class RefreshTokenStore { ... }
 
 // 테스트 코드 (같은 패키지)
-package io.iotree.linkwave.infra.redis;
+package com.example.messaging.infra.redis;
 class RefreshTokenStoreTest {  // package-private
     // 같은 패키지니까 RefreshTokenStore 접근 가능!
 }
@@ -760,7 +760,7 @@ class UserServiceTest {
 User user = new User("john");  // 컴파일 타임에 타입 확정
 
 // 리플렉션으로 객체 생성
-Class<?> clazz = Class.forName("io.iotree.linkwave.domain.user.User");
+Class<?> clazz = Class.forName("com.example.messaging.domain.user.User");
 Object user = clazz.getDeclaredConstructor(String.class).newInstance("john");
 // → 런타임에 타입 결정
 ```
@@ -806,7 +806,7 @@ User user = new User();
 Class<?> clazz2 = user.getClass();
 
 // 3. 문자열로 동적 로딩 (forName)
-Class<?> clazz3 = Class.forName("io.iotree.linkwave.domain.user.User");
+Class<?> clazz3 = Class.forName("com.example.messaging.domain.user.User");
 ```
 
 ---

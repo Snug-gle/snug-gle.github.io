@@ -1,4 +1,7 @@
 ---
+created: 2026-03-12
+---
+---
 created: 2026-03-11
 ---
 ---
@@ -52,7 +55,7 @@ tags:
 
 ```java
 @Configuration
-@MapperScan(basePackages = "io.iotree.linkwave.infra.mybatis.mapper")
+@MapperScan(basePackages = "com.example.messaging.infra.mybatis.mapper")
 public class MybatisConfig {
 
   @Bean
