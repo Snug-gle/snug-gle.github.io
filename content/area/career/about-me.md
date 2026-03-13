@@ -1,15 +1,9 @@
 ---
-created: 2026-03-11
----
----
-created: 2026-03-11
----
----
-created: 2026-03-11
----
----
+tags: [career, portfolio, about]
+category: career
 created: 2026-01-22
 title: Portfolio
+description: 상훈 Backend Developer 포트폴리오 — LinkWave, 실무 경험, 기술 스택
 ---
 # 상훈 | Backend Developer
 
@@ -21,7 +15,7 @@ Java/Spring + React/TypeScript | 2022 ~
 
 ## 주요 프로젝트: LinkWave
 
-**멀티채널 메시징 플랫폼** — B2B SaaS (SMS/LMS/MMS/KakaoTalk/RCS)
+**멀티채널 메시징 플랫폼** — 구축형 (SMS/LMS/MMS/KakaoTalk/RCS)
 
 `Spring Boot` `React` `MySQL` `Redis` `JPA + MyBatis`
 

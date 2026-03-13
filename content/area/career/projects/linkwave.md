@@ -6,7 +6,7 @@ tags: [project, portfolio, spring-boot, react, mysql]
 
 # LinkWave — 멀티채널 메시징 플랫폼
 
-**기간**: 2024 ~ 현재 | **역할**: Full-stack Developer | **규모**: B2B SaaS
+**기간**: 2024 ~ 현재 | **역할**: Full-stack Developer | **규모**: 구축형(On-Premise)
 
 > SMS/LMS/MMS/KakaoTalk/RCS를 단일 API로 통합하는 멀티채널 메시징 플랫폼
 

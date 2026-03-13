@@ -1,19 +1,20 @@
 ---
-created: 2026-02-09
+created: 2026-03-13
 ---
 ---
-tags:
-  - resource
-  - database
-  - mysql
-  - join
-  - sql
+tags: [database, mysql, join, sql]
 category: database
-topic: JOIN
-status: complete
 created: 2024-01-01
-modified: 2025-10-29
+status: complete
+description: MySQL JOIN 유형 — INNER / OUTER / CROSS JOIN 기초
 ---
+
+# JOIN 유형과 활용
+
+> MySQL에서 테이블을 연결하는 JOIN 유형(INNER, OUTER, CROSS)의 개념과 기초 사용법을 정리합니다.
+
+---
+
 ## 1. 테이블 간의 관계
 ### Foreign Key
 - 두 테이블 간의 참조 무결성을 보장해주는 역할

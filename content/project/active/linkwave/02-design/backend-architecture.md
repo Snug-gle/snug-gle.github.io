@@ -1,9 +1,9 @@
 ---
+tags: [linkwave, backend, architecture, spring, cqrs]
+category: linkwave
 created: 2026-02-10
-tags:
-  - linkwave
-  - backend
-  - architecture
+status: complete
+description: LinkWave 백엔드 레이어 구조 및 CQRS 설계 요약
 ---
 
 > 이 문서는 linkwave-docs의 backend/ARCHITECTURE.md를 요약한 것입니다.

@@ -1,18 +1,12 @@
 ---
-created: 2026-03-12
+created: 2026-03-13
 ---
 ---
-created: 2026-03-11
----
----
+tags: [database, pagination, cursor, mybatis, linkwave]
+category: database
 created: 2026-03-10
-updated: 2026-03-10
-tags:
-  - database
-  - pagination
-  - cursor
-  - mybatis
-  - linkwave
+status: complete
+description: LinkWave 메시지 이력 조회에 커서 기반 페이징(Keyset Pagination) 구현 경험
 ---
 
 # 커서 기반 페이징 구현기 — LinkWave 메시지 이력 조회
