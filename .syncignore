@@ -33,6 +33,7 @@
 - archive/
 - templates/
 - resource/daily/
+- resource/claude-agents/
 
 # Vault navigation: 루트 index.md는 Quartz 홈 페이지로 유지, 나머지 제외
 + /index.md
