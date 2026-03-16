@@ -57,11 +57,13 @@ description: LinkWave 백엔드 레이어 구조 및 CQRS 설계 요약
 
 | 패턴 | 적용 | 이점 |
 |------|------|------|
-| **CQRS** | Command(JPA) / Query(MyBatis) 분리 | 각각 최적화된 기술 사용 |
+| **하이브리드 ORM** | Write + 단순 조회 → JPA / 복잡한 조회 → MyBatis | 쿼리 복잡도 기준으로 기술 분리, 성능·생산성 동시 확보 |
 | **Factory Method** | `Entity.createForXxx()` | 엔티티 생성 로직 캡슐화 |
 | **Pragmatic** | Repository/Mapper 직접 사용 | 단순함, 빠른 개발 |
 
-**Port/Adapter를 채택하지 않은 이유**: 파일 증가(4개+)로 복잡도 상승, CQRS로 이미 충분히 분리됨.
+**ORM 분리 기준**: 도메인이 아닌 쿼리 복잡도. 단순 CRUD·단건 조회는 JPA 그대로 사용. 메시지 이력 동적 필터링·커서 페이징·통계 집계처럼 SQL 제어가 필요한 경우에만 MyBatis QueryMapper 적용.
+
+**Port/Adapter를 채택하지 않은 이유**: 파일 증가(4개+)로 복잡도 상승, 하이브리드 ORM으로 이미 충분히 분리됨.
 
 ### 2.2 메시지 발송 아키텍처
 

@@ -1,14 +1,14 @@
 ---
+tags: [linkwave, design, initial-scratch]
+category: linkwave
 created: 2026-02-10
-tags:
-  - linkwave
-  - design
-  - initial-scratch
+status: complete
+description: LinkWave 초기 설계 요약 — 시스템 아키텍처, 프론트엔드/백엔드 설계, 메시지 처리 흐름
 ---
 
 > 이 문서는 linkwave-docs의 common/INITIAL_SCRATCH.md를 요약한 것입니다.
 
-# 문자 발송 웹페이지 설계 (Initial Scratch)
+# 문자 발송 웹페이지 초기 설계
 
 ## 1. 개요
 
@@ -91,9 +91,9 @@ src/
 | 발송 처리 | ums_msg, ums_log_{YYYYMM} | Message DB |
 | 부가 기능 | message_files, audit_logs, sync_queue | Web DB |
 
-### Hybrid Persistence 전략
-- **User Domain** → JPA: users, organizations, address_book
-- **Message Domain** → MyBatis: ums_msg, ums_log_{YYYYMM}
+### 하이브리드 영속성 전략
+- **사용자 도메인** → JPA: users, organizations, address_book
+- **메시지 도메인** → MyBatis: ums_msg, ums_log_{YYYYMM}
 - 원칙: 같은 테이블에 두 기술 혼용 금지
 
 ---
@@ -114,16 +114,15 @@ src/
 4. 발송 에이전트가 폴링 (우선순위: real > normal > batch)
 5. 발송 완료 → ums_msg 상태 업데이트, ums_log 기록
 
-### TRAFFIC_TYPE
-- `real`: 고우선순위, 즉시 발송 (<10분)
+### 트래픽 유형 (TRAFFIC_TYPE)
+- `real`: 고우선순위, 즉시 발송 (10분 이내)
 - `normal`: 표준 큐
-- `batch`: 저우선순위 (100명+ 또는 10분+ 예약)
+- `batch`: 저우선순위 (수신자 100명 이상 또는 10분 이후 예약)
 
 ---
 
-## Related Documents
+## 관련 문서
 
-- [[system-architecture|System Architecture]]
-- [[backend-architecture|Backend Architecture]]
-- [[frontend-architecture|Frontend Architecture]]
-- [[api-specifications|API Specifications]]
+- [[backend-architecture|백엔드 아키텍처]]
+- [[frontend-architecture|프론트엔드 아키텍처]]
+- [[api-specifications|API 명세]]

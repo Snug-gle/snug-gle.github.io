@@ -7,8 +7,6 @@ description: 상훈 Backend Developer 포트폴리오 — LinkWave, 실무 경�
 ---
 # 상훈 | Backend Developer
 
-> Upstream First (목표) — Star는 열심히 눌렀다. PR은 준비 중이다. 오픈소스 생태계에서 배우며 언젠간 돌려줄 개발자
-
 Java/Spring + React/TypeScript | 2022 ~
 
 ---
@@ -19,7 +17,7 @@ Java/Spring + React/TypeScript | 2022 ~
 
 `Spring Boot` `React` `MySQL` `Redis` `JPA + MyBatis`
 
-- **이벤트 기반 CQRS + 하이브리드 ORM**: Write Model(`UmsMsg`/MyBatis 배치 삽입) → `MessageSendRequestedEvent` 발행 → `@TransactionalEventListener(AFTER_COMMIT) + @Async` → Read Model(`MessageHistory`/JPA) 동기화. CRUD 도메인은 JPA, 복잡한 조회는 MyBatis QueryMapper 분리 → [[resource/topics/architecture/cqrs-hybrid-orm-linkwave|구현 상세]]
+- **이벤트 기반 CQRS + 하이브리드 ORM**: Write + 단순 조회는 JPA, 메시지 이력·통계 등 복잡한 조회에만 MyBatis QueryMapper 선택 적용 (조회 성능 최적화 목적). Write Model(`UmsMsg`) 커밋 후 `@TransactionalEventListener(AFTER_COMMIT) + @Async` → Read Model(`MessageHistory`) 비동기 동기화 → [[resource/topics/architecture/cqrs-hybrid-orm-linkwave|구현 상세]]
 - **커서 기반 페이징 (Keyset Pagination)**: 이중 커서(requestedAt + clientKey)로 후반 페이지도 O(1) 성능, Base64 불투명 커서 → [[resource/topics/database/cursor-pagination-linkwave|구현 상세]]
 - **JWT HS256 기반 인증 + Refresh Token Rotation**: HMAC-SHA256 대칭키 인증, 슬라이딩 윈도우 리프레시로 보안성 확보
 - **월별 파티션 테이블**: 조회 성능 80% 향상, 인덱스 크기 86% 감소
@@ -47,7 +45,7 @@ Java/Spring + React/TypeScript | 2022 ~
 
 - HAR 병합 → JMX/JTL 추출 → AI 상관관계 분석 → JMeter 스크립트 최적화
 - 가상 스크롤링으로 10,000건 렌더링 시간 90% 단축, React Query 캐싱으로 API 요청 80% 감소
-- Spring AI + VectorDB 활용 JMeter 스크립트 지능형 검색 프로토타입 구현
+- Spring AI + OpenSearch(VectorDB)로 JMeter 스크립트 유사 패턴 검색 프로토타입 설계·구현
 
 → [[area/career/projects/perf-script-pipeline|자세히 보기]]
 
@@ -82,6 +80,7 @@ Java/Spring + React/TypeScript | 2022 ~
 **Frontend**: React, TypeScript, TanStack (Query/Router/Table), Tailwind CSS, shadcn/ui
 **DevOps**: Docker, Nginx, GitHub Actions, GitLab CI/CD
 **Architecture**: CQRS, Multi-tenant, RBAC, DDD
+**AI / Tools**: Claude Code Agent (architect → skeleton → guide-me), Spring AI, VectorDB (OpenSearch)
 
 ---
 
