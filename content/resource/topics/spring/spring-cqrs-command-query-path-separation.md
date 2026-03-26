@@ -1,8 +1,9 @@
 ---
-tags: [spring, cqrs, architecture, rest-api, linkwave, backend]
+tags: [spring, cqrs, architecture, rest-api, linkwave, backend, jpa, mybatis]
 category: resource
 created: 2026-03-16
-related: [역할 기반 분리 CQRS, spring-event-cqrs-sync-pattern, cursor-pagination-linkwave]
+modified: 2026-03-26
+related: [spring-event-cqrs-sync-pattern, cursor-pagination-linkwave, spring-transactional-deep-dive]
 ---
 
 # 🔍 CQRS Command/Query 경로 분리 — 컨트롤러 레벨
@@ -117,3 +118,98 @@ public class MessageHistoryController {
 
 - [Martin Fowler — CQRS Pattern](https://martinfowler.com/bliki/CQRS.html)
 - [Spring MVC — @RestController](https://docs.spring.io/spring-framework/docs/current/reference/html/web.html#mvc-controller)
+
+---
+
+## 📚 Service/Repository 레벨 CQRS — 역할 기반 분리
+
+컨트롤러 경로 분리와 함께, 서비스·레포지토리 계층에서도 Command/Query 역할을 기술 스택으로 분리한다.
+
+### 핵심 원칙: 조회의 목적에 따른 기술 스택 분리
+
+```
+조회 결과의 사용 목적
+├── 상태 변경을 위한 조회 → Command Layer (JPA)
+│   ├── findById()   - 엔티티 수정 목적
+│   ├── existsBy()   - 유효성 검증 목적
+│   └── findOneBy()  - 비즈니스 로직 실행 목적
+│
+└── 사용자에게 보여주기 위한 조회 → Query Layer (MyBatis)
+    ├── 목록 조회 (페이징, 정렬)
+    ├── 검색 (복잡한 조건)
+    ├── 상세 보기 (Join 필요)
+    └── 통계/집계
+```
+
+### 네이밍 컨벤션
+
+| 계층 | 역할 | 네이밍 | 기술 스택 |
+|------|------|--------|-----------|
+| Command | 상태 변경 | `{Entity}Repository` | JPA |
+| Query | 데이터 제공 | `{Entity}QueryMapper` | MyBatis |
+
+```java
+UserRepository    // JPA - Command
+UserQueryMapper   // MyBatis - Query
+```
+
+### 의사결정 플로우
+
+```
+조회 쿼리를 작성해야 할 때
+        ↓
+"이 조회 결과로 무엇을 하는가?"
+        ↓
+    ┌───┴───┐
+    │       │
+엔티티 수정?   화면 표시?
+영속성 필요?   DTO 반환?
+    │           │
+    ↓           ↓
+JPA Repository  MyBatis Mapper
+(Command)       (Query)
+```
+
+#### JPA를 사용해야 하는 경우
+
+- 조회 후 엔티티 상태 변경 필요
+- 영속성 컨텍스트 관리 필요
+- 비즈니스 로직을 엔티티 메서드로 실행
+- 트랜잭션 내 Dirty Checking 활용
+
+#### MyBatis를 사용해야 하는 경우
+
+- 조회 결과를 화면에 바로 표시
+- 복잡한 Join이 필요한 상세 조회
+- 동적 검색 조건이 많은 목록 조회
+- 통계/집계 쿼리
+- 성능 최적화가 필요한 대량 조회
+
+### QueryDSL 대신 MyBatis를 선택한 이유
+
+| 관점 | MyBatis | QueryDSL |
+|------|---------|----------|
+| 학습 곡선 | SQL 지식만으로 즉시 사용 | Q클래스 생성, 복잡한 API 학습 필요 |
+| 유지보수 | XML SQL 직관적 | Java DSL 코드 복잡 |
+| 성능 튜닝 | SQL 직접 작성, 실행 계획 확인 용이 | ORM 추상화로 제어 범위 제한 |
+| 팀 협업 | DBA와 SQL 공유 가능 | Java 개발자 전용 |
+
+### 실무 예시
+
+```java
+// ❌ MyBatis로 엔티티 수정 — 잘못된 접근
+userQueryMapper.updateUserName(userId, newName); // 엔티티 생명주기 무시
+
+// ✅ JPA로 엔티티 수정 — 올바른 접근
+User user = userRepository.findById(userId).orElseThrow();
+user.changeName(newName); // 엔티티 메서드 + Dirty Checking 자동 반영
+
+// ❌ JPA로 목록 조회 — N+1 유발
+users.stream().map(u -> new UserListDto(u.getId(), u.getPosts().size())).toList();
+
+// ✅ MyBatis로 목록 조회 — 단일 쿼리
+userQueryMapper.findUserList(); // 필요한 데이터만 Join
+```
+
+> [!warning] 경계를 명확히
+> Command와 Query를 섞어 사용하지 말 것. Service 계층에서 역할에 맞는 레이어를 호출한다.

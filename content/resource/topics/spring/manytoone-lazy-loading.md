@@ -1,5 +1,5 @@
 ---
-created: 2026-02-09
+created: 2026-03-26
 ---
 ---
 tags:
@@ -8,11 +8,13 @@ tags:
   - jpa
   - backend
   - hibernate
+  - lazy-loading
 category: spring
 topic: ManyToOne(fetch = FetchType.LAZY)
 status: complete
 created: 2024-01-01
-modified: 2025-10-29
+modified: 2026-03-26
+related: [spring-transactional-deep-dive, spring-cqrs-command-query-path-separation]
 ---
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 
@@ -133,3 +135,32 @@ public Module hibernateModule() {
 - **더 나은 해결**: **DTO 사용 → 엔티티를 API 응답으로 직접 반환하지 말기**
 
 결론: **가능하면 DTO 패턴을 써라!** 🎯
+
+---
+
+## 📌 지연 로딩 기본 개념
+
+### 정의
+
+- 연관된 데이터를 즉시 불러오지 않고, 실제로 접근하는 시점에 쿼리를 날려서 가져오는 전략
+- `LAZY`: 필요할 때까지 대기 / `EAGER`: 연관 엔티티까지 즉시 join 조회
+
+### 설정 방법
+
+```java
+@OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+private List<Order> orders;
+```
+
+- `user.getOrders()` 호출 전까지 쿼리 실행 안 됨
+- 실제 호출 시점에 `SELECT * FROM orders WHERE user_id = ?` 실행
+
+```java
+User user = userRepository.findById(1L).get();  // orders 조회 안 함
+List<Order> orders = user.getOrders();           // 여기서 쿼리 실행됨
+```
+
+### 주의할 점
+
+- **N+1 문제**: 루프 안에서 지연 로딩 필드를 여러 번 조회하면 매번 쿼리 발생
+- **JSON 직렬화 문제**: 직렬화 도중 lazy 필드 접근 시 예외 발생 (→ Hibernate5Module 또는 DTO로 대응)
