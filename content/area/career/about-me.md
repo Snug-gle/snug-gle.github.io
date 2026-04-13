@@ -23,6 +23,7 @@ Java/Spring + React/TypeScript | 2022 ~
 - **월별 파티션 테이블**: 조회 성능 80% 향상, 인덱스 크기 86% 감소
 - **멀티테넌트 데이터 격리 + RBAC**: 조직별 데이터 분리와 역할 기반 접근 제어
 - **디자인 시스템**: shadcn/ui + Tailwind CSS 컴포넌트 라이브러리 ("Clarity Through Connection")
+- **Redis 분산 락 기반 멀티 인스턴스 안전 배치**: 메시지 이력·위반 로그 보존 정책 집행 배치 스케줄러 구현. 다중 인스턴스 환경에서 중복 실행 방지를 위해 날짜 기반 lockKey + UUID lockValue + Lua 스크립트 unlock 패턴 적용. InnoDB row lock 경합을 피하기 위한 청크 단위 삭제(page=0 고정) 전략 설계
 
 → [[area/career/projects/linkwave|자세히 보기]]
 
