@@ -22,6 +22,7 @@ const config: QuartzConfig = {
       // 여기서는 sync.sh가 잡지 못하는 파일만 필터링.
       "**/private",
       "**/templates",
+      "**/_system/**",    // v5: defense-in-depth (sync.sh already excludes)
       "**/*.base",
       "**/*.url",
       "**/*.canvas",

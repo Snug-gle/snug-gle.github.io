@@ -14,9 +14,14 @@
 - private/
 - area/work/
 - area/log/
-- area/learning/
 - area/career/interview-prep/
 - area/career/portfolio-resume.md
+
+# v5: learning/ moved from area/learning/ (was here)
+- learning/
+
+# v5: system meta directory (agents, templates, docs) — never public
+- _system/
 
 # Project management (not for public)
 - project/inbox/
@@ -33,7 +38,6 @@
 - archive/
 - templates/
 - resource/daily/
-- resource/claude-agents/
 - resource/lecture/
 
 # Vault navigation: 루트 index.md는 Quartz 홈 페이지로 유지, 나머지 제외
